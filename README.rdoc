@@ -1,0 +1,16 @@
+= Knife Rackspace
+This is the offical Opscode Knife plugin for Rackspace. This plugin gives knife
+the ability to create, bootstrap, and manage servers on the Rackspace Cloud.
+
+== Installation
+This plugin is distributed as a Ruby Gem. To install it, run:
+  gem install knife-rackspace
+Depending on your system's configuration, you may need to run this command with
+root privileges.
+
+== Configuration
+TODO
+
+== Usage
+TODO
+
