@@ -18,14 +18,14 @@ In order to communicate with the Rackspace Cloud API you will have to tell Knife
 
     knife[:rackspace_api_key]  = "Your Rackspace API Key"
     knife[:rackspace_api_username] = "Your Rackspace API username"
-    
+
 If your knife.rb file will be checked into a SCM system (ie readable by others) you may want to read the values from environment variables:
 
     knife[:rackspace_api_username] = "#{ENV['RACKSPACE_USERNAME']}"
     knife[:rackspace_api_key] = "#{ENV['RACKSPACE_API_KEY']}"
 
 You also have the option of passing your Rackspace API Username/Key into the individual knife subcommands using the <tt>-A</tt> (or <tt>--rackspace-api-username</tt>) <tt>-K</tt> (or <tt>--rackspace-api-key</tt>) command options
-    
+
     # provision a new 1GB Ubuntu 10.04 webserver
     knife rackspace server create 'role[webserver]' -i 49 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key"
 
