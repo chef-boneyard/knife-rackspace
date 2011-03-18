@@ -19,6 +19,7 @@
 require 'fog'
 require 'chef/knife'
 require 'chef/json_compat'
+require 'resolv'
 
 class Chef
   class Knife
@@ -36,23 +37,38 @@ class Chef
         require 'net/ssh/multi'
         require 'readline'
 
-        connection = Fog::Rackspace::Compute.new(
+        connection = Fog::Compute.new(
+          :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => Chef::Config[:knife][:rackspace_api_username] 
         )
 
         server = connection.servers.get(@name_args[0])
 
-        confirm("Do you really want to delete server ID #{server.id} named #{server.name}")
+        puts "#{h.color("Instance ID", :cyan)}: #{server.id}"
+        puts "#{h.color("Host ID", :cyan)}: #{server.host_id}"
+        puts "#{h.color("Name", :cyan)}: #{server.name}"
+        puts "#{h.color("Flavor", :cyan)}: #{server.flavor.name}"
+        puts "#{h.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{h.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
+        puts "#{h.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
+        puts "#{h.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
+
+        puts "\n"
+        confirm("Do you really want to delete this server")
 
         server.destroy
 
         Chef::Log.warn("Deleted server #{server.id} named #{server.name}")
       end
+
+      def public_dns_name(server)
+        @public_dns_name ||= begin
+          Resolv.getname(server.addresses["public"][0])
+        rescue
+          "#{server.addresses["public"][0].gsub('.','-')}.static.cloud-ips.com"
+        end
+      end
     end
   end
 end
-
-
-
-
