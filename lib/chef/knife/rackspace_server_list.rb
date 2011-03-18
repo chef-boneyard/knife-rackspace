@@ -36,25 +36,25 @@ class Chef
         require 'net/ssh/multi'
         require 'readline'
 
-        connection = Fog::Rackspace::Compute.new(
+        connection = Fog::Compute.new(
+          :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => Chef::Config[:knife][:rackspace_api_username] 
         )
 
-        server_list = [ h.color('ID', :bold), h.color('Name', :bold), h.color('Public IP', :bold), h.color('Private IP', :bold), h.color('Flavor ID', :bold) ]
+        server_list = [ h.color('ID', :bold), h.color('Name', :bold), h.color('Public IP', :bold), h.color('Private IP', :bold), h.color('Flavor', :bold), h.color('Image', :bold), h.color('State', :bold) ]
         connection.servers.all.each do |server|
           server_list << server.id.to_s
           server_list << server.name
           server_list << server.addresses["public"][0]
           server_list << server.addresses["private"][0]
-          server_list << server.flavor_id.to_s
+          server_list << server.flavor.name.split(/\s/).first
+          server_list << server.image.name
+          server_list << server.status.downcase
         end
-        puts h.list(server_list, :columns_across, 5)
+        puts h.list(server_list, :columns_across, 7)
 
       end
     end
   end
 end
-
-
-
