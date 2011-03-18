@@ -20,7 +20,7 @@ require 'fog'
 require 'chef/knife'
 require 'chef/knife/bootstrap'
 require 'chef/json_compat'
-require 'uuidtools'
+require 'resolv'
 
 class Chef
   class Knife
@@ -44,8 +44,7 @@ class Chef
       option :server_name,
         :short => "-S NAME",
         :long => "--server-name NAME",
-        :description => "The server name. Defaults to a random UUID.",
-        :default => UUIDTools::UUID.random_create.to_s
+        :description => "The server name"
 
       option :chef_node_name,
         :short => "-N NAME",
@@ -85,6 +84,11 @@ class Chef
         :description => "Bootstrap a distro using a template",
         :default => "ubuntu10.04-gems"
 
+      option :use_sudo,
+        :long => "--sudo",
+        :description => "Execute the bootstrap via sudo",
+        :boolean => false
+
       option :template_file,
         :long => "--template-file TEMPLATE",
         :description => "Full path to location of template to use",
@@ -121,7 +125,8 @@ class Chef
 
         $stdout.sync = true
 
-        connection = Fog::Rackspace::Compute.new(
+        connection = Fog::Compute.new(
+          :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => Chef::Config[:knife][:rackspace_api_username] 
         )
@@ -133,19 +138,22 @@ class Chef
         )
 
         puts "#{h.color("Instance ID", :cyan)}: #{server.id}"
+        puts "#{h.color("Host ID", :cyan)}: #{server.host_id}"
         puts "#{h.color("Name", :cyan)}: #{server.name}"
-        puts "#{h.color("Flavor", :cyan)}: #{server.flavor_id}"
-        puts "#{h.color("Image", :cyan)}: #{server.image_id}"
-        puts "#{h.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
-        puts "#{h.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
-        puts "#{h.color("Password", :cyan)}: #{server.password}"
+        puts "#{h.color("Flavor", :cyan)}: #{server.flavor.name}"
+        puts "#{h.color("Image", :cyan)}: #{server.image.name}"
 
-        print "\n#{h.color("Requesting server", :magenta)}"
+        print "\n#{h.color("Waiting server", :magenta)}"
 
         # wait for it to be ready to do stuff
         server.wait_for { print "."; ready? }
 
         puts("\n")
+
+        puts "#{h.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
+        puts "#{h.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
+        puts "#{h.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
+        puts "#{h.color("Password", :cyan)}: #{server.password}"
 
         print "\n#{h.color("Waiting for sshd", :magenta)}"
 
@@ -155,9 +163,11 @@ class Chef
 
         puts "\n"
         puts "#{h.color("Instance ID", :cyan)}: #{server.id}"
+        puts "#{h.color("Host ID", :cyan)}: #{server.host_id}"
         puts "#{h.color("Name", :cyan)}: #{server.name}"
-        puts "#{h.color("Flavor", :cyan)}: #{server.flavor_id}"
-        puts "#{h.color("Image", :cyan)}: #{server.image_id}"
+        puts "#{h.color("Flavor", :cyan)}: #{server.flavor.name}"
+        puts "#{h.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{h.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
         puts "#{h.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
         puts "#{h.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
         puts "#{h.color("Password", :cyan)}: #{server.password}"
@@ -166,7 +176,7 @@ class Chef
 
       def bootstrap_for_node(server)
         bootstrap = Chef::Knife::Bootstrap.new
-        bootstrap.name_args = [server.addresses["public"][0]]
+        bootstrap.name_args = [public_dns_name(server)]
         bootstrap.config[:run_list] = @name_args
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:ssh_password] = server.password
@@ -174,13 +184,20 @@ class Chef
         bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
         bootstrap.config[:prerelease] = config[:prerelease]
         bootstrap.config[:distro] = config[:distro]
-        bootstrap.config[:use_sudo] = true
+        # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
+        bootstrap.config[:use_sudo] = config[:use_sudo]
         bootstrap.config[:template_file] = config[:template_file]
         bootstrap.config[:environment] = config[:environment]
         bootstrap
       end
+
+      def public_dns_name(server)
+        @public_dns_name ||= begin
+          Resolv.getname(server.addresses["public"][0])
+        rescue
+          "#{server.addresses["public"][0].gsub('.','-')}.static.cloud-ips.com"
+        end
+      end
     end
   end
 end
-
-
