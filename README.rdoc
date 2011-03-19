@@ -29,13 +29,20 @@ You also have the option of passing your Rackspace API Username/Key into the ind
     # provision a new 1GB Ubuntu 10.04 webserver
     knife rackspace server create 'role[webserver]' -i 49 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key"
 
+Additionally the following options may be set in your `knife.rb`:
+
+* flavor
+* image
+* distro
+* template_file
+
 = SUBCOMMANDS:
 
 This plugin provides the following Knife subcommands.  Specific command options can be found by invoking the subcommand with a <tt>--help</tt> flag
 
 == knife rackspace server create
 
-Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap (using the SSH protocol).  The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server.  By default the server is bootstrapped using the {ubuntu10.04-gems}(https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/ubuntu10.04-gems.erb) template.  This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
+Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap (using the SSH protocol).  The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server.  By default the server is bootstrapped using the {ubuntu10.04-gems}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/ubuntu10.04-gems.erb] template.  This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
 
 == knife rackspace server delete
 

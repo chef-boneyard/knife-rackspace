@@ -32,14 +32,14 @@ class Chef
         :short => "-f FLAVOR",
         :long => "--flavor FLAVOR",
         :description => "The flavor of server",
-        :proc => Proc.new { |f| f.to_i },
+        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_i },
         :default => 1
 
       option :image,
         :short => "-i IMAGE",
         :long => "--image IMAGE",
         :description => "The image of the server",
-        :proc => Proc.new { |i| i.to_i }
+        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_i }
 
       option :server_name,
         :short => "-S NAME",
@@ -66,13 +66,13 @@ class Chef
         :short => "-K KEY",
         :long => "--rackspace-api-key KEY",
         :description => "Your rackspace API key",
-        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key } 
+        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
 
       option :api_username,
         :short => "-A USERNAME",
         :long => "--rackspace-api-username USERNAME",
         :description => "Your rackspace API username",
-        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_api_username] = username } 
+        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_api_username] = username }
 
       option :prerelease,
         :long => "--prerelease",
@@ -82,7 +82,8 @@ class Chef
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
         :description => "Bootstrap a distro using a template",
-        :default => "ubuntu10.04-gems"
+        :default => "ubuntu10.04-gems",
+        :proc => Proc.new { |d| Chef::Config[:knife][:distro] = d }
 
       option :use_sudo,
         :long => "--sudo",
@@ -92,7 +93,8 @@ class Chef
       option :template_file,
         :long => "--template-file TEMPLATE",
         :description => "Full path to location of template to use",
-        :default => false
+        :default => false,
+        :proc => Proc.new { |t| Chef::Config[:knife][:template_file] = t } 
 
       def h
         @highline ||= HighLine.new
@@ -133,8 +135,8 @@ class Chef
 
         server = connection.servers.create(
           :name => config[:server_name],
-          :image_id => config[:image],
-          :flavor_id => config[:flavor]
+          :image_id => Chef::Config[:knife][:image],
+          :flavor_id => Chef::Config[:knife][:flavor]
         )
 
         puts "#{h.color("Instance ID", :cyan)}: #{server.id}"
@@ -183,10 +185,10 @@ class Chef
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
         bootstrap.config[:prerelease] = config[:prerelease]
-        bootstrap.config[:distro] = config[:distro]
+        bootstrap.config[:distro] = Chef::Config[:knife][:distro]
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
         bootstrap.config[:use_sudo] = config[:use_sudo]
-        bootstrap.config[:template_file] = config[:template_file]
+        bootstrap.config[:template_file] = Chef::Config[:knife][:template_file]
         bootstrap.config[:environment] = config[:environment]
         bootstrap
       end
