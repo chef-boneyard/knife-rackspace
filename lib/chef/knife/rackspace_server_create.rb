@@ -32,8 +32,7 @@ class Chef
         :short => "-f FLAVOR",
         :long => "--flavor FLAVOR",
         :description => "The flavor of server",
-        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_i },
-        :default => 1
+        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_i }
 
       option :image,
         :short => "-i IMAGE",
@@ -62,17 +61,23 @@ class Chef
         :long => "--ssh-password PASSWORD",
         :description => "The ssh password"
 
-      option :api_key,
+      option :rackspace_api_key,
         :short => "-K KEY",
         :long => "--rackspace-api-key KEY",
         :description => "Your rackspace API key",
         :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
 
-      option :api_username,
+      option :rackspace_api_username,
         :short => "-A USERNAME",
         :long => "--rackspace-api-username USERNAME",
         :description => "Your rackspace API username",
         :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_api_username] = username }
+
+      option :rackspace_api_auth_url,
+        :long => "--rackspace-api-auth-url URL",
+        :description => "Your rackspace API auth url",
+        :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url },
+        :default => "auth.api.rackspacecloud.com"
 
       option :prerelease,
         :long => "--prerelease",
@@ -82,8 +87,8 @@ class Chef
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
         :description => "Bootstrap a distro using a template",
-        :default => "ubuntu10.04-gems",
-        :proc => Proc.new { |d| Chef::Config[:knife][:distro] = d }
+        :proc => Proc.new { |d| Chef::Config[:knife][:distro] = d },
+        :default => "ubuntu10.04-gems"
 
       option :use_sudo,
         :long => "--sudo",
@@ -93,8 +98,8 @@ class Chef
       option :template_file,
         :long => "--template-file TEMPLATE",
         :description => "Full path to location of template to use",
-        :default => false,
-        :proc => Proc.new { |t| Chef::Config[:knife][:template_file] = t }
+        :proc => Proc.new { |t| Chef::Config[:knife][:template_file] = t },
+        :default => false
 
       def h
         @highline ||= HighLine.new
@@ -130,7 +135,8 @@ class Chef
         connection = Fog::Compute.new(
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => Chef::Config[:knife][:rackspace_api_username]
+          :rackspace_username => Chef::Config[:knife][:rackspace_api_username],
+          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
         )
 
         server = connection.servers.create(
@@ -185,10 +191,10 @@ class Chef
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
         bootstrap.config[:prerelease] = config[:prerelease]
-        bootstrap.config[:distro] = Chef::Config[:knife][:distro]
+        bootstrap.config[:distro] = Chef::Config[:knife][:distro] || config[:distro]
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
         bootstrap.config[:use_sudo] = config[:use_sudo]
-        bootstrap.config[:template_file] = Chef::Config[:knife][:template_file]
+        bootstrap.config[:template_file] = Chef::Config[:knife][:template_file] || config[:template_file]
         bootstrap.config[:environment] = config[:environment]
         bootstrap
       end

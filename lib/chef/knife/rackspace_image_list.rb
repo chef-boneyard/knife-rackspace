@@ -26,6 +26,24 @@ class Chef
 
       banner "knife rackspace image list (options)"
 
+      option :rackspace_api_key,
+        :short => "-K KEY",
+        :long => "--rackspace-api-key KEY",
+        :description => "Your rackspace API key",
+        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
+
+      option :rackspace_api_username,
+        :short => "-A USERNAME",
+        :long => "--rackspace-api-username USERNAME",
+        :description => "Your rackspace API username",
+        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_api_username] = username }
+
+      option :rackspace_api_auth_url,
+        :long => "--rackspace-api-auth-url URL",
+        :description => "Your rackspace API auth url",
+        :default => "auth.api.rackspacecloud.com",
+        :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
+
       def h
         @highline ||= HighLine.new
       end
@@ -36,7 +54,8 @@ class Chef
         connection = Fog::Compute.new(
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => Chef::Config[:knife][:rackspace_api_username]
+          :rackspace_username => Chef::Config[:knife][:rackspace_api_username],
+          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
         )
 
         image_list = [ h.color('ID', :bold), h.color('Name', :bold) ]

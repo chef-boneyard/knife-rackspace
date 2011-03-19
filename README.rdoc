@@ -29,6 +29,10 @@ You also have the option of passing your Rackspace API Username/Key into the ind
     # provision a new 1GB Ubuntu 10.04 webserver
     knife rackspace server create 'role[webserver]' -i 49 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key"
 
+This plugin also has support for authenticating against an alternate API Auth URL.  This is useful if you are a Rackspace Cloud UK user or OpenStack early adopter.  Here is an example of configuring knife for Rackspace Cloud UK:
+
+    knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
+
 Additionally the following options may be set in your `knife.rb`:
 
 * flavor
