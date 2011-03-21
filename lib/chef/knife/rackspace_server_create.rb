@@ -26,7 +26,7 @@ class Chef
   class Knife
     class RackspaceServerCreate < Knife
 
-      banner "knife rackspace server create [RUN LIST...] (options)"
+      banner "knife rackspace server create (options)"
 
       option :flavor,
         :short => "-f FLAVOR",
@@ -100,6 +100,13 @@ class Chef
         :description => "Full path to location of template to use",
         :proc => Proc.new { |t| Chef::Config[:knife][:template_file] = t },
         :default => false
+
+      option :run_list,
+        :short => "-r RUN_LIST",
+        :long => "--run-list RUN_LIST",
+        :description => "Comma separated list of roles/recipes to apply",
+        :proc => lambda { |o| o.split(/[\s,]+/) },
+        :default => []
 
       def h
         @highline ||= HighLine.new
@@ -185,7 +192,7 @@ class Chef
       def bootstrap_for_node(server)
         bootstrap = Chef::Knife::Bootstrap.new
         bootstrap.name_args = [public_dns_name(server)]
-        bootstrap.config[:run_list] = @name_args
+        bootstrap.config[:run_list] = config[:run_list]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:ssh_password] = server.password
         bootstrap.config[:identity_file] = config[:identity_file]
