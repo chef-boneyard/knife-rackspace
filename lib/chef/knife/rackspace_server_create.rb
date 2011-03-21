@@ -35,7 +35,7 @@ class Chef
         :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_i }
 
       option :image,
-        :short => "-i IMAGE",
+        :short => "-I IMAGE",
         :long => "--image IMAGE",
         :description => "The image of the server",
         :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_i }
