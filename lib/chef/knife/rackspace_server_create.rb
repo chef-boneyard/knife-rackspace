@@ -69,6 +69,11 @@ class Chef
         :long => "--ssh-password PASSWORD",
         :description => "The ssh password"
 
+      option :identity_file,
+        :short => "-i IDENTITY_FILE",
+        :long => "--identity-file IDENTITY_FILE",
+        :description => "The SSH identity file used for authentication"
+      
       option :rackspace_api_key,
         :short => "-K KEY",
         :long => "--rackspace-api-key KEY",
