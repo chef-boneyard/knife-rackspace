@@ -186,7 +186,7 @@ class Chef
         puts "#{h.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
         puts "#{h.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
         puts "#{h.color("Password", :cyan)}: #{server.password}"
-        puts "#{h.color("Run List", :cyan)}: #{@name_args.join(', ')}"
+        puts "#{h.color("Run List", :cyan)}: #{config[:run_list].join(', ')}"
       end
 
       def bootstrap_for_node(server)
