@@ -26,6 +26,14 @@ class Chef
   class Knife
     class RackspaceServerCreate < Knife
 
+      deps do
+        Chef::Knife::Bootstrap.load_deps
+        require 'fog'
+        require 'highline'
+        require 'net/ssh/multi'
+        require 'readline'
+      end
+
       banner "knife rackspace server create (options)"
 
       option :flavor,
