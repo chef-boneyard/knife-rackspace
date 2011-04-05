@@ -16,13 +16,16 @@
 # limitations under the License.
 #
 
-require 'fog'
 require 'chef/knife'
-require 'chef/json_compat'
 
 class Chef
   class Knife
     class RackspaceServerList < Knife
+
+      deps do
+        require 'fog'
+        require 'chef/json_compat'
+      end
 
       banner "knife rackspace server list (options)"
 
@@ -44,16 +47,9 @@ class Chef
         :default => "auth.api.rackspacecloud.com",
         :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
 
-      def h
-        @highline ||= HighLine.new
-      end
-
       def run
-        require 'fog'
-        require 'highline'
-        require 'net/ssh/multi'
-        require 'readline'
-
+        $stdout.sync = true
+        
         connection = Fog::Compute.new(
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
@@ -61,7 +57,15 @@ class Chef
           :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
         )
 
-        server_list = [ h.color('ID', :bold), h.color('Name', :bold), h.color('Public IP', :bold), h.color('Private IP', :bold), h.color('Flavor', :bold), h.color('Image', :bold), h.color('State', :bold) ]
+        server_list = [
+          ui.color('ID', :bold),
+          ui.color('Name', :bold),
+          ui.color('Public IP', :bold),
+          ui.color('Private IP', :bold),
+          ui.color('Flavor', :bold),
+          ui.color('Image', :bold),
+          ui.color('State', :bold)
+        ]
         connection.servers.all.each do |server|
           server_list << server.id.to_s
           server_list << server.name
@@ -71,7 +75,7 @@ class Chef
           server_list << server.image.name
           server_list << server.status.downcase
         end
-        puts h.list(server_list, :columns_across, 7)
+        puts ui.list(server_list, :columns_across, 7)
 
       end
     end

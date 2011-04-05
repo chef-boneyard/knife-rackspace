@@ -16,13 +16,16 @@
 # limitations under the License.
 #
 
-require 'fog'
 require 'chef/knife'
-require 'chef/json_compat'
 
 class Chef
   class Knife
     class RackspaceFlavorList < Knife
+
+      deps do
+        require 'fog'
+        require 'chef/json_compat'
+      end
 
       banner "knife rackspace flavor list (options)"
 
@@ -44,12 +47,7 @@ class Chef
         :default => "auth.api.rackspacecloud.com",
         :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
 
-      def h
-        @highline ||= HighLine.new
-      end
-
       def run
-        require 'fog'
 
         connection = Fog::Compute.new(
           :provider => 'Rackspace',
@@ -58,7 +56,7 @@ class Chef
           :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
         )
 
-        flavor_list = [ h.color('ID', :bold), h.color('Name', :bold), h.color('Architecture', :bold), h.color('RAM', :bold), h.color('Disk', :bold) , h.color('Cores', :bold) ]
+        flavor_list = [ ui.color('ID', :bold), ui.color('Name', :bold), ui.color('Architecture', :bold), ui.color('RAM', :bold), ui.color('Disk', :bold) , ui.color('Cores', :bold) ]
         connection.flavors.sort_by(&:id).each do |flavor|
           flavor_list << flavor.id.to_s
           flavor_list << flavor.name
@@ -67,7 +65,7 @@ class Chef
           flavor_list << "#{flavor.disk.to_s} GB"
           flavor_list << flavor.cores.to_s
         end
-        puts h.list(flavor_list, :columns_across, 6)
+        puts ui.list(flavor_list, :columns_across, 6)
       end
     end
   end

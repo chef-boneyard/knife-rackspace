@@ -16,13 +16,16 @@
 # limitations under the License.
 #
 
-require 'fog'
 require 'chef/knife'
-require 'chef/json_compat'
 
 class Chef
   class Knife
     class RackspaceImageList < Knife
+
+      deps do
+        require 'fog'
+        require 'chef/json_compat'
+      end
 
       banner "knife rackspace image list (options)"
 
@@ -44,13 +47,7 @@ class Chef
         :default => "auth.api.rackspacecloud.com",
         :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
 
-      def h
-        @highline ||= HighLine.new
-      end
-
       def run
-        require 'fog'
-
         connection = Fog::Compute.new(
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
@@ -58,12 +55,12 @@ class Chef
           :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
         )
 
-        image_list = [ h.color('ID', :bold), h.color('Name', :bold) ]
+        image_list = [ ui.color('ID', :bold), ui.color('Name', :bold) ]
         connection.images.sort_by(&:name).each do |image|
           image_list << image.id.to_s
           image_list << image.name
         end
-        puts h.list(image_list, :columns_across, 2)
+        puts ui.list(image_list, :columns_across, 2)
       end
     end
   end

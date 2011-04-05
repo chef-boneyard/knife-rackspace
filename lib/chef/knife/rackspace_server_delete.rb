@@ -16,15 +16,19 @@
 # limitations under the License.
 #
 
-require 'fog'
 require 'chef/knife'
-require 'chef/json_compat'
-require 'resolv'
 
 class Chef
   class Knife
     class RackspaceServerDelete < Knife
-
+      
+      deps do
+        require 'fog'
+        require 'chef/knife'
+        require 'chef/json_compat'
+        require 'resolv'
+      end
+      
       banner "knife rackspace server delete SERVER (options)"
 
       option :rackspace_api_key,
@@ -45,10 +49,6 @@ class Chef
         :default => "auth.api.rackspacecloud.com",
         :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
 
-      def h
-        @highline ||= HighLine.new
-      end
-
       def run
         require 'fog'
         require 'highline'
@@ -64,21 +64,21 @@ class Chef
 
         server = connection.servers.get(@name_args[0])
 
-        puts "#{h.color("Instance ID", :cyan)}: #{server.id}"
-        puts "#{h.color("Host ID", :cyan)}: #{server.host_id}"
-        puts "#{h.color("Name", :cyan)}: #{server.name}"
-        puts "#{h.color("Flavor", :cyan)}: #{server.flavor.name}"
-        puts "#{h.color("Image", :cyan)}: #{server.image.name}"
-        puts "#{h.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
-        puts "#{h.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
-        puts "#{h.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
+        puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
+        puts "#{ui.color("Host ID", :cyan)}: #{server.host_id}"
+        puts "#{ui.color("Name", :cyan)}: #{server.name}"
+        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
+        puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{ui.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
+        puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
+        puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
 
         puts "\n"
         confirm("Do you really want to delete this server")
 
         server.destroy
 
-        Chef::Log.warn("Deleted server #{server.id} named #{server.name}")
+        ui.warn("Deleted server #{server.id} named #{server.name}")
       end
 
       def public_dns_name(server)
