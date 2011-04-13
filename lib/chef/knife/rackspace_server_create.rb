@@ -185,6 +185,7 @@ class Chef
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
         puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
         puts "#{ui.color("Password", :cyan)}: #{server.password}"
+        puts "#{ui.color("Environment", :cyan)}: #{config[:environment]}"
         puts "#{ui.color("Run List", :cyan)}: #{config[:run_list].join(', ')}"
       end
 
