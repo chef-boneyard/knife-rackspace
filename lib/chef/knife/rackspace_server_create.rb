@@ -90,6 +90,11 @@ class Chef
         :long => "--prerelease",
         :description => "Install the pre-release chef gems"
 
+      option :bootstrap_version,
+        :long => "--bootstrap-version VERSION",
+        :description => "The version of Chef to install",
+        :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_version] = v }
+
       option :distro,
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
@@ -135,7 +140,6 @@ class Chef
       end
 
       def run
-
         $stdout.sync = true
 
         connection = Fog::Compute.new(
@@ -198,12 +202,18 @@ class Chef
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
         bootstrap.config[:prerelease] = config[:prerelease]
-        bootstrap.config[:distro] = Chef::Config[:knife][:distro] || config[:distro]
+        bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
+        bootstrap.config[:distro] = locate_config_value(:distro)
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
         bootstrap.config[:use_sudo] = config[:use_sudo]
-        bootstrap.config[:template_file] = Chef::Config[:knife][:template_file] || config[:template_file]
+        bootstrap.config[:template_file] = locate_config_value(:template_file)
         bootstrap.config[:environment] = config[:environment]
         bootstrap
+      end
+
+      def locate_config_value(key)
+        key = key.to_sym
+        Chef::Config[:knife][key] || config[key]
       end
 
       def public_dns_name(server)
