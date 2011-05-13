@@ -132,7 +132,12 @@ class Chef
         end
       rescue Errno::ETIMEDOUT
         false
+      rescue Errno::EPERM
+        false
       rescue Errno::ECONNREFUSED
+        sleep 2
+        false
+      rescue Errno::EHOSTUNREACH
         sleep 2
         false
       ensure
