@@ -73,7 +73,7 @@ class Chef
           server_list << server.addresses["private"][0]
           server_list << server.flavor.name.split(/\s/).first
           server_list << server.image.name
-          server_list << server.status.downcase
+          server_list << server.state.downcase
         end
         puts ui.list(server_list, :columns_across, 7)
 
