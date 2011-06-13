@@ -38,8 +38,9 @@ class Chef
       option :flavor,
         :short => "-f FLAVOR",
         :long => "--flavor FLAVOR",
-        :description => "The flavor of server",
-        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_i }
+        :description => "The flavor of server; default is 2 (512 MB)",
+        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_i },
+        :default => 2
 
       option :image,
         :short => "-I IMAGE",
@@ -60,7 +61,7 @@ class Chef
       option :ssh_user,
         :short => "-x USERNAME",
         :long => "--ssh-user USERNAME",
-        :description => "The ssh username",
+        :description => "The ssh username; default is 'root'",
         :default => "root"
 
       option :ssh_password,
@@ -82,7 +83,7 @@ class Chef
 
       option :rackspace_api_auth_url,
         :long => "--rackspace-api-auth-url URL",
-        :description => "Your rackspace API auth url",
+        :description => "Your rackspace API auth url; default is 'auth.api.rackspacecloud.com'",
         :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url },
         :default => "auth.api.rackspacecloud.com"
 
@@ -98,7 +99,7 @@ class Chef
       option :distro,
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
-        :description => "Bootstrap a distro using a template",
+        :description => "Bootstrap a distro using a template; default is 'ubuntu10.04-gems'",
         :proc => Proc.new { |d| Chef::Config[:knife][:distro] = d },
         :default => "ubuntu10.04-gems"
 
@@ -151,13 +152,18 @@ class Chef
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => Chef::Config[:knife][:rackspace_api_username],
-          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+          :rackspace_auth_url => locate_config_value(:rackspace_api_auth_url)
         )
+
+        unless Chef::Config[:knife][:image]
+          ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
+          exit 1
+        end
 
         server = connection.servers.create(
           :name => config[:server_name],
           :image_id => Chef::Config[:knife][:image],
-          :flavor_id => Chef::Config[:knife][:flavor]
+          :flavor_id => locate_config_value(:flavor)
         )
 
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
