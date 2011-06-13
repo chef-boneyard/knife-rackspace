@@ -43,7 +43,7 @@ class Chef
 
       option :rackspace_api_auth_url,
         :long => "--rackspace-api-auth-url URL",
-        :description => "Your rackspace API auth url",
+        :description => "Your rackspace API auth url; default is 'auth.api.rackspacecloud.com'",
         :default => "auth.api.rackspacecloud.com",
         :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
 
@@ -69,11 +69,11 @@ class Chef
         connection.servers.all.each do |server|
           server_list << server.id.to_s
           server_list << server.name
-          server_list << server.addresses["public"][0]
-          server_list << server.addresses["private"][0]
-          server_list << server.flavor.name.split(/\s/).first
-          server_list << server.image.name
-          server_list << server.status.downcase
+          server_list << (server.public_ip_address == nil ? "" : server.public_ip_address)
+          server_list << (server.addresses["private"].first == nil ? "" : server.addresses["private"].first)
+          server_list << (server.flavor == nil ? "" : server.flavor.name.split(/\s/).first)
+          server_list << (server.image == nil ? "" : server.image.name)
+          server_list << (server.state == nil ? "" : server.state)
         end
         puts ui.list(server_list, :columns_across, 7)
 
