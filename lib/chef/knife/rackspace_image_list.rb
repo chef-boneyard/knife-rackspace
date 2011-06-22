@@ -51,7 +51,7 @@ class Chef
         connection = Fog::Compute.new(
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => Chef::Config[:knife][:rackspace_api_username],
+          :rackspace_username => Chef::Config[:knife][:rackspace_api_username] || Chef::Config[:knife][:rackspace_username],
           :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
         )
 
