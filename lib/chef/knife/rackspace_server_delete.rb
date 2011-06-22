@@ -29,7 +29,7 @@ class Chef
         require 'resolv'
       end
       
-      banner "knife rackspace server delete SERVER (options)"
+      banner "knife rackspace server delete SERVER_ID (options)"
 
       option :rackspace_api_key,
         :short => "-K KEY",
