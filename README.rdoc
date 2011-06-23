@@ -6,6 +6,10 @@ This is the official Opscode Knife plugin for Rackspace. This plugin gives knife
 
 = INSTALLATION:
 
+Be sure you are running the latest version Chef. Versions earlier than 0.10.0 don't support plugins:
+
+    gem install chef
+
 This plugin is distributed as a Ruby Gem. To install it, run:
 
     gem install knife-rackspace
