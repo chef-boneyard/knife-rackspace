@@ -54,7 +54,7 @@ Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap
 
 == knife rackspace server delete
 
-Deletes an existing server in the currently configured Rackspace Cloud account.  Please note - this does not delete the associated node and client objects from the Chef server.
+Deletes an existing server in the currently configured Rackspace Cloud accountby the server/instance id. You can find the instance id by entering 'knife backspace server list'. Please note - this does not delete the associated node and client objects from the Chef server.
 
 == knife rackspace server list
 
