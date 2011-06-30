@@ -125,7 +125,8 @@ class Chef
         :short => "-M JSON",
         :long => "--rackspace-metadata JSON",
         :description => "JSON string version of metadata hash to be supplied with the server create call",
-        :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) }
+        :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
+        :default => ""
 
       def tcp_test_ssh(hostname)
         tcp_socket = TCPSocket.new(hostname, 22)
