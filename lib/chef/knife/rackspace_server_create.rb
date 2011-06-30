@@ -126,6 +126,13 @@ class Chef
         :proc => lambda { |o| o.split(/[\s,]+/) },
         :default => []
 
+
+      option :rackspace_metadata,
+        :short => "-M JSON",
+        :long => "--rackspace-metadata JSON",
+        :description => "JSON string version of metadata hash to be supplied with the server create call",
+        :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) }
+
       def tcp_test_ssh(hostname)
         tcp_socket = TCPSocket.new(hostname, 22)
         readable = IO.select([tcp_socket], nil, nil, 5)
@@ -168,7 +175,8 @@ class Chef
         server = connection.servers.create(
           :name => config[:server_name],
           :image_id => Chef::Config[:knife][:image],
-          :flavor_id => locate_config_value(:flavor)
+          :flavor_id => Chef::Config[:knife][:flavor],
+          :metadata => Chef::Config[:knife][:rackspace_metadata]
         )
 
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
@@ -176,6 +184,7 @@ class Chef
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
         puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
         puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{ui.color("Metadata", :cyan)}: #{server.metadata}"
 
         print "\n#{ui.color("Waiting server", :magenta)}"
 
