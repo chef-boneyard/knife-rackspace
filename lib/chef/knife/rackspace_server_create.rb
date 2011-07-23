@@ -22,15 +22,15 @@ class Chef
   class Knife
     class RackspaceServerCreate < Knife
 
+      include Knife::RackspaceBase
+
       deps do
-        require 'chef/knife/bootstrap'
-        Chef::Knife::Bootstrap.load_deps
         require 'fog'
-        require 'highline'
         require 'net/ssh/multi'
         require 'readline'
-        require 'resolv'
         require 'chef/json_compat'
+        require 'chef/knife/bootstrap'
+        Chef::Knife::Bootstrap.load_deps
       end
 
       banner "knife rackspace server create (options)"
@@ -73,24 +73,6 @@ class Chef
         :short => "-i IDENTITY_FILE",
         :long => "--identity-file IDENTITY_FILE",
         :description => "The SSH identity file used for authentication"
-      
-      option :rackspace_api_key,
-        :short => "-K KEY",
-        :long => "--rackspace-api-key KEY",
-        :description => "Your rackspace API key",
-        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
-
-      option :rackspace_username,
-        :short => "-A USERNAME",
-        :long => "--rackspace-username USERNAME",
-        :description => "Your rackspace API username",
-        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
-
-      option :rackspace_api_auth_url,
-        :long => "--rackspace-api-auth-url URL",
-        :description => "Your rackspace API auth url; default is 'auth.api.rackspacecloud.com'",
-        :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url },
-        :default => "auth.api.rackspacecloud.com"
 
       option :prerelease,
         :long => "--prerelease",
@@ -108,11 +90,6 @@ class Chef
         :proc => Proc.new { |d| Chef::Config[:knife][:distro] = d },
         :default => "ubuntu10.04-gems"
 
-      option :use_sudo,
-        :long => "--sudo",
-        :description => "Execute the bootstrap via sudo",
-        :boolean => false
-
       option :template_file,
         :long => "--template-file TEMPLATE",
         :description => "Full path to location of template to use",
@@ -125,7 +102,6 @@ class Chef
         :description => "Comma separated list of roles/recipes to apply",
         :proc => lambda { |o| o.split(/[\s,]+/) },
         :default => []
-
 
       option :rackspace_metadata,
         :short => "-M JSON",
@@ -160,13 +136,6 @@ class Chef
 
       def run
         $stdout.sync = true
-
-        connection = Fog::Compute.new(
-          :provider => 'Rackspace',
-          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => locate_config_value(:rackspace_api_auth_url)
-        )
 
         unless Chef::Config[:knife][:image]
           ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
@@ -211,6 +180,7 @@ class Chef
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
         puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
         puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{ui.color("Metadata", :cyan)}: #{server.metadata}"
         puts "#{ui.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
         puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
@@ -231,24 +201,12 @@ class Chef
         bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
         bootstrap.config[:distro] = locate_config_value(:distro)
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
-        bootstrap.config[:use_sudo] = config[:use_sudo]
+        bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
         bootstrap.config[:template_file] = locate_config_value(:template_file)
         bootstrap.config[:environment] = config[:environment]
         bootstrap
       end
 
-      def locate_config_value(key)
-        key = key.to_sym
-        Chef::Config[:knife][key] || config[key]
-      end
-
-      def public_dns_name(server)
-        @public_dns_name ||= begin
-          Resolv.getname(server.addresses["public"][0])
-        rescue
-          "#{server.addresses["public"][0].gsub('.','-')}.static.cloud-ips.com"
-        end
-      end
     end
   end
 end
