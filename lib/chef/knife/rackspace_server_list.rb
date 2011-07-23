@@ -16,46 +16,18 @@
 # limitations under the License.
 #
 
-require 'chef/knife'
+require 'chef/knife/rackspace_base'
 
 class Chef
   class Knife
     class RackspaceServerList < Knife
 
-      deps do
-        require 'fog'
-        require 'chef/json_compat'
-      end
+      include Knife::RackspaceBase
 
       banner "knife rackspace server list (options)"
 
-      option :rackspace_api_key,
-        :short => "-K KEY",
-        :long => "--rackspace-api-key KEY",
-        :description => "Your rackspace API key",
-        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
-
-      option :rackspace_username,
-        :short => "-A USERNAME",
-        :long => "--rackspace-api-username USERNAME",
-        :description => "Your rackspace API username",
-        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
-
-      option :rackspace_api_auth_url,
-        :long => "--rackspace-api-auth-url URL",
-        :description => "Your rackspace API auth url; default is 'auth.api.rackspacecloud.com'",
-        :default => "auth.api.rackspacecloud.com",
-        :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
-
       def run
         $stdout.sync = true
-        
-        connection = Fog::Compute.new(
-          :provider => 'Rackspace',
-          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-        )
 
         server_list = [
           ui.color('Instance ID', :bold),
@@ -74,6 +46,16 @@ class Chef
           server_list << (server.image_id == nil ? "" : server.image_id.to_s)
           server_list << server.name
           server_list << (server.state == nil ? "" : server.state.downcase)
+          server_list << begin
+            case server.state.downcase
+            when 'deleted','suspended'
+              ui.color(server.state.downcase, :red)
+            when 'build'
+              ui.color(server.state.downcase, :yellow)
+            else
+              ui.color(server.state.downcase, :green)
+            end
+          end
         end
         puts ui.list(server_list, :columns_across, 7)
 

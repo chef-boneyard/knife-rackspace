@@ -16,76 +16,41 @@
 # limitations under the License.
 #
 
-require 'chef/knife'
+require 'chef/knife/rackspace_base'
 
 class Chef
   class Knife
     class RackspaceServerDelete < Knife
-      
-      deps do
-        require 'fog'
-        require 'chef/knife'
-        require 'chef/json_compat'
-        require 'resolv'
-      end
-      
-      banner "knife rackspace server delete SERVER_ID (options)"
 
-      option :rackspace_api_key,
-        :short => "-K KEY",
-        :long => "--rackspace-api-key KEY",
-        :description => "Your rackspace API key",
-        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
+      include Knife::RackspaceBase
 
-      option :rackspace_username,
-        :short => "-A USERNAME",
-        :long => "--rackspace-username USERNAME",
-        :description => "Your rackspace API username",
-        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
-
-      option :rackspace_api_auth_url,
-        :long => "--rackspace-api-auth-url URL",
-        :description => "Your rackspace API auth url",
-        :default => "auth.api.rackspacecloud.com",
-        :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
+      banner "knife rackspace server delete SERVER_ID [SERVER_ID] (options)"
 
       def run
-        require 'fog'
-        require 'highline'
-        require 'net/ssh/multi'
-        require 'readline'
+        @name_args.each do |instance_id|
+          
+          server = connection.servers.get(instance_id)
 
-        connection = Fog::Compute.new(
-          :provider => 'Rackspace',
-          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-        )
+          msg("Instance ID", server.id)
+          msg("Host ID", server.host_id)
+          msg("Name", server.name)
+          msg("Flavor", server.flavor.name)
+          msg("Image", server.image.name)
+          msg("Public DNS Name", server.addresses["public"][0])
+          msg("Private IP Address", server.addresses["private"][0])
 
-        server = connection.servers.get(@name_args[0])
+          puts "\n"
+          confirm("Do you really want to delete this server")
 
-        puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
-        puts "#{ui.color("Host ID", :cyan)}: #{server.host_id}"
-        puts "#{ui.color("Name", :cyan)}: #{server.name}"
-        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
-        puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
-        puts "#{ui.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
-        puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
-        puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
+          server.destroy
 
-        puts "\n"
-        confirm("Do you really want to delete this server")
-
-        server.destroy
-
-        ui.warn("Deleted server #{server.id} named #{server.name}")
+          ui.warn("Deleted server #{server.id} named #{server.name}")
+        end
       end
 
-      def public_dns_name(server)
-        @public_dns_name ||= begin
-          Resolv.getname(server.addresses["public"][0])
-        rescue
-          "#{server.addresses["public"][0].gsub('.','-')}.static.cloud-ips.com"
+      def msg(label, value)
+        if value && !value.empty?
+          puts "#{ui.color(label, :cyan)}: #{value}"
         end
       end
     end

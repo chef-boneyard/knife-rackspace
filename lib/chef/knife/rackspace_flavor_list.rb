@@ -16,47 +16,25 @@
 # limitations under the License.
 #
 
-require 'chef/knife'
+require 'chef/knife/rackspace_base'
 
 class Chef
   class Knife
     class RackspaceFlavorList < Knife
 
-      deps do
-        require 'fog'
-        require 'chef/json_compat'
-      end
+      include Knife::RackspaceBase
 
       banner "knife rackspace flavor list (options)"
 
-      option :rackspace_api_key,
-        :short => "-K KEY",
-        :long => "--rackspace-api-key KEY",
-        :description => "Your rackspace API key",
-        :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
-
-      option :rackspace_username,
-        :short => "-A USERNAME",
-        :long => "--rackspace-username USERNAME",
-        :description => "Your rackspace API username",
-        :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
-
-      option :rackspace_api_auth_url,
-        :long => "--rackspace-api-auth-url URL",
-        :description => "Your rackspace API auth url",
-        :default => "auth.api.rackspacecloud.com",
-        :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
-
       def run
-
-        connection = Fog::Compute.new(
-          :provider => 'Rackspace',
-          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-        )
-
-        flavor_list = [ ui.color('ID', :bold), ui.color('Name', :bold), ui.color('Architecture', :bold), ui.color('RAM', :bold), ui.color('Disk', :bold) , ui.color('Cores', :bold) ]
+        flavor_list = [ 
+          ui.color('ID', :bold),
+          ui.color('Name', :bold),
+          ui.color('Architecture', :bold),
+          ui.color('RAM', :bold),
+          ui.color('Disk', :bold),
+          ui.color('Cores', :bold)
+        ]
         connection.flavors.sort_by(&:id).each do |flavor|
           flavor_list << flavor.id.to_s
           flavor_list << flavor.name
