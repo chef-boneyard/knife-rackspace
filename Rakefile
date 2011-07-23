@@ -17,52 +17,5 @@
 # limitations under the License.
 #
 
-require 'rubygems'
-require 'rake/gempackagetask'
-require 'rake/rdoctask'
-
-GEM_NAME = "knife-rackspace"
-
-spec = eval(File.read("knife-rackspace.gemspec"))
-
-Rake::GemPackageTask.new(spec) do |pkg|
-  pkg.gem_spec = spec
-end
-
-begin
-  require 'sdoc'
-
-  Rake::RDocTask.new do |rdoc|
-    rdoc.title = "Chef Ruby API Documentation"
-    rdoc.main = "README.rdoc"
-    rdoc.options << '--fmt' << 'shtml' # explictly set shtml generator
-    rdoc.template = 'direct' # lighter template
-    rdoc.rdoc_files.include("README.rdoc", "LICENSE", "spec/tiny_server.rb", "lib/**/*.rb")
-    rdoc.rdoc_dir = "rdoc"
-  end
-rescue LoadError
-  puts "sdoc is not available. (sudo) gem install sdoc to generate rdoc documentation."
-end
-
-task :install => :package do
-  sh %{gem install pkg/#{GEM_NAME}-#{KnifeRackspace::VERSION} --no-rdoc --no-ri}
-end
-
-task :uninstall do
-  sh %{gem uninstall #{GEM_NAME} -x -v #{KnifeRackspace::VERSION} }
-end
-
-begin
-  require 'rspec/core/rake_task'
-
-  task :default => :spec
-
-  desc "Run all specs in spec directory"
-  RSpec::Core::RakeTask.new(:spec) do |t|
-    t.pattern = 'spec/unit/**/*_spec.rb'
-  end
-
-rescue LoadError
-  STDERR.puts "\n*** RSpec not available. (sudo) gem install rspec to run unit tests. ***\n\n"
-end
-
+require 'bundler'
+Bundler::GemHelper.install_tasks

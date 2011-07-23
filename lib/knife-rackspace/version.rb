@@ -1,3 +1,6 @@
-module KnifeRackspace
-  VERSION = "0.5.6"
+module Knife
+  module Rackspace
+    VERSION = "0.5.6"
+    MAJOR, MINOR, TINY = VERSION.split('.')
+  end
 end
