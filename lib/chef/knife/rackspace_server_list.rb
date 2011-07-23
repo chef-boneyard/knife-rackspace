@@ -45,7 +45,6 @@ class Chef
           server_list << (server.flavor_id == nil ? "" : server.flavor_id.to_s)
           server_list << (server.image_id == nil ? "" : server.image_id.to_s)
           server_list << server.name
-          server_list << (server.state == nil ? "" : server.state.downcase)
           server_list << begin
             case server.state.downcase
             when 'deleted','suspended'
