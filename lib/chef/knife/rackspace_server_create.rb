@@ -176,7 +176,7 @@ class Chef
         server = connection.servers.create(
           :name => config[:server_name],
           :image_id => Chef::Config[:knife][:image],
-          :flavor_id => Chef::Config[:knife][:flavor],
+          :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata]
         )
 
