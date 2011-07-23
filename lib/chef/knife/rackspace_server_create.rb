@@ -180,6 +180,7 @@ class Chef
         puts "#{ui.color("Name", :cyan)}: #{server.name}"
         puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
         puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
+        puts "#{ui.color("Metadata", :cyan)}: #{server.metadata}"
         puts "#{ui.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
         puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
         puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
