@@ -31,7 +31,7 @@ class Chef
           
           server = connection.servers.get(instance_id)
 
-          msg("Instance ID", server.id)
+          msg("Instance ID", server.id.to_s)
           msg("Host ID", server.host_id)
           msg("Name", server.name)
           msg("Flavor", server.flavor.name)
