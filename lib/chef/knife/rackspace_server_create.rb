@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-require 'chef/knife'
+require 'chef/knife/rackspace_base'
 
 class Chef
   class Knife
