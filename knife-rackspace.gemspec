@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.add_dependency "fog", "~> 0.8.2"
   s.add_dependency "net-ssh", "~> 2.1.3"
-  s.add_dependency "net-ssh-multi", "~> 1.0.1"
+  s.add_dependency "net-ssh-multi", "~> 1.1.0"
   s.require_paths = ["lib"]
 
 end
