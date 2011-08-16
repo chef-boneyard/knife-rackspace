@@ -8,4 +8,5 @@ group :development do
   gem 'yard'
 end
 
+gem 'chef'
 gem 'fog', '>= 0.8.2'
