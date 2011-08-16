@@ -1,8 +1,7 @@
 source "http://rubygems.org"
 
-gem 'knife-rackspace', :path => '.'
-
 group :development do
+	gem 'knife-rackspace', :path => '.'
   gem 'jeweler'
   gem 'rspec'
   gem 'yard'

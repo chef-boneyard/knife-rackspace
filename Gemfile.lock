@@ -2,8 +2,8 @@ PATH
   remote: .
   specs:
     knife-rackspace (0.5.12)
+      chef
       fog (>= 0.8.2)
-      knife-rackspace
 
 GEM
   remote: http://rubygems.org/
