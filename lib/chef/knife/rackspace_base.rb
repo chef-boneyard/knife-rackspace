@@ -75,7 +75,7 @@ class Chef
         @public_dns_name ||= begin
           Resolv.getname(server.addresses["public"][0])
         rescue
-          "#{server.addresses["public"][0]"
+          "#{server.addresses["public"][0]}"
         end
       end
     end
