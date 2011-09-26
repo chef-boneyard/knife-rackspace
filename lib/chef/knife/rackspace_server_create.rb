@@ -116,6 +116,13 @@ class Chef
 	    :proc => Proc.new { |n| Chef::Config[:knife][:ssh_network] = n },
 	    :default => "public"
 
+      option :adtl_runlist,
+        :short => "-z RUN_LIST",
+        :long => "--adtl-runlist RUN_LIST",
+        :description => "Comma separated list of roles/recipes to apply",
+        :proc => lambda { |o| o.split(/[\s,]+/) },
+        :default => []
+
       def tcp_test_ssh(hostname)
         tcp_socket = TCPSocket.new(hostname, 22)
         readable = IO.select([tcp_socket], nil, nil, 5)
@@ -182,8 +189,10 @@ class Chef
            print(".") until tcp_test_ssh(server.addresses["public"][0]) { sleep @initial_sleep_delay ||= 10; puts("done") }
         end
 
-        bootstrap_for_node(server).run
-
+        bootstrap_for_node(server,1).run
+        sleep(15)
+        bootstrap_for_node(server,2).run
+        
         puts "\n"
         puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
         puts "#{ui.color("Host ID", :cyan)}: #{server.host_id}"
@@ -197,9 +206,10 @@ class Chef
         puts "#{ui.color("Password", :cyan)}: #{server.password}"
         puts "#{ui.color("Environment", :cyan)}: #{config[:environment] || '_default'}"
         puts "#{ui.color("Run List", :cyan)}: #{config[:run_list].join(', ')}"
+        puts "#{ui.color("Adtl Run List", :cyan)}: #{config[:adtl_runlist].join(', ')}"
       end
 
-      def bootstrap_for_node(server)
+      def bootstrap_for_node(server,iter)
         bootstrap = Chef::Knife::Bootstrap.new
         
         if Chef::Config[:knife][:ssh_network] == "private"  
@@ -207,7 +217,11 @@ class Chef
         else
             bootstrap.name_args = [public_dns_name(server)]
         end
-        bootstrap.config[:run_list] = config[:run_list]
+        if iter == "1"
+            bootstrap.config[:run_list] = config[:run_list]
+        else
+            bootstrap.config[:run_list] = config[:adtl_runlist]
+        end
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:ssh_password] = server.password
         bootstrap.config[:identity_file] = config[:identity_file]
