@@ -1,6 +1,6 @@
 #
 # Author:: Seth Chisamore (<schisamo@opscode.com>)
-# Copyright:: Copyright (c) 2011 Opscode, Inc.
+# Copyright:: Copyright (c) 2011-2012 Opscode, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,12 +27,12 @@ class Chef
       banner "knife rackspace flavor list (options)"
 
       def run
-        flavor_list = [ 
+        flavor_list = [
           ui.color('ID', :bold),
           ui.color('Name', :bold),
           ui.color('Architecture', :bold),
           ui.color('RAM', :bold),
-          ui.color('Disk', :bold),
+          ui.color('Disk', :bold)
         ]
         connection.flavors.sort_by(&:id).each do |flavor|
           flavor_list << flavor.id.to_s
