@@ -1,6 +1,6 @@
 #
 # Author:: Seth Chisamore (<schisamo@opscode.com>)
-# Copyright:: Copyright (c) 2011 Opscode, Inc.
+# Copyright:: Copyright (c) 2011-2012 Opscode, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,13 +27,12 @@ class Chef
       banner "knife rackspace flavor list (options)"
 
       def run
-        flavor_list = [ 
+        flavor_list = [
           ui.color('ID', :bold),
           ui.color('Name', :bold),
           ui.color('Architecture', :bold),
           ui.color('RAM', :bold),
-          ui.color('Disk', :bold),
-          ui.color('Cores', :bold)
+          ui.color('Disk', :bold)
         ]
         connection.flavors.sort_by(&:id).each do |flavor|
           flavor_list << flavor.id.to_s
@@ -41,9 +40,8 @@ class Chef
           flavor_list << "#{flavor.bits.to_s}-bit"
           flavor_list << "#{flavor.ram.to_s}"
           flavor_list << "#{flavor.disk.to_s} GB"
-          flavor_list << flavor.cores.to_s
         end
-        puts ui.list(flavor_list, :columns_across, 6)
+        puts ui.list(flavor_list, :columns_across, 5)
       end
     end
   end
