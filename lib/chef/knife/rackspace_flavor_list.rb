@@ -41,7 +41,7 @@ class Chef
           flavor_list << "#{flavor.ram.to_s}"
           flavor_list << "#{flavor.disk.to_s} GB"
         end
-        puts ui.list(flavor_list, :columns_across, 5)
+        puts ui.list(flavor_list, :uneven_columns_across, 5)
       end
     end
   end
