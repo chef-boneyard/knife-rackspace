@@ -71,6 +71,12 @@ class Chef
         Chef::Config[:knife][key] || config[key]
       end
 
+      def private_ip_addr(server)
+        @private_ip_addr ||= begin
+          server.addresses["private"][0]
+        end	  
+      end
+	  
       def public_dns_name(server)
         @public_dns_name ||= begin
           Resolv.getname(server.addresses["public"][0])
@@ -81,5 +87,3 @@ class Chef
     end
   end
 end
-
-
