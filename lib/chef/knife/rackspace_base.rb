@@ -29,6 +29,7 @@ class Chef
         includer.class_eval do
 
           deps do
+            gem 'fog', '0.8.2'
             require 'fog'
             require 'net/ssh/multi'
             require 'readline'
