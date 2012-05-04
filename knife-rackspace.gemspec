@@ -16,7 +16,12 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.add_dependency "fog", "~> 0.8.2"
+
+  # hard fog dependency removed as this interferes with
+  # using a custom (less ancient) fog version in knife plugins.
+  # instead fog is now dynamically required in rackspace_base.rb.
+
+  #s.add_dependency "fog", "~> 0.8.2"
   s.add_dependency "chef", "~> 0.10"
   s.require_paths = ["lib"]
 
