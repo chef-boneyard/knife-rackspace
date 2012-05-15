@@ -1,4 +1,4 @@
-## v0.2.0
+## v0.5.14
 * KNIFE_RACKSPACE-25 version bump to match knife-ec2's dependencies
 * KNIFE_RACKSPACE-33 chef-full is new default
 * updated authors
