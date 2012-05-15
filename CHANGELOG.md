@@ -8,6 +8,8 @@
 * updated for rackspace_api_username and the correct current image number for Ubuntu 10.04 LTS
 * KNIFE-RACKSPACE-26 fog doesn't provide cores enumeration anymore
 * updated copyright and removed trailing comma
+* KNIFE_RACKSPACE-30 Make use of --json-attributes option for knife
+  bootstrap.
 
 ## v0.5.12
 * remove dependency on net-ssh and net-ssh-multi..neither is access directly in plugin
