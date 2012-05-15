@@ -6,8 +6,8 @@
 * KNIFE_RACKSPACE-31 chef dependency needed, add explicit gem deps
 * KNIFE_RACKSPACE-7 switch to uneven_columns_across for prettier output
 * updated for rackspace_api_username and the correct current image number for Ubuntu 10.04 LTS
-* KNIFE-RACKSPACE-26 updated copyright and removed trailing comma
-07cb71c fog doesn't provide cores enumeration anymore
+* KNIFE-RACKSPACE-26 fog doesn't provide cores enumeration anymore
+* updated copyright and removed trailing comma
 
 ## v0.5.12
 * remove dependency on net-ssh and net-ssh-multi..neither is access directly in plugin
