@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.name        = "knife-rackspace"
   s.version     = Knife::Rackspace::VERSION
   s.has_rdoc = true
-  s.authors     = ["Adam Jacob","Seth Chisamore"]
-  s.email       = ["adam@opscode.com","schisamo@opscode.com"]
+  s.authors     = ["Adam Jacob","Seth Chisamore", "Matt Ray"]
+  s.email       = ["adam@opscode.com","schisamo@opscode.com", "matt@opscode.com"]
   s.homepage = "http://wiki.opscode.com/display/chef"
   s.summary = "Rackspace Support for Chef's Knife Command"
   s.description = s.summary
