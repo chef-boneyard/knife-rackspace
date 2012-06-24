@@ -68,7 +68,9 @@ class Chef
 
       def locate_config_value(key)
         key = key.to_sym
-        Chef::Config[:knife][key] || config[key]
+        config[key]
+        # We used to look here first, but that doesn't let us over-ride on the command line what is in the file
+        # Chef::Config[:knife][key]
       end
 
       def public_dns_name(server)
