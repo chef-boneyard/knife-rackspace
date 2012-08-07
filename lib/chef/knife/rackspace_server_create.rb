@@ -182,14 +182,14 @@ class Chef
         puts("\n")
 
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", server.addresses['public'][0])
-        msg_pair("Private IP Address", server.addresses['private'][0])
+        msg_pair("Public IP Address", public_ip(server))
+        msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
 
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
         #which IP address to bootstrap
-        bootstrap_ip_address = public_ip(server) 
+        bootstrap_ip_address = public_ip(server)
         if config[:private_network]
           bootstrap_ip_address = private_ip(server)
         end
@@ -203,7 +203,6 @@ class Chef
           sleep @initial_sleep_delay ||= 10
           puts("done")
         }
-
         bootstrap_for_node(server, bootstrap_ip_address).run
 
         puts "\n"
