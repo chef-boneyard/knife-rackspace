@@ -47,6 +47,12 @@ class Chef
             :description => "Your rackspace API username",
             :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
 
+          option :rackspace_version,
+            :long => '--rackspace-version VERSION',
+            :description => 'Rackspace Cloud Servers API version',
+            :default => "v1",
+            :proc => Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
+
           option :rackspace_api_auth_url,
             :long => "--rackspace-api-auth-url URL",
             :description => "Your rackspace API auth url",
@@ -59,6 +65,7 @@ class Chef
         @connection ||= begin
           connection = Fog::Compute.new(
             :provider => 'Rackspace',
+            :version => Chef::Config[:knife][:rackspace_version],
             :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
             :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
             :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
