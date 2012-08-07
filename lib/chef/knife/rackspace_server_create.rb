@@ -45,7 +45,7 @@ class Chef
         :short => "-I IMAGE",
         :long => "--image IMAGE",
         :description => "The image of the server",
-        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_i }
+        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
 
       option :server_name,
         :short => "-S NAME",
@@ -214,8 +214,8 @@ class Chef
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", server.addresses["public"][0])
-        msg_pair("Private IP Address", server.addresses["private"][0])
+        msg_pair("Public IP Address", public_ip(server))
+        msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
