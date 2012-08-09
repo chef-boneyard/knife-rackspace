@@ -84,12 +84,64 @@ class Chef
         end
       end
 
-      def public_dns_name(server)
-        @public_dns_name ||= begin
-          Resolv.getname(server.addresses["public"][0])
-        rescue
-          "#{server.addresses["public"][0].gsub('.','-')}.static.cloud-ips.com"
+      def public_ip(server)
+        if version_one?
+          v1_public_ip(server)
+        else
+          v2_public_ip(server)
         end
+      end
+
+      def private_ip(server)
+        if version_one?
+          v1_private_ip(server)
+        else
+          v2_private_ip(server)
+        end
+      end
+
+      def public_dns_name(server)
+        ip_address = public_ip(server)
+
+        @public_dns_name ||= begin
+          Resolv.getname(ip_address)
+        rescue
+          "#{ip_address.gsub('.','-')}.static.cloud-ips.com"
+        end
+      end
+
+      private
+
+      def version_one?
+        rackspace_api_version == 'v1'
+      end
+
+      def rackspace_api_version
+        version = Chef::Config[:knife][:rackspace_version] || 'v1'
+        version.downcase
+      end
+
+      def v1_public_ip(server)
+          server.public_ip_address == nil ? "" : server.public_ip_address
+      end
+
+      def v1_private_ip(server)
+        server.addresses["private"].first == nil ? "" : server.addresses["private"].first
+      end
+
+      def v2_public_ip(server)
+        public_ips = server.addresses["public"]
+        extract_ipv4_address(public_ips)
+      end
+
+      def v2_private_ip(server)
+        private_ips = server.addresses["private"]
+        extract_ipv4_address(private_ips)
+      end
+
+      def extract_ipv4_address(ip_addresses)
+        address = ip_addresses.select { |ip| ip["version"] == 4 }.first
+        address ? address["addr"] : ""
       end
     end
   end
