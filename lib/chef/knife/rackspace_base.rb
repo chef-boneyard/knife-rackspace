@@ -58,6 +58,12 @@ class Chef
             :description => "Your rackspace API auth url",
             :default => "auth.api.rackspacecloud.com",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
+
+          option :rackspace_endpoint,
+            :long => "--rackspace-endpoint URL",
+            :description => "Your rackspace API endpoint",
+            :default => "https://dfw.servers.api.rackspacecloud.com/v2",
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
         end
       end
 
@@ -68,7 +74,8 @@ class Chef
             :version => Chef::Config[:knife][:rackspace_version],
             :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
             :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-            :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+            :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url],
+            :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
           )
         end
       end
