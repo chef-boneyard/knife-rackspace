@@ -37,6 +37,15 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
     knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
 
+This plugin also has support for specifying which region to create servers into:
+
+    knife[:rackspace_endpoint] = "https://dfw.servers.api.rackspacecloud.com/v2"
+
+valid options include:
+      DFW_ENDPOINT = 'https://dfw.servers.api.rackspacecloud.com/v2'
+      ORD_ENDPOINT = 'https://ord.servers.api.rackspacecloud.com/v2'
+      LON_ENDPOINT = 'https://lon.servers.api.rackspacecloud.com/v2'
+
 Additionally the following options may be set in your `knife.rb`:
 
 * flavor
