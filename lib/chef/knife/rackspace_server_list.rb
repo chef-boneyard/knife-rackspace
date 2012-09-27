@@ -49,7 +49,7 @@ class Chef
             case server.state.downcase
             when 'deleted','suspended'
               ui.color(server.state.downcase, :red)
-            when 'build'
+            when 'build','unknown'
               ui.color(server.state.downcase, :yellow)
             else
               ui.color(server.state.downcase, :green)
