@@ -71,6 +71,12 @@ class Chef
         Chef::Config[:knife][key] || config[key]
       end
 
+      def msg_pair(label, value, color=:cyan)
+        if value && !value.to_s.empty?
+          puts "#{ui.color(label, color)}: #{value}"
+        end
+      end
+
       def public_dns_name(server)
         @public_dns_name ||= begin
           Resolv.getname(server.addresses["public"][0])

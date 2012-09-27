@@ -1,3 +1,7 @@
+## v0.5.16
+* KNIFE_RACKSPACE-36 Changed to code to use IP address for bootstrapping
+* KNIFE_RACKSPACE-38 Support the -P --purge option
+
 ## v0.5.14
 * KNIFE_RACKSPACE-25 version bump to match knife-ec2's dependencies
 * KNIFE_RACKSPACE-33 chef-full is new default
