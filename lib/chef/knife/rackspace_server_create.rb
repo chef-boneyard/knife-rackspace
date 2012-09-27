@@ -57,6 +57,12 @@ class Chef
         :long => "--node-name NAME",
         :description => "The Chef node name for your new node"
 
+      option :private_network,
+        :long => "--private-network",
+        :description => "Use the private IP for bootstrapping rather than the public IP",
+        :boolean => true,
+        :default => false
+
       option :ssh_user,
         :short => "-x USERNAME",
         :long => "--ssh-user USERNAME",
@@ -101,7 +107,7 @@ class Chef
         :description => "Comma separated list of roles/recipes to apply",
         :proc => lambda { |o| o.split(/[\s,]+/) },
         :default => []
-        
+
       option :first_boot_attributes,
         :short => "-j JSON_ATTRIBS",
         :long => "--json-attributes",
@@ -155,12 +161,12 @@ class Chef
           :metadata => Chef::Config[:knife][:rackspace_metadata]
         )
 
-        puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
-        puts "#{ui.color("Host ID", :cyan)}: #{server.host_id}"
-        puts "#{ui.color("Name", :cyan)}: #{server.name}"
-        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
-        puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
-        puts "#{ui.color("Metadata", :cyan)}: #{server.metadata}"
+        msg_pair("Instance ID", server.id)
+        msg_pair("Host ID", server.host_id)
+        msg_pair("Name", server.name)
+        msg_pair("Flavor", server.flavor.name)
+        msg_pair("Image", server.image.name)
+        msg_pair("Metadata", server.metadata)
 
         print "\n#{ui.color("Waiting server", :magenta)}"
 
@@ -169,35 +175,49 @@ class Chef
 
         puts("\n")
 
-        puts "#{ui.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
-        puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
-        puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
-        puts "#{ui.color("Password", :cyan)}: #{server.password}"
+        msg_pair("Public DNS Name", public_dns_name(server))
+        msg_pair("Public IP Address", server.addresses['public'][0])
+        msg_pair("Private IP Address", server.addresses['private'][0])
+        msg_pair("Password", server.password)
 
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
-        print(".") until tcp_test_ssh(server.addresses["public"][0]) { sleep @initial_sleep_delay ||= 10; puts("done") }
+        #which IP address to bootstrap
+        bootstrap_ip_address = server.addresses['public'][0] if server.public_ip_address
+        if config[:private_network]
+          bootstrap_ip_address = server.addresses['private'][0]
+        end
+        Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
+        if bootstrap_ip_address.nil?
+          ui.error("No IP address available for bootstrapping.")
+          exit 1
+        end
 
-        bootstrap_for_node(server).run
+        print(".") until tcp_test_ssh(bootstrap_ip_address) {
+          sleep @initial_sleep_delay ||= 10
+          puts("done")
+        }
+
+        bootstrap_for_node(server, bootstrap_ip_address).run
 
         puts "\n"
-        puts "#{ui.color("Instance ID", :cyan)}: #{server.id}"
-        puts "#{ui.color("Host ID", :cyan)}: #{server.host_id}"
-        puts "#{ui.color("Name", :cyan)}: #{server.name}"
-        puts "#{ui.color("Flavor", :cyan)}: #{server.flavor.name}"
-        puts "#{ui.color("Image", :cyan)}: #{server.image.name}"
-        puts "#{ui.color("Metadata", :cyan)}: #{server.metadata}"
-        puts "#{ui.color("Public DNS Name", :cyan)}: #{public_dns_name(server)}"
-        puts "#{ui.color("Public IP Address", :cyan)}: #{server.addresses["public"][0]}"
-        puts "#{ui.color("Private IP Address", :cyan)}: #{server.addresses["private"][0]}"
-        puts "#{ui.color("Password", :cyan)}: #{server.password}"
-        puts "#{ui.color("Environment", :cyan)}: #{config[:environment] || '_default'}"
-        puts "#{ui.color("Run List", :cyan)}: #{config[:run_list].join(', ')}"
+        msg_pair("Instance ID", server.id)
+        msg_pair("Host ID", server.host_id)
+        msg_pair("Name", server.name)
+        msg_pair("Flavor", server.flavor.name)
+        msg_pair("Image", server.image.name)
+        msg_pair("Metadata", server.metadata)
+        msg_pair("Public DNS Name", public_dns_name(server))
+        msg_pair("Public IP Address", server.addresses["public"][0])
+        msg_pair("Private IP Address", server.addresses["private"][0])
+        msg_pair("Password", server.password)
+        msg_pair("Environment", config[:environment] || '_default')
+        msg_pair("Run List", config[:run_list].join(', '))
       end
 
-      def bootstrap_for_node(server)
+      def bootstrap_for_node(server, bootstrap_ip_address)
         bootstrap = Chef::Knife::Bootstrap.new
-        bootstrap.name_args = server.addresses["public"][0]
+        bootstrap.name_args = [bootstrap_ip_address]
         bootstrap.config[:run_list] = config[:run_list]
         bootstrap.config[:first_boot_attributes] = config[:first_boot_attributes]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
