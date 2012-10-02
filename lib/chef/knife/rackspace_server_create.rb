@@ -189,9 +189,9 @@ class Chef
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
         #which IP address to bootstrap
-        bootstrap_ip_address = server.addresses['public'][0] if server.public_ip_address
+        bootstrap_ip_address = public_ip(server) 
         if config[:private_network]
-          bootstrap_ip_address = server.addresses['private'][0]
+          bootstrap_ip_address = private_ip(server)
         end
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
