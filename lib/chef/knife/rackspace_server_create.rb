@@ -45,7 +45,7 @@ class Chef
         :short => "-I IMAGE",
         :long => "--image IMAGE",
         :description => "The image of the server",
-        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_i }
+        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
 
       option :server_name,
         :short => "-S NAME",
@@ -182,16 +182,16 @@ class Chef
         puts("\n")
 
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", server.addresses['public'][0])
-        msg_pair("Private IP Address", server.addresses['private'][0])
+        msg_pair("Public IP Address", public_ip(server))
+        msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
 
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
         #which IP address to bootstrap
-        bootstrap_ip_address = server.addresses['public'][0] if server.public_ip_address
+        bootstrap_ip_address = public_ip(server)
         if config[:private_network]
-          bootstrap_ip_address = server.addresses['private'][0]
+          bootstrap_ip_address = private_ip(server)
         end
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
@@ -203,7 +203,6 @@ class Chef
           sleep @initial_sleep_delay ||= 10
           puts("done")
         }
-
         bootstrap_for_node(server, bootstrap_ip_address).run
 
         puts "\n"
@@ -214,8 +213,8 @@ class Chef
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", server.addresses["public"][0])
-        msg_pair("Private IP Address", server.addresses["private"][0])
+        msg_pair("Public IP Address", public_ip(server))
+        msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
