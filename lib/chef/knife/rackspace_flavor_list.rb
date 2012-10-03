@@ -35,9 +35,13 @@ class Chef
           ui.color('Disk', :bold)
         ]
         connection.flavors.sort_by(&:id).each do |flavor|
+
+          flavor = connection.flavors.get(flavor.id)
+          bits = flavor.respond_to?(:bits) ? "#{flavor.bits.to_s}-bit" : ""
+
           flavor_list << flavor.id.to_s
           flavor_list << flavor.name
-          flavor_list << "#{flavor.bits.to_s}-bit"
+          flavor_list << bits
           flavor_list << "#{flavor.ram.to_s}"
           flavor_list << "#{flavor.disk.to_s} GB"
         end

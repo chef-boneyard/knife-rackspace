@@ -37,6 +37,15 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
     knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
 
+This plugin also has support for specifying which region to create servers into:
+
+    knife[:rackspace_endpoint] = "https://dfw.servers.api.rackspacecloud.com/v2"
+
+valid options include:
+      DFW_ENDPOINT = 'https://dfw.servers.api.rackspacecloud.com/v2'
+      ORD_ENDPOINT = 'https://ord.servers.api.rackspacecloud.com/v2'
+      LON_ENDPOINT = 'https://lon.servers.api.rackspacecloud.com/v2'
+
 Additionally the following options may be set in your `knife.rb`:
 
 * flavor
@@ -54,7 +63,7 @@ Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap
 
 == knife rackspace server delete
 
-Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering 'knife rackspace server list'. Please note - this does not delete the associated node and client objects from the Chef server.
+Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering 'knife rackspace server list'. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option.
 
 == knife rackspace server list
 
@@ -73,6 +82,7 @@ Outputs a list of all available images available to the currently configured Rac
 
 Author:: Adam Jacob (<adam@opscode.com>)
 Author:: Seth Chisamore (<schisamo@opscode.com>)
+Author:: Matt Ray (<matt@opscode.com>)
 Copyright:: Copyright (c) 2009-2012 Opscode, Inc.
 License:: Apache License, Version 2.0
 

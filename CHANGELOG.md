@@ -1,3 +1,11 @@
+## v0.5.16
+* KNIFE_RACKSPACE-36 Changed to code to use IP address for bootstrapping
+* KNIFE_RACKSPACE-38 Support the -P --purge option
+* Refactored to use msg_pair method like other knife plugins with eye on eventual base class.
+* KNIFE_RACKSPACE-29 Support private network to connect to for bootstrap
+* KNIFE_RACKSPACE-40 Support for disabling host key checking
+* Added the 'unknown' state to `rackspace server list`, appeared transitory
+
 ## v0.5.14
 * KNIFE_RACKSPACE-25 version bump to match knife-ec2's dependencies
 * KNIFE_RACKSPACE-33 chef-full is new default

@@ -39,9 +39,10 @@ class Chef
           ui.color('State', :bold)
         ]
         connection.servers.all.each do |server|
+          server = connection.servers.get(server.id)
           server_list << server.id.to_s
-          server_list << (server.public_ip_address == nil ? "" : server.public_ip_address)
-          server_list << (server.addresses["private"].first == nil ? "" : server.addresses["private"].first)
+          server_list << public_ip(server)
+          server_list << private_ip(server)
           server_list << (server.flavor_id == nil ? "" : server.flavor_id.to_s)
           server_list << (server.image_id == nil ? "" : server.image_id.to_s)
           server_list << server.name
@@ -49,7 +50,7 @@ class Chef
             case server.state.downcase
             when 'deleted','suspended'
               ui.color(server.state.downcase, :red)
-            when 'build'
+            when 'build','unknown'
               ui.color(server.state.downcase, :yellow)
             else
               ui.color(server.state.downcase, :green)
@@ -57,7 +58,6 @@ class Chef
           end
         end
         puts ui.list(server_list, :uneven_columns_across, 7)
-
       end
     end
   end
