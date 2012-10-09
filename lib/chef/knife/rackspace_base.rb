@@ -52,6 +52,12 @@ class Chef
             :description => "Your rackspace API auth url",
             :default => "auth.api.rackspacecloud.com",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
+
+          option :rackspace_api_public_dns_root_url,
+            :long => "--rackspace_api_public_dns_root_url URL",
+            :description => "Your rackspace API public DNS root url",
+            :default => "static.cloud-ips.com",
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_public_dns_root_url] = url }
         end
       end
 
@@ -81,7 +87,7 @@ class Chef
         @public_dns_name ||= begin
           Resolv.getname(server.addresses["public"][0])
         rescue
-          "#{server.addresses["public"][0].gsub('.','-')}.static.cloud-ips.com"
+          "#{server.addresses["public"][0].gsub('.','-')}.#{Chef::Config[:knife][:rackspace_api_public_dns_root_url] || config[:rackspace_api_public_dns_root_url]}"
         end
       end
     end

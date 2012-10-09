@@ -37,6 +37,10 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
     knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
 
+Secondly if the default root domain name of the cloud is different this can als be configured. This is useful if you are a Rackspace Cloud UK user or OpenStack early adopter.  Here is an example of configuring knife for Rackspace Cloud UK:
+
+    knife[:rackspace_api_public_dns_root_url] =  "static.cloud-ips.co.uk"
+
 Additionally the following options may be set in your `knife.rb`:
 
 * flavor
