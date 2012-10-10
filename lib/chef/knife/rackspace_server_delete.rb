@@ -62,13 +62,13 @@ class Chef
         @name_args.each do |instance_id|
           begin
             server = connection.servers.get(instance_id)
-            msg_pair("Instance ID", server.id)
+            msg_pair("Instance ID", server.id.to_s)
             msg_pair("Host ID", server.host_id)
             msg_pair("Name", server.name)
             msg_pair("Flavor", server.flavor.name)
             msg_pair("Image", server.image.name)
-            msg_pair("Public IP Address", server.addresses["public"][0])
-            msg_pair("Private IP Address", server.addresses["private"][0])
+            msg_pair("Public IP Address", public_ip(server))
+            msg_pair("Private IP Address", private_ip(server))
 
             puts "\n"
             confirm("Do you really want to delete this server")
@@ -78,9 +78,16 @@ class Chef
             ui.warn("Deleted server #{server.id}")
 
             if config[:purge]
-              thing_to_delete = config[:chef_node_name] || instance_id
-              destroy_item(Chef::Node, thing_to_delete, "node")
-              destroy_item(Chef::ApiClient, thing_to_delete, "client")
+              if version_one?
+                thing_to_delete = config[:chef_node_name] || instance_id
+                destroy_item(Chef::Node, thing_to_delete, "node")
+                destroy_item(Chef::ApiClient, thing_to_delete, "client")
+              else
+                #v2 nodes may be named automatically
+                thing_to_delete = config[:chef_node_name] || server.name
+                destroy_item(Chef::Node, thing_to_delete, "node")
+                destroy_item(Chef::ApiClient, thing_to_delete, "client")
+              end
             else
               ui.warn("Corresponding node and client for the #{instance_id} server were not deleted and remain registered with the Chef Server")
             end

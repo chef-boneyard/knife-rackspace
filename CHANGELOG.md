@@ -1,3 +1,10 @@
+## v0.6.0
+* KNIFE_RACKSPACE-39 support for Rackspace Open Cloud (v2)
+* server list puts the name in second column
+* flavor list supports VCPUs for v2
+* server delete for v2 will attempt the name when purging since we set the name
+* docs updated to reflect all of the regions and APIs supported
+
 ## v0.5.16
 * KNIFE_RACKSPACE-36 Changed to code to use IP address for bootstrapping
 * KNIFE_RACKSPACE-38 Support the -P --purge option

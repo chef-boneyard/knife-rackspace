@@ -1,6 +1,7 @@
 #
 # Author:: Adam Jacob (<adam@opscode.com>)
-# Copyright:: Copyright (c) 2009 Opscode, Inc.
+# Author:: Matt Ray (<matt@opscode.com>)
+# Copyright:: Copyright (c) 2009-2012 Opscode, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -45,7 +46,7 @@ class Chef
         :short => "-I IMAGE",
         :long => "--image IMAGE",
         :description => "The image of the server",
-        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_i }
+        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
 
       option :server_name,
         :short => "-S NAME",
@@ -160,12 +161,14 @@ class Chef
           exit 1
         end
 
+        node_name = get_node_name(config[:chef_node_name] || config[:server_name])
+
         server = connection.servers.create(
-          :name => config[:server_name],
+          :name => node_name,
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata]
-        )
+          )
 
         msg_pair("Instance ID", server.id)
         msg_pair("Host ID", server.host_id)
@@ -182,16 +185,16 @@ class Chef
         puts("\n")
 
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", server.addresses['public'][0])
-        msg_pair("Private IP Address", server.addresses['private'][0])
+        msg_pair("Public IP Address", public_ip(server))
+        msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
 
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
         #which IP address to bootstrap
-        bootstrap_ip_address = server.addresses['public'][0] if server.public_ip_address
+        bootstrap_ip_address = public_ip(server)
         if config[:private_network]
-          bootstrap_ip_address = server.addresses['private'][0]
+          bootstrap_ip_address = private_ip(server)
         end
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
@@ -203,7 +206,6 @@ class Chef
           sleep @initial_sleep_delay ||= 10
           puts("done")
         }
-
         bootstrap_for_node(server, bootstrap_ip_address).run
 
         puts "\n"
@@ -214,8 +216,8 @@ class Chef
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", server.addresses["public"][0])
-        msg_pair("Private IP Address", server.addresses["private"][0])
+        msg_pair("Public IP Address", public_ip(server))
+        msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
@@ -230,7 +232,11 @@ class Chef
         bootstrap.config[:ssh_password] = server.password
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:host_key_verify] = config[:host_key_verify]
-        bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
+        if version_one?
+          bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
+        else
+          bootstrap.config[:chef_node_name] = server.name
+        end
         bootstrap.config[:prerelease] = config[:prerelease]
         bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
         bootstrap.config[:distro] = locate_config_value(:distro)
@@ -241,6 +247,12 @@ class Chef
         bootstrap
       end
 
+    end
+    #v2 servers require a name, random if chef_node_name is empty, empty if v1
+    def get_node_name(chef_node_name)
+      return chef_node_name unless chef_node_name.nil?
+      #lazy uuids
+      chef_node_name = "rs-"+rand.to_s.split('.')[1] unless version_one?
     end
   end
 end

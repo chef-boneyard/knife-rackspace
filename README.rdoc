@@ -2,7 +2,7 @@
 
 = DESCRIPTION:
 
-This is the official Opscode Knife plugin for Rackspace. This plugin gives knife the ability to create, bootstrap, and manage servers on the Rackspace Cloud.
+This is the official Opscode Knife plugin for Rackspace Cloud Servers. This plugin gives knife the ability to create, bootstrap, and manage servers on all the regions for Rackspace Cloud Servers.
 
 = INSTALLATION:
 
@@ -33,9 +33,22 @@ You also have the option of passing your Rackspace API Username/Key into the ind
     # provision a new 1GB Ubuntu 10.04 webserver
     knife rackspace server create -I 112 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key" -r 'role[webserver]'
 
-This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user or OpenStack early adopter. Here is an example of configuring knife for Rackspace Cloud UK:
+To select for the new OpenStack-based "Rackspace Open Cloud" API (aka 'v2'), you can use the <tt>--rackspace-version v2</tt> command option. 'v1' is still the default, so if you're using exclusively 'v2' you will probably want to add the following to your <tt>knife.rb</tt>:
+
+    knife[:rackspace_version] = 'v2'
+
+This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
 
     knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
+
+This plugin also has support for specifying which region to create servers into:
+
+    knife[:rackspace_endpoint] = "https://dfw.servers.api.rackspacecloud.com/v2"
+
+valid options include:
+      DFW_ENDPOINT = 'https://dfw.servers.api.rackspacecloud.com/v2'
+      ORD_ENDPOINT = 'https://ord.servers.api.rackspacecloud.com/v2'
+      LON_ENDPOINT = 'https://lon.servers.api.rackspacecloud.com/v2'
 
 Additionally the following options may be set in your `knife.rb`:
 
@@ -50,23 +63,25 @@ This plugin provides the following Knife subcommands. Specific command options c
 
 == knife rackspace server create
 
-Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap (using the SSH protocol). The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server. By default the server is bootstrapped using the {ubuntu10.04-gems}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/ubuntu10.04-gems.erb] template. This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
+Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap (using the SSH protocol). The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server. By default the server is bootstrapped using the {chef-full}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/chef-full.erb] template. This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
+
+If no name is provided, nodes created with  the v1 API are named after their instance ID, with the v2 API they are given a random 'rs-XXXXXXXXX' name.
 
 == knife rackspace server delete
 
-Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering 'knife rackspace server list'. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option.
+Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering 'knife rackspace server list'. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option. Using the <tt>--purge</tt> option with v2 nodes will attempt to delete the node and client by the name of the node.
 
 == knife rackspace server list
 
-Outputs a list of all servers in the currently configured Rackspace Cloud account. Please note - this shows all instances associated with the account, some of which may not be currently managed by the Chef server.
+Outputs a list of all servers in the currently configured Rackspace Cloud account. Please note - this shows all instances associated with the account, some of which may not be currently managed by the Chef server. You may need to use the <tt>--rackspace-version</tt> and possibly a <tt>--rackspace-endpoint</tt> options to see nodes in different Rackspace regions.
 
 == knife rackspace flavor list
 
-Outputs a list of all available flavors (available hardware configuration for a server) available to the currently configured Rackspace Cloud account. Each flavor has a unique combination of disk space, memory capacity and priority for CPU time. This data can be useful when choosing a flavor id to pass to the <tt>knife rackspace server create</tt> subcommand.
+Outputs a list of all available flavors (available hardware configuration for a server) available to the currently configured Rackspace Cloud account. Each flavor has a unique combination of disk space, memory capacity and priority for CPU time. This data can be useful when choosing a flavor id to pass to the <tt>knife rackspace server create</tt> subcommand. You may need to use the <tt>--rackspace-version</tt> and possibly a <tt>--rackspace-endpoint</tt> options to see nodes in different Rackspace regions.
 
 == knife rackspace image list
 
-Outputs a list of all available images available to the currently configured Rackspace Cloud account. An image is a collection of files used to create or rebuild a server. Rackspace provides a number of pre-built OS images by default. This data can be useful when choosing an image id to pass to the <tt>knife rackspace server create</tt> subcommand.
+Outputs a list of all available images available to the currently configured Rackspace Cloud account. An image is a collection of files used to create or rebuild a server. Rackspace provides a number of pre-built OS images by default. This data can be useful when choosing an image id to pass to the <tt>knife rackspace server create</tt> subcommand. You may need to use the <tt>--rackspace-version</tt> and possibly a <tt>--rackspace-endpoint</tt> options to see nodes in different Rackspace regions.
 
 
 = LICENSE:
