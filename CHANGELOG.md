@@ -1,3 +1,6 @@
+## v0.6.2
+* bump release to fix permission issues inside the gem
+
 ## v0.6.0
 * KNIFE_RACKSPACE-39 support for Rackspace Open Cloud (v2)
 * server list puts the name in second column
