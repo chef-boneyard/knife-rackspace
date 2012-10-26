@@ -17,6 +17,12 @@
 #
 
 class Chef
+
+  class Config
+    # Namespace for knife-rackspace
+    knife[:rackspace] = Hash.new
+  end
+
   class Knife
     module RackspaceBase
 
