@@ -74,24 +74,24 @@ class Chef
       end
 
       def connection
-        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]}") #config file
-        Chef::Log.debug("version #{config[:rackspace_version]}") #cli
-        Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
-        Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
-        Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
-        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
-        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
-        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]}")
-        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]}")
-        if (Chef::Config[:knife][:rackspace_version] == 'v2') || (config[:rackspace_version] == 'v2')
+        Chef::Log.debug("version #{locate_config_value(:rackspace_version)}") #config file
+        Chef::Log.debug("version #{locate_config_value(:rackspace_version)}") #cli
+        Chef::Log.debug("rackspace_api_key #{locate_config_value(:rackspace_api_key)}")
+        Chef::Log.debug("rackspace_username #{locate_config_value(:rackspace_username)}")
+        Chef::Log.debug("rackspace_api_username #{locate_config_value(:rackspace_api_username)}")
+        Chef::Log.debug("rackspace_auth_url #{locate_config_value(:rackspace_auth_url)}")
+        Chef::Log.debug("rackspace_auth_url #{locate_config_value(:rackspace_api_auth_url)}")
+        Chef::Log.debug("rackspace_endpoint #{locate_config_value(:rackspace_endpoint)}")
+        Chef::Log.debug("rackspace_endpoint #{locate_config_value(:rackspace_endpoint)}")
+        if (locate_config_value(:rackspace_version) == 'v2') || (locate_config_value(:rackspace_version) == 'v2')
           @connection ||= begin
             connection = Fog::Compute.new(
               :provider => 'Rackspace',
               :version => 'v2',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url],
-              :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
+              :rackspace_api_key => locate_config_value(:rackspace_api_key),
+              :rackspace_username => (locate_config_value(:rackspace_username) || locate_config_value(:rackspace_api_username)),
+              :rackspace_auth_url => locate_config_value(:rackspace_api_auth_url) || locate_config_value(:rackspace_api_auth_url),
+              :rackspace_endpoint => locate_config_value(:rackspace_endpoint) || locate_config_value(:rackspace_endpoint)
             )
           end
         else
@@ -99,9 +99,9 @@ class Chef
             connection = Fog::Compute.new(
               :provider => 'Rackspace',
               :version => 'v1',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+              :rackspace_api_key => locate_config_value(:rackspace_api_key),
+              :rackspace_username => (locate_config_value(:rackspace_username) || locate_config_value(:rackspace_api_username)),
+              :rackspace_auth_url => locate_config_value(:rackspace_api_auth_url) || locate_config_value(:rackspace_api_auth_url)
             )
           end
         end
@@ -151,7 +151,7 @@ class Chef
       end
 
       def rackspace_api_version
-        version = Chef::Config[:knife][:rackspace_version] || 'v1'
+        version = locate_config_value(:rackspace_version) || 'v1'
         version.downcase
       end
 

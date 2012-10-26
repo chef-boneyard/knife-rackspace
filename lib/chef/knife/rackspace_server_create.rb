@@ -153,7 +153,7 @@ class Chef
       def run
         $stdout.sync = true
 
-        unless Chef::Config[:knife][:image]
+        unless locate_config_value(:image)
           ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
           exit 1
         end
@@ -162,9 +162,9 @@ class Chef
 
         server = connection.servers.create(
           :name => node_name,
-          :image_id => Chef::Config[:knife][:image],
+          :image_id => locate_config_value(:image),
           :flavor_id => locate_config_value(:flavor),
-          :metadata => Chef::Config[:knife][:rackspace_metadata]
+          :metadata => locate_config_value(:rackspace_metadata)
           )
 
         msg_pair("Instance ID", server.id)
