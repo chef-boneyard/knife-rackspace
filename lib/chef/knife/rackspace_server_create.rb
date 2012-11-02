@@ -120,6 +120,15 @@ class Chef
         :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
         :default => ""
 
+      option :hint,
+        :long => "--hint HINT_NAME[=HINT_FILE]",
+        :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
+        :proc => Proc.new { |h|
+           Chef::Config[:knife][:hints] ||= {}
+           name, path = h.split("=")
+           Chef::Config[:knife][:hints][name] = path ? JSON.parse(::File.read(path)) : Hash.new
+        }
+
       option :host_key_verify,
         :long => "--[no-]host-key-verify",
         :description => "Verify host key, enabled by default",
@@ -241,6 +250,10 @@ class Chef
         bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
         bootstrap.config[:template_file] = locate_config_value(:template_file)
         bootstrap.config[:environment] = config[:environment]
+        # Modify global configuration state to ensure hint gets set by
+        # knife-bootstrap
+        Chef::Config[:knife][:hints] ||= {}
+        Chef::Config[:knife][:hints]["rackspace"] ||= {}
         bootstrap
       end
 
