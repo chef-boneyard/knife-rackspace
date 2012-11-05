@@ -16,6 +16,8 @@
 # limitations under the License.
 #
 
+require 'fog'
+
 class Chef
   class Knife
     module RackspaceBase
@@ -27,7 +29,6 @@ class Chef
         includer.class_eval do
 
           deps do
-            require 'fog'
             require 'net/ssh/multi'
             require 'readline'
             require 'chef/knife'
