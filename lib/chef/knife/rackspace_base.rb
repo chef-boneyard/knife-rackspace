@@ -16,6 +16,8 @@
 # limitations under the License.
 #
 
+require 'chef/knife'
+
 class Chef
   class Knife
     module RackspaceBase
@@ -30,9 +32,7 @@ class Chef
             require 'fog'
             require 'net/ssh/multi'
             require 'readline'
-            require 'chef/knife'
             require 'chef/json_compat'
-            Chef::Knife.load_deps
           end
 
           option :rackspace_api_key,
