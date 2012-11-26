@@ -1,3 +1,6 @@
+## v0.6.4
+* KNIFE-182 default to Rackspace Open Cloud (v2)
+
 ## v0.6.2
 * bump release to fix permission issues inside the gem
 
