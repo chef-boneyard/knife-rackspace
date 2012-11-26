@@ -33,13 +33,13 @@ You also have the option of passing your Rackspace API Username/Key into the ind
     # provision a new 1GB Ubuntu 10.04 webserver
     knife rackspace server create -I 112 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key" -r 'role[webserver]'
 
-To select for the new OpenStack-based "Rackspace Open Cloud" API (aka 'v2'), you can use the <tt>--rackspace-version v2</tt> command option. 'v1' is still the default, so if you're using exclusively 'v2' you will probably want to add the following to your <tt>knife.rb</tt>:
+To select for the previous Rackspace API (aka 'v1'), you can use the <tt>--rackspace-version v1</tt> command option. 'v2' is the default, so if you're still using exclusively 'v1' you will probably want to add the following to your <tt>knife.rb</tt>:
 
-    knife[:rackspace_version] = 'v2'
+    knife[:rackspace_version] = 'v1'
 
 This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
 
-    knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
+    knife[:rackspace_auth_url] = "lon.auth.api.rackspacecloud.com"
 
 This plugin also has support for specifying which region to create servers into:
 
