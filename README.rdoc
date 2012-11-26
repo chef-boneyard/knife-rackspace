@@ -39,7 +39,7 @@ To select for the previous Rackspace API (aka 'v1'), you can use the <tt>--racks
 
 This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
 
-    knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
+    knife[:rackspace_auth_url] = "lon.auth.api.rackspacecloud.com"
 
 This plugin also has support for specifying which region to create servers into:
 

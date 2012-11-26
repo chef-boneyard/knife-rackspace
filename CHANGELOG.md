@@ -1,4 +1,5 @@
 ## v0.6.4
+* KNIFE-181 correct mixed use of 'rackspace_auth_url' and 'rackspace_api_auth_url'. Only 'rackspace_auth_url' is correct.
 * KNIFE-182 default to Rackspace Open Cloud (v2)
 
 ## v0.6.2

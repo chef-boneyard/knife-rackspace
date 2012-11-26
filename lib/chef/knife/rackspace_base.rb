@@ -53,11 +53,11 @@ class Chef
             :default => "v2",
             :proc => Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
 
-          option :rackspace_api_auth_url,
-            :long => "--rackspace-api-auth-url URL",
+          option :rackspace_auth_url,
+            :long => "--rackspace-auth-url URL",
             :description => "Your rackspace API auth url",
             :default => "auth.api.rackspacecloud.com",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
 
           option :rackspace_endpoint,
             :long => "--rackspace-endpoint URL",
@@ -74,7 +74,7 @@ class Chef
         Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
         Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]} (config)")
-        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]} (cli)")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_auth_url]} (cli)")
         Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]} (config)")
         Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]} (cli)")
         if (Chef::Config[:knife][:rackspace_version] == 'v1') || (config[:rackspace_version] == 'v1')
@@ -85,7 +85,7 @@ class Chef
               :version => 'v1',
               :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
               :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+              :rackspace_auth_url => Chef::Config[:knife][:rackspace_auth_url] || config[:rackspace_auth_url]
             )
           end
         else
@@ -96,7 +96,7 @@ class Chef
               :version => 'v2',
               :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
               :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url],
+              :rackspace_auth_url => Chef::Config[:knife][:rackspace_auth_url] || config[:rackspace_auth_url],
               :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
             )
           end
