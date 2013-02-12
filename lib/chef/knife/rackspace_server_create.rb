@@ -123,6 +123,10 @@ class Chef
         :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
         :default => ""
 
+      option :rackconnect_wait,
+        :long => "--rackconnect-wait",
+        :description => "Wait until the Rackconnect automation setup is complete before bootstrapping chef"
+
       option :hint,
         :long => "--hint HINT_NAME[=HINT_FILE]",
         :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
@@ -189,7 +193,14 @@ class Chef
         print "\n#{ui.color("Waiting server", :magenta)}"
 
         # wait for it to be ready to do stuff
-        server.wait_for { print "."; ready? }
+        server.wait_for { 
+          print "."; 
+          if Chef::Config[:knife][:rackconnect_wait]
+            ready? and metadata['rackconnect_automation_status'] == 'DEPLOYED'
+          else
+            ready?
+          end
+        }
 
         puts("\n")
 
@@ -197,6 +208,7 @@ class Chef
         msg_pair("Public IP Address", public_ip(server))
         msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
+        msg_pair("Metadata", server.metadata)
 
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
