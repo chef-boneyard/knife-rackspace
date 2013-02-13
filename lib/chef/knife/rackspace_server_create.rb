@@ -189,7 +189,7 @@ class Chef
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
-        msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes', 'no')
+        msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes' : 'no')
 
         # wait for it to be ready to do stuff
         server.wait_for(1200) { 
