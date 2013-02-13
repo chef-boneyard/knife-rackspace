@@ -189,14 +189,13 @@ class Chef
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
-
-        print "\n#{ui.color("Waiting server", :magenta)}"
+        msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes', 'no')
 
         # wait for it to be ready to do stuff
-        server.wait_for { 
+        server.wait_for(1200) { 
           print "."; 
           if Chef::Config[:knife][:rackconnect_wait]
-            ready? and metadata['rackconnect_automation_status'] == 'DEPLOYED'
+            ready? and metadata['rackconnect_automation_status'] == 'DEPLOYED' and metadata['rax_service_level_automation'] == 'Complete'
           else
             ready?
           end
