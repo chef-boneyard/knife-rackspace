@@ -192,7 +192,7 @@ class Chef
         msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes' : 'no')
 
         # wait for it to be ready to do stuff
-        server.wait_for(1200) { 
+        server.wait_for(2400) { 
           print "."; 
           if Chef::Config[:knife][:rackconnect_wait]
             ready? and metadata['rackconnect_automation_status'] == 'DEPLOYED' and metadata['rax_service_level_automation'] == 'Complete'
