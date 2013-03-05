@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-# Todo:
-# - list more than one server-id
 
 require 'chef/knife/rackspace_base'
 
