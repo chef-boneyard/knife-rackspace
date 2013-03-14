@@ -374,15 +374,16 @@ class Chef
         puts("\n")
 
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", public_ip(server))
-        msg_pair("Private IP Address", private_ip(server))
+        msg_pair("Public IP Address", ip_addr(server, 'public'))
+        msg_pair("Private IP Address", ip_addr(server, 'private'))
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
         #which IP address to bootstrap
-        bootstrap_ip_address = public_ip(server)
         if config[:private_network]
-          bootstrap_ip_address = private_ip(server)
+          bootstrap_ip_address = ip_addr(server, 'private')
+        else
+          bootstrap_ip_address = ip_addr(server, 'public')
         end
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
@@ -411,8 +412,8 @@ class Chef
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", public_ip(server))
-        msg_pair("Private IP Address", private_ip(server))
+        msg_pair("Public IP Address", ip_addr(server, 'public'))
+        msg_pair("Private IP Address", ip_addr(server, 'private'))
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
