@@ -64,9 +64,14 @@ class Chef
         :long => "--node-name NAME",
         :description => "The Chef node name for your new node"
 
+      option :bootstrap_network,
+        :long => "--bootstrap-network NAME",
+        :description => "Use IP address on this network for bootstrap",
+        :default => 'public'
+
       option :private_network,
         :long => "--private-network",
-        :description => "Use the private IP for bootstrapping rather than the public IP",
+        :description => "Equivalent to --bootstrap-network private",
         :boolean => true,
         :default => false
 
@@ -296,6 +301,9 @@ class Chef
       def run
         $stdout.sync = true
 
+        # Maybe deprecate this option at some point
+        config[:bootstrap_network] = 'private' if config[:private_network]
+
         unless Chef::Config[:knife][:image]
           ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
           exit 1
@@ -379,12 +387,7 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
-        #which IP address to bootstrap
-        if config[:private_network]
-          bootstrap_ip_address = ip_addr(server, 'private')
-        else
-          bootstrap_ip_address = ip_addr(server, 'public')
-        end
+        bootstrap_ip_address = ip_addr(server, config[:bootstrap_network])
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
           ui.error("No IP address available for bootstrapping.")
