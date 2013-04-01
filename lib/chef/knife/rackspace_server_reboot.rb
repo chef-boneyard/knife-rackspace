@@ -23,7 +23,7 @@ class Chef
 
       include Knife::RackspaceBase
       
-      banner "knife rackspace server reboot SERVER_ID (options)"
+      banner "knife rackspace server reboot SERVER_ID [SERVER_ID] (options)"
 
       attr_accessor :initial_sleep_delay
 
