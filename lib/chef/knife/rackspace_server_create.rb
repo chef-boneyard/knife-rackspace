@@ -143,6 +143,14 @@ class Chef
         :description => "Verify host key, enabled by default",
         :boolean => true,
         :default => true
+
+      option :network,
+        :long => '--network [LABEL_OR_ID]',
+        :description => "Add private network. Use multiple --network options to specify multiple networks.",
+        :proc => Proc.new{|name|
+          Chef::Config[:knife][:rackspace_networks] ||= []
+          (Chef::Config[:knife][:rackspace_networks] << name).uniq!
+        }
         
       option :bootstrap_protocol,
       :long => "--bootstrap-protocol protocol",
@@ -159,7 +167,8 @@ class Chef
       :long => "--bootstrap-proxy PROXY_URL",
       :description => "The proxy server for the node being bootstrapped",
       :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_proxy] = v }
-      
+     
+
       def load_winrm_deps
         require 'winrm'
         require 'em-winrm'
@@ -265,13 +274,17 @@ class Chef
         end
         
         node_name = get_node_name(config[:chef_node_name] || config[:server_name])
+        networks = get_networks(Chef::Config[:knife][:rackspace_networks])
 
-        server = connection.servers.create(
+        server = connection.servers.new(
           :name => node_name,
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
           :personality => files
+        )
+        server.save(
+          :networks => networks
         )
 
         msg_pair("Instance ID", server.id)
@@ -280,6 +293,7 @@ class Chef
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
+        msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', ')) if networks
 
         print "\n#{ui.color("Waiting server", :magenta)}"
         
@@ -380,6 +394,33 @@ class Chef
       return chef_node_name unless chef_node_name.nil?
       #lazy uuids
       chef_node_name = "rs-"+rand.to_s.split('.')[1] unless version_one?
+    end
+
+    def get_networks(names)
+      if(Chef::Config[:knife][:rackspace_version] == 'v2')
+        # Always include public net and service net
+        nets = [
+          '00000000-0000-0000-0000-000000000000',
+          '11111111-1111-1111-1111-111111111111'
+        ]
+        found_nets = connection.networks.find_all do |n|
+          names.include?(n.label) || names.include?(n.id)
+        end
+        
+        names.each do |name|
+          net = found_nets.detect{|n| n.label == name || n.id == name}
+          if(net)
+            nets << net.id
+          else
+            ui.error("Failed to locate network: #{name}")
+            exit 1
+          end
+        end
+        nets
+      elsif(names && !names.empty?)
+        ui.error("Custom networks are only available in v2 API")
+        exit 1
+      end
     end
   end
 end
