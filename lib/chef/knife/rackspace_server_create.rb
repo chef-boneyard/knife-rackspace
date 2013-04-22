@@ -197,7 +197,9 @@ class Chef
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
-        msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', ')) if networks
+        if(networks && Chef::Config[:knife][:rackspace_networks])
+          msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
+        end
 
         print "\n#{ui.color("Waiting server", :magenta)}"
 
