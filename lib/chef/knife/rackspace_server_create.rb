@@ -282,6 +282,7 @@ class Chef
     end
 
     def get_networks(names)
+      names = Array(names) unless names.is_a?(Array)
       if(Chef::Config[:knife][:rackspace_version] == 'v2')
         # Always include public net and service net
         nets = [
