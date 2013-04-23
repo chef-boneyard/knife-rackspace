@@ -123,6 +123,10 @@ class Chef
         :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
         :default => ""
 
+      option :rackconnect_wait,
+        :long => "--rackconnect-wait",
+        :description => "Wait until the Rackconnect automation setup is complete before bootstrapping chef"
+
       option :hint,
         :long => "--hint HINT_NAME[=HINT_FILE]",
         :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
@@ -184,12 +188,29 @@ class Chef
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
-        msg_pair("Metadata", server.metadata)
-
-        print "\n#{ui.color("Waiting server", :magenta)}"
+        msg_pair("Metadata", server.metadata.all)
+        msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes' : 'no')
 
         # wait for it to be ready to do stuff
-        server.wait_for { print "."; ready? }
+        begin
+          server.wait_for(1200) { 
+            print "."; 
+            Chef::Log.debug("#{progress}%")
+            if Chef::Config[:knife][:rackconnect_wait]
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
+              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED' and metadata.all['rax_service_level_automation'] == 'Complete'
+            else
+              ready?
+            end
+          }
+        rescue Fog::Errors::TimeoutError
+          ui.error('Timeout waiting for the server to be created')
+          msg_pair('Progress', "#{server.progress}%")
+          msg_pair('rackconnect_automation_status', server.metadata.all['rackconnect_automation_status'])
+          msg_pair('rax_service_level_automation', server.metadata.all['rax_service_level_automation'])
+          Chef::Application.fatal! 'Server didn\'t finish on time'
+        end
 
         puts("\n")
 
@@ -197,6 +218,7 @@ class Chef
         msg_pair("Public IP Address", public_ip(server))
         msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
+        msg_pair("Metadata", server.metadata.all)
 
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
 
