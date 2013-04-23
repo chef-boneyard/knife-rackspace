@@ -192,14 +192,21 @@ class Chef
         msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes' : 'no')
 
         # wait for it to be ready to do stuff
-        server.wait_for(2400) { 
-          print "."; 
-          if Chef::Config[:knife][:rackconnect_wait]
-            ready? and metadata['rackconnect_automation_status'] == 'DEPLOYED' and metadata['rax_service_level_automation'] == 'Complete'
-          else
-            ready?
-          end
-        }
+        begin
+          server.wait_for(2400) { 
+            print "."; 
+            if Chef::Config[:knife][:rackconnect_wait]
+              ready? and metadata['rackconnect_automation_status'] == 'DEPLOYED' and metadata['rax_service_level_automation'] == 'Complete'
+            else
+              ready?
+            end
+          }
+        rescue Fog::Errors::TimeoutError
+          ui.error('Timeout waiting for the server to be created')
+          msg_pair('Progress', "#{server.progress}%")
+          msg_pair('Metadata', server.metadata)
+        end
+
 
         puts("\n")
 
