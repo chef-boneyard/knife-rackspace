@@ -197,9 +197,9 @@ class Chef
             print "."; 
             Chef::Log.debug("#{progress}%")
             if Chef::Config[:knife][:rackconnect_wait]
-              Chef::Log.debug("rackconnect_automation_status: #{metadata.get('rackconnect_automation_status')}")
-              Chef::Log.debug("rax_service_level_automation: #{metadata.get('rax_service_level_automation')}")
-              ready? and metadata.get('rackconnect_automation_status') == 'DEPLOYED' and metadata.get('rax_service_level_automation') == 'Complete'
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status')}"]
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation')}"]
+              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED' and metadata.all['rax_service_level_automation'] == 'Complete'
             else
               ready?
             end
@@ -207,8 +207,8 @@ class Chef
         rescue Fog::Errors::TimeoutError
           ui.error('Timeout waiting for the server to be created')
           msg_pair('Progress', "#{server.progress}%")
-          msg_pair('rackconnect_automation_status', metadata.get('rackconnect_automation_status'))
-          msg_pair('rax_service_level_automation', metadata.get('rax_service_level_automation'))
+          msg_pair('rackconnect_automation_status', metadata.all['rackconnect_automation_status')]
+          msg_pair('rax_service_level_automation', metadata.all['rax_service_level_automation')]
           Chef::Application.fatal! 'Server didn\'t finish on time'
         end
 
