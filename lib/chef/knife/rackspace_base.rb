@@ -163,12 +163,12 @@ class Chef
       end
 
       def public_dns_name(server)
-        ip_address = ip_addr(server, 'public')
-
-        @public_dns_name ||= begin
-          Resolv.getname(ip_address)
-        rescue
-          "#{ip_address.gsub('.','-')}.static.cloud-ips.com" if ip_address
+        if ip_address = ip_addr(server, 'public')
+          @public_dns_name ||= begin
+            Resolv.getname(ip_address)
+          rescue
+            "#{ip_address.gsub('.','-')}.static.cloud-ips.com"
+          end
         end
       end
 
