@@ -230,6 +230,14 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
+        instance_data = {
+                        "uuid" => server.id,
+                        "host_id" =>server.host_id,
+                        "server_name" => server.name,
+                        "public_ip" => public_ip(server),
+                        "private_ip" => private_ip(server)
+                        }
+        return instance_data
       end
 
       def bootstrap_for_node(server, bootstrap_ip_address)
