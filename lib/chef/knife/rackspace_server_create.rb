@@ -144,10 +144,16 @@ class Chef
         :boolean => true,
         :default => true
 
+      option :default_networks,
+        :long => "--[no-]-default-networks",
+        :description => "Include public and service networks, enabled by default",
+        :boolean => true,
+        :default => true
+
       option :network,
         :long => '--network [LABEL_OR_ID]',
         :description => "Add private network. Use multiple --network options to specify multiple networks.",
-        :proc => Proc.new{|name|
+        :proc => Proc.new{ |name|
           Chef::Config[:knife][:rackspace_networks] ||= []
           (Chef::Config[:knife][:rackspace_networks] << name).uniq!
         }
@@ -401,11 +407,14 @@ class Chef
     def get_networks(names)
       names = Array(names) unless names.is_a?(Array)
       if(Chef::Config[:knife][:rackspace_version] == 'v2')
-        # Always include public net and service net
-        nets = [
-          '00000000-0000-0000-0000-000000000000',
-          '11111111-1111-1111-1111-111111111111'
-        ]
+        if(config[:default_networks])
+          nets = [
+            '00000000-0000-0000-0000-000000000000',
+            '11111111-1111-1111-1111-111111111111'
+          ]
+        else
+          nets = []
+        end
         found_nets = connection.networks.find_all do |n|
           names.include?(n.label) || names.include?(n.id)
         end
