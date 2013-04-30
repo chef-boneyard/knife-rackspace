@@ -20,7 +20,6 @@ class Chef
           ]
         end
         connection.networks.sort_by(&:id).each do |network|
-          next if network.id.match(%r{^([0-]+|[1-]+)$}) # skip builtins
           networks_list << network.label
           networks_list << network.cidr
           networks_list << network.id.to_s
