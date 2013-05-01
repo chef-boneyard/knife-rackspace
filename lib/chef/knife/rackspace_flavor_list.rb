@@ -47,13 +47,11 @@ class Chef
         connection.flavors.sort_by(&:id).each do |flavor|
 
           flavor = connection.flavors.get(flavor.id)
-          bits = flavor.respond_to?(:bits) ? "#{flavor.bits.to_s}-bit" : ""
 
           flavor_list << flavor.id.to_s
           flavor_list << flavor.name
-          flavor_list << bits if version_one?
           flavor_list << flavor.vcpus.to_s unless version_one?
-          flavor_list << "#{flavor.ram.to_s}"
+          flavor_list << "#{flavor.ram.to_s} MB"
           flavor_list << "#{flavor.disk.to_s} GB"
         end
           puts ui.list(flavor_list, :uneven_columns_across, 5)

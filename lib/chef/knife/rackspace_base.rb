@@ -50,20 +50,20 @@ class Chef
           option :rackspace_version,
             :long => '--rackspace-version VERSION',
             :description => 'Rackspace Cloud Servers API version',
-            :default => "v1",
+            :default => "v2",
             :proc => Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
 
           option :rackspace_api_auth_url,
             :long => "--rackspace-api-auth-url URL",
             :description => "Your rackspace API auth url",
-            :default => "auth.api.rackspacecloud.com",
+            :default => "https://identity.api.rackspacecloud.com/v2.0/",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
 
-          option :rackspace_endpoint,
-            :long => "--rackspace-endpoint URL",
-            :description => "Your rackspace API endpoint",
+          option :rackspace_compute_url,
+            :long => "--rackspace-compute-url URL",
+            :description => "Your rackspace compute API endpoint",
             :default => "https://dfw.servers.api.rackspacecloud.com/v2",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_compute_url] = url }
         end
       end
 
@@ -75,8 +75,8 @@ class Chef
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
         Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
         Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
-        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]}")
-        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]}")
+        Chef::Log.debug("rackspace_compute_url #{Chef::Config[:knife][:rackspace_compute_url]}")
+        Chef::Log.debug("rackspace_compute_url #{config[:rackspace_compute_url]}")
         if (Chef::Config[:knife][:rackspace_version] == 'v2') || (config[:rackspace_version] == 'v2')
           @connection ||= begin
             connection = Fog::Compute.new(
@@ -85,7 +85,7 @@ class Chef
               :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
               :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
               :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url],
-              :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
+              :rackspace_compute_url => Chef::Config[:knife][:rackspace_compute_url] || config[:rackspace_compute_url]
             )
           end
         else
@@ -145,7 +145,7 @@ class Chef
       end
 
       def rackspace_api_version
-        version = Chef::Config[:knife][:rackspace_version] || 'v1'
+        version = Chef::Config[:knife][:rackspace_version] || 'v2'
         version.downcase
       end
 
