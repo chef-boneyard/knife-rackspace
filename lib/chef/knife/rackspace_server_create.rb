@@ -125,7 +125,15 @@ class Chef
 
       option :rackconnect_wait,
         :long => "--rackconnect-wait",
-        :description => "Wait until the Rackconnect automation setup is complete before bootstrapping chef"
+        :description => "Wait until the Rackconnect automation setup is complete before bootstrapping chef",
+        :boolean => true,
+        :default => false
+
+      option :rackspace_servicelevel_wait,
+        :long => "--rackspace-servicelevel-wait",
+        :description => "Wait until the Rackspace service level automation setup is complete before bootstrapping chef",
+        :boolean => true,
+        :default => false
 
       option :hint,
         :long => "--hint HINT_NAME[=HINT_FILE]",
@@ -176,6 +184,9 @@ class Chef
 
         node_name = get_node_name(config[:chef_node_name] || config[:server_name])
 
+        rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
+        rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
+
         server = connection.servers.create(
           :name => node_name,
           :image_id => Chef::Config[:knife][:image],
@@ -189,17 +200,24 @@ class Chef
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata.all)
-        msg_pair("RackConnect", Chef::Config[:knife][:rackconnect_wait] ? 'yes' : 'no')
+        msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
+        msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
 
         # wait for it to be ready to do stuff
         begin
           server.wait_for(1200) { 
             print "."; 
             Chef::Log.debug("#{progress}%")
-            if Chef::Config[:knife][:rackconnect_wait]
+            if rackconnect_wait and rackspace_servicelevel_wait
               Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
               Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
               ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED' and metadata.all['rax_service_level_automation'] == 'Complete'
+            elsif rackconnect_wait
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
+              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED'
+            elsif rackspace_servicelevel_wait
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
+              ready? and metadata.all['rax_service_level_automation'] == 'Complete'
             else
               ready?
             end
