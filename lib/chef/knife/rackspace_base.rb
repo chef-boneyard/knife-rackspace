@@ -168,7 +168,7 @@ class Chef
       end
 
       def v2_access_ip(server)
-        server.accessIPv4 == nil ? "" : server.accessIPv4
+        server.access_ipv4_address == nil ? "" : server.access_ipv4_address
       end
 
       def extract_ipv4_address(ip_addresses)
