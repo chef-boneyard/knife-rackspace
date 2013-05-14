@@ -58,6 +58,11 @@ class Chef
         :long => "--node-name NAME",
         :description => "The Chef node name for your new node"
 
+      option :additional_networks,
+        :short => '-n NETWORK,NETWORK2,...',
+        :long => '--network NETWORK,NETWORK2,..',
+        :description => 'Add new instance to existing cloud networks'
+
       option :private_network,
         :long => "--private-network",
         :description => "Use the private IP for bootstrapping rather than the public IP",
@@ -172,11 +177,45 @@ class Chef
 
         node_name = get_node_name(config[:chef_node_name] || config[:server_name])
 
+        # Default networks
+        networks = [
+            '00000000-0000-0000-0000-000000000000',
+            '11111111-1111-1111-1111-111111111111'
+        ]
+
+        if config.has_key? :additional_networks and\
+                not config[:additional_networks].nil?
+            idornames = config[:additional_networks].split(',')
+            mapped_ids = []
+            idornames.each { |idorname|
+                connection.networks.each { |network|
+                    if network.id.strip == idorname.strip or\
+                            network.label.strip.downcase ==\
+                            idorname.strip.downcase
+                        networks.push(network.id)
+                        mapped_ids.push(idorname)
+                        break
+                    end
+                }
+            }
+            if not (idornames - mapped_ids).empty?
+                ui.error("Error mapping the follwing network ID/names to"\
+                         +" existing cloud networks: #{idornames.join ','}.")
+                exit 1
+            end
+        end
+
+        Chef::Log.debug('Networks:')
+        networks.each { |id|
+            Chef::Log.debug(id)
+        }
+
         server = connection.servers.create(
           :name => node_name,
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
-          :metadata => Chef::Config[:knife][:rackspace_metadata]
+          :metadata => Chef::Config[:knife][:rackspace_metadata],
+          :networks => networks
           )
 
         msg_pair("Instance ID", server.id)
