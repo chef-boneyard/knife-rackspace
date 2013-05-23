@@ -50,6 +50,14 @@ valid options include:
       ORD_ENDPOINT = 'https://ord.servers.api.rackspacecloud.com/v2'
       LON_ENDPOINT = 'https://lon.servers.api.rackspacecloud.com/v2'
 
+If you are behind a proxy you can specify it in the knife.rb file as follows:
+
+	https_proxy https://PROXY_IP_ADDRESS:PORT
+
+SSL certificate verification can be disabled by include the following in your knife.rb file:
+
+	knife[:ssl_verify_peer] = false
+
 Additionally the following options may be set in your `knife.rb`:
 
 * flavor
