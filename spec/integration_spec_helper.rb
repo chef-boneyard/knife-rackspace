@@ -5,6 +5,7 @@ require 'ansi/diff'
 
 Chef::Config[:knife][:rackspace_api_username] = "#{ENV['OS_USERNAME']}"
 Chef::Config[:knife][:rackspace_api_key] = "#{ENV['OS_PASSWORD']}"
+Chef::Config[:knife][:ssl_verify_peer] = false
 # Chef::Config[:knife][:rackspace_version] = "#{ENV['RS_VERSION']}"
 
 VCR.configure do |c|
@@ -18,10 +19,12 @@ VCR.configure do |c|
   c.filter_sensitive_data('<TENANT-ID>') { ENV['RS_TENANT_ID'] }
 
   c.before_record do |interaction|
-    filter_headers(interaction.request.headers, /X-\w*-Token/, '<ONE-TIME-TOKEN>')
-    filter_headers(interaction.response.headers, /X-\w*-Token/, '<ONE-TIME-TOKEN>')
-    filter_headers(interaction.request.headers, 'X-Compute-Request-Id', '<COMPUTE-REQUEST-ID>')
-    filter_headers(interaction.response.headers, 'X-Compute-Request-Id', '<COMPUTE-REQUEST-ID>')
+    # Sensitive data
+    filter_headers(interaction, /X-\w*-Token/, '<ONE-TIME-TOKEN>')
+
+    # Transient data (trying to avoid unnecessary cassette churn)
+    filter_headers(interaction, 'X-Compute-Request-Id', '<COMPUTE-REQUEST-ID>')
+    filter_headers(interaction, 'X-Varnish', '<VARNISH-REQUEST-ID>')
   end
 
   c.default_cassette_options = { 
@@ -30,10 +33,12 @@ VCR.configure do |c|
   }
 end
 
-def filter_headers(headers, pattern, placeholder)
-  sensitive_tokens = headers.select{|key| key.to_s.match(pattern)}
-  sensitive_tokens.each do |key, value|
-    headers[key] = placeholder
+def filter_headers(interaction, pattern, placeholder)
+  [interaction.request.headers, interaction.response.headers].each do | headers |
+    sensitive_tokens = headers.select{|key| key.to_s.match(pattern)}
+    sensitive_tokens.each do |key, value|
+      headers[key] = placeholder
+    end
   end
 end
 

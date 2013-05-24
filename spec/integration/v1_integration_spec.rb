@@ -24,4 +24,12 @@ ID  Name           Architecture  RAM    Disk
 8   30GB server    64-bit        30720  1200 GB
 """)
   end
+
+  it 'should list images', :vcr do
+    stdout, stderr, status = knife_capture('rackspace image list')
+    status.should == 0
+    stdout = ANSI.unansi stdout
+    stdout.should match /^ID\s*Name\s*$/
+    stdout.should include 'Ubuntu 12.04 LTS'
+  end
 end

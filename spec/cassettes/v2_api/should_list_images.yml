@@ -1,0 +1,287 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://auth.api.rackspacecloud.com/v1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.9.0
+      X-Auth-Key:
+      - <RAX_PASSWORD>
+      X-Auth-User:
+      - <RAX_USERNAME>
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass,
+        X-Auth-User
+      X-Storage-Url:
+      - https://storage101.dfw1.clouddrive.com/v1/<CDN-TENANT-NAME>
+      Cache-Control:
+      - s-maxage=73629
+      X-Cloud-Auth:
+      - 'true'
+      Date:
+      - Fri, 24 May 2013 18:08:20 GMT
+      Front-End-Https:
+      - 'on'
+      X-Auth-Token: <ONE-TIME-TOKEN>
+      response-source:
+      - cloud-auth
+      X-Storage-Token: <ONE-TIME-TOKEN>
+      X-Server-Management-Url:
+      - https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      Connection:
+      - keep-alive
+      X-CDN-Management-Url:
+      - https://cdn1.clouddrive.com/v1/<CDN-TENANT-NAME>
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Fri, 24 May 2013 18:08:20 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.9.0
+      Content-Type:
+      - application/json
+      X-Auth-Token: <ONE-TIME-TOKEN>
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Fri, 24 May 2013 18:08:26 GMT
+      Content-Length:
+      - '22207'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: <COMPUTE-REQUEST-ID>
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"images": [{"id": "3e4871d9-cd30-4a8c-bdb3-c962a6730c1c", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/3e4871d9-cd30-4a8c-bdb3-c962a6730c1c",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/3e4871d9-cd30-4a8c-bdb3-c962a6730c1c",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/3e4871d9-cd30-4a8c-bdb3-c962a6730c1c",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 x64 SP2"}, {"id": "bfdb3838-152e-46c2-88a3-c45f7423bcd9", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/bfdb3838-152e-46c2-88a3-c45f7423bcd9",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/bfdb3838-152e-46c2-88a3-c45f7423bcd9",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/bfdb3838-152e-46c2-88a3-c45f7423bcd9",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 (with updates) + SQL Server 2012 Standard SP1"}, {"id":
+        "18189eb3-5415-4e13-aef4-0c9d40bda4a3", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/18189eb3-5415-4e13-aef4-0c9d40bda4a3",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/18189eb3-5415-4e13-aef4-0c9d40bda4a3",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/18189eb3-5415-4e13-aef4-0c9d40bda4a3",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Debian
+        7 (Wheezy)"}, {"id": "fc62f5c8-ca85-4166-8483-46bfcbca45cd", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/fc62f5c8-ca85-4166-8483-46bfcbca45cd",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/fc62f5c8-ca85-4166-8483-46bfcbca45cd",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/fc62f5c8-ca85-4166-8483-46bfcbca45cd",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012 + SQL Server 2012 Web SP1"}, {"id": "1d6cf74a-af8a-4235-abf5-edddd9d58941",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/1d6cf74a-af8a-4235-abf5-edddd9d58941",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/1d6cf74a-af8a-4235-abf5-edddd9d58941",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/1d6cf74a-af8a-4235-abf5-edddd9d58941",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012 + SQL Server 2012 Standard SP1"}, {"id": "f2527410-310d-46af-a2fe-7debe6cddc35",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/f2527410-310d-46af-a2fe-7debe6cddc35",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f2527410-310d-46af-a2fe-7debe6cddc35",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f2527410-310d-46af-a2fe-7debe6cddc35",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012 (with updates) + SQL Server 2012 Standard SP1"}, {"id": "fc2448b4-da85-4893-b0e7-6c8794e608b4",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/fc2448b4-da85-4893-b0e7-6c8794e608b4",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/fc2448b4-da85-4893-b0e7-6c8794e608b4",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/fc2448b4-da85-4893-b0e7-6c8794e608b4",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012 (with updates)"}, {"id": "f7f274f3-5d04-4a2c-9159-29b9d295cf76",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/f7f274f3-5d04-4a2c-9159-29b9d295cf76",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f7f274f3-5d04-4a2c-9159-29b9d295cf76",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f7f274f3-5d04-4a2c-9159-29b9d295cf76",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012"}, {"id": "74461803-4d7f-413f-b9ae-1d7d1c13e1c8", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/74461803-4d7f-413f-b9ae-1d7d1c13e1c8",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/74461803-4d7f-413f-b9ae-1d7d1c13e1c8",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/74461803-4d7f-413f-b9ae-1d7d1c13e1c8",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 + SQL Server 2012 Web SP1"}, {"id": "f2f52d05-86c7-4ebf-9e3e-cc1a81ab1d99",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/f2f52d05-86c7-4ebf-9e3e-cc1a81ab1d99",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f2f52d05-86c7-4ebf-9e3e-cc1a81ab1d99",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f2f52d05-86c7-4ebf-9e3e-cc1a81ab1d99",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 + SQL Server 2012 Standard SP1"}, {"id": "05313f52-c19b-4640-b5ed-c7b8e8d17775",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/05313f52-c19b-4640-b5ed-c7b8e8d17775",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/05313f52-c19b-4640-b5ed-c7b8e8d17775",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/05313f52-c19b-4640-b5ed-c7b8e8d17775",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 + SQL Server 2008 R2 Web SP2"}, {"id": "37c9e70e-bf94-4631-b76c-de21246dff34",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/37c9e70e-bf94-4631-b76c-de21246dff34",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/37c9e70e-bf94-4631-b76c-de21246dff34",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/37c9e70e-bf94-4631-b76c-de21246dff34",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 + SQL Server 2008 R2 Standard SP2"}, {"id": "59909b8d-4a36-40c9-bd4e-fa1bd31285ad",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/59909b8d-4a36-40c9-bd4e-fa1bd31285ad",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/59909b8d-4a36-40c9-bd4e-fa1bd31285ad",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/59909b8d-4a36-40c9-bd4e-fa1bd31285ad",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 (with updates) + SQL Server 2012 Web SP1"}, {"id": "5e514a8e-9aaf-4d50-a7fc-1c992db194f3",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/5e514a8e-9aaf-4d50-a7fc-1c992db194f3",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/5e514a8e-9aaf-4d50-a7fc-1c992db194f3",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/5e514a8e-9aaf-4d50-a7fc-1c992db194f3",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 (with updates) + SQL Server 2008 R2 Web SP2"}, {"id": "da18bdc0-5fb6-4b60-a7b5-c097db527c7b",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/da18bdc0-5fb6-4b60-a7b5-c097db527c7b",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/da18bdc0-5fb6-4b60-a7b5-c097db527c7b",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/da18bdc0-5fb6-4b60-a7b5-c097db527c7b",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 (with updates) + SQL Server 2008 R2 Standard SP2"}, {"id":
+        "d47aeca3-38d6-4dcb-bccf-534492986ae0", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/d47aeca3-38d6-4dcb-bccf-534492986ae0",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/d47aeca3-38d6-4dcb-bccf-534492986ae0",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/d47aeca3-38d6-4dcb-bccf-534492986ae0",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 (with updates)"}, {"id": "48df4181-040e-4821-8723-d9e4ba908d2f",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/48df4181-040e-4821-8723-d9e4ba908d2f",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/48df4181-040e-4821-8723-d9e4ba908d2f",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/48df4181-040e-4821-8723-d9e4ba908d2f",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1"}, {"id": "9922a7c7-5a42-4a56-bc6a-93f857ae2346", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/9922a7c7-5a42-4a56-bc6a-93f857ae2346",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/9922a7c7-5a42-4a56-bc6a-93f857ae2346",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/9922a7c7-5a42-4a56-bc6a-93f857ae2346",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Ubuntu
+        13.04 (Raring Ringtail)"}, {"id": "e298e0d7-4fea-45f0-9694-7643e300fb43",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/e298e0d7-4fea-45f0-9694-7643e300fb43",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e298e0d7-4fea-45f0-9694-7643e300fb43",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e298e0d7-4fea-45f0-9694-7643e300fb43",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Gentoo
+        13.1"}, {"id": "89e9ce4a-1261-49c3-8a35-17224411659d", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/89e9ce4a-1261-49c3-8a35-17224411659d",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/89e9ce4a-1261-49c3-8a35-17224411659d",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/89e9ce4a-1261-49c3-8a35-17224411659d",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Fedora
+        18 (Spherical Cow)"}, {"id": "ae725da5-a942-496f-87ff-8319d23ddec1", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/ae725da5-a942-496f-87ff-8319d23ddec1",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/ae725da5-a942-496f-87ff-8319d23ddec1",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/ae725da5-a942-496f-87ff-8319d23ddec1",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "FreeBSD
+        9.1"}, {"id": "2c9736a0-a56d-481e-9d85-a9ad93ecdcc4", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/2c9736a0-a56d-481e-9d85-a9ad93ecdcc4",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/2c9736a0-a56d-481e-9d85-a9ad93ecdcc4",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/2c9736a0-a56d-481e-9d85-a9ad93ecdcc4",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Arch
+        2013.2"}, {"id": "88130782-11ec-4795-b85f-b55a297ba446", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/88130782-11ec-4795-b85f-b55a297ba446",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/88130782-11ec-4795-b85f-b55a297ba446",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/88130782-11ec-4795-b85f-b55a297ba446",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Ubuntu
+        12.10 (Quantal Quetzal)"}, {"id": "e4dbdba7-b2a4-4ee5-8e8f-4595b6d694ce",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/e4dbdba7-b2a4-4ee5-8e8f-4595b6d694ce",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e4dbdba7-b2a4-4ee5-8e8f-4595b6d694ce",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e4dbdba7-b2a4-4ee5-8e8f-4595b6d694ce",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Ubuntu
+        12.04 LTS (Precise Pangolin)"}, {"id": "d4c7b93d-9f18-45dc-aa7c-3e3b126e3792",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/d4c7b93d-9f18-45dc-aa7c-3e3b126e3792",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/d4c7b93d-9f18-45dc-aa7c-3e3b126e3792",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/d4c7b93d-9f18-45dc-aa7c-3e3b126e3792",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Ubuntu
+        10.04 LTS (Lucid Lynx)"}, {"id": "e189a89b-722e-4854-a886-25b22be8be7c", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/e189a89b-722e-4854-a886-25b22be8be7c",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e189a89b-722e-4854-a886-25b22be8be7c",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e189a89b-722e-4854-a886-25b22be8be7c",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Red
+        Hat Enterprise Linux 6.3"}, {"id": "0119af00-161f-46f4-8e76-0cbf799d7e7e",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/0119af00-161f-46f4-8e76-0cbf799d7e7e",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/0119af00-161f-46f4-8e76-0cbf799d7e7e",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/0119af00-161f-46f4-8e76-0cbf799d7e7e",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Red
+        Hat Enterprise Linux 6.1"}, {"id": "e21a4251-41c6-44b5-aa39-20e1982487f2",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/e21a4251-41c6-44b5-aa39-20e1982487f2",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e21a4251-41c6-44b5-aa39-20e1982487f2",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/e21a4251-41c6-44b5-aa39-20e1982487f2",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Red
+        Hat Enterprise Linux 5.8"}, {"id": "76856c8b-e56e-4301-b454-c8cd1be22cfb",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/76856c8b-e56e-4301-b454-c8cd1be22cfb",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/76856c8b-e56e-4301-b454-c8cd1be22cfb",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/76856c8b-e56e-4301-b454-c8cd1be22cfb",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Fedora
+        17 (Beefy Miracle)"}, {"id": "8ae428cd-0490-4f3a-818f-28213a7286b0", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/8ae428cd-0490-4f3a-818f-28213a7286b0",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/8ae428cd-0490-4f3a-818f-28213a7286b0",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/8ae428cd-0490-4f3a-818f-28213a7286b0",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Debian
+        6.06 (Squeeze)"}, {"id": "da1f0392-8c64-468f-a839-a9e56caebf07", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/da1f0392-8c64-468f-a839-a9e56caebf07",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/da1f0392-8c64-468f-a839-a9e56caebf07",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/da1f0392-8c64-468f-a839-a9e56caebf07",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "CentOS
+        6.3"}, {"id": "92ac9889-2ede-4633-ab39-25560436d83a", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/92ac9889-2ede-4633-ab39-25560436d83a",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/92ac9889-2ede-4633-ab39-25560436d83a",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/92ac9889-2ede-4633-ab39-25560436d83a",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "CentOS
+        6.2"}, {"id": "7b06ce2d-d166-4e23-ac7f-2ea0c79064e9", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/7b06ce2d-d166-4e23-ac7f-2ea0c79064e9",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/7b06ce2d-d166-4e23-ac7f-2ea0c79064e9",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/7b06ce2d-d166-4e23-ac7f-2ea0c79064e9",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "CentOS
+        6.0"}, {"id": "f5889c60-5e1a-4c6f-96db-d63c91083ca7", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/f5889c60-5e1a-4c6f-96db-d63c91083ca7",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f5889c60-5e1a-4c6f-96db-d63c91083ca7",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/f5889c60-5e1a-4c6f-96db-d63c91083ca7",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "CentOS
+        5.9"}, {"id": "436727f4-9a72-4439-99b4-975f92c87c33", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/436727f4-9a72-4439-99b4-975f92c87c33",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/436727f4-9a72-4439-99b4-975f92c87c33",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/436727f4-9a72-4439-99b4-975f92c87c33",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "CentOS
+        5.8"}, {"id": "2f15076a-dfd5-4441-9eba-3b001e4630de", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/2f15076a-dfd5-4441-9eba-3b001e4630de",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/2f15076a-dfd5-4441-9eba-3b001e4630de",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/2f15076a-dfd5-4441-9eba-3b001e4630de",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "CentOS
+        5.6"}, {"id": "17282573-81b3-4a2d-80e4-7fcf16d4ac08", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/17282573-81b3-4a2d-80e4-7fcf16d4ac08",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/17282573-81b3-4a2d-80e4-7fcf16d4ac08",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/17282573-81b3-4a2d-80e4-7fcf16d4ac08",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012 (with updates) + SQL Server 2012 Web SP1"}, {"id": "efc98a61-3816-4049-a785-f5fe0923d2d6",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/efc98a61-3816-4049-a785-f5fe0923d2d6",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/efc98a61-3816-4049-a785-f5fe0923d2d6",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/efc98a61-3816-4049-a785-f5fe0923d2d6",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2012 + SharePoint 2013 Foundation with SQL 2012 Standard"}, {"id":
+        "5ca993f8-92c7-4ace-8698-4531a8674d7a", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/5ca993f8-92c7-4ace-8698-4531a8674d7a",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/5ca993f8-92c7-4ace-8698-4531a8674d7a",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/5ca993f8-92c7-4ace-8698-4531a8674d7a",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 + SharePoint Foundation with SQL 2008 R2 SP1 Standard"},
+        {"id": "224da8a8-130d-4195-b8c6-db5863eb8c84", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/224da8a8-130d-4195-b8c6-db5863eb8c84",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/224da8a8-130d-4195-b8c6-db5863eb8c84",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/224da8a8-130d-4195-b8c6-db5863eb8c84",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Windows
+        Server 2008 R2 SP1 + SharePoint Foundation with SQL 2008 R2 Express"}, {"id":
+        "644be485-411d-4bac-aba5-5f60641d92b5", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/644be485-411d-4bac-aba5-5f60641d92b5",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/644be485-411d-4bac-aba5-5f60641d92b5",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/644be485-411d-4bac-aba5-5f60641d92b5",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "Red
+        Hat Enterprise Linux 5.5"}, {"id": "096c55e5-39f3-48cf-a413-68d9377a3ab6",
+        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/<TENANT-ID>/images/096c55e5-39f3-48cf-a413-68d9377a3ab6",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/096c55e5-39f3-48cf-a413-68d9377a3ab6",
+        "rel": "bookmark"}, {"href": "https://dfw.servers.api.rackspacecloud.com/<TENANT-ID>/images/096c55e5-39f3-48cf-a413-68d9377a3ab6",
+        "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "openSUSE
+        12.1"}]}'
+    http_version: 
+  recorded_at: Fri, 24 May 2013 18:08:26 GMT
+recorded_with: VCR 2.5.0

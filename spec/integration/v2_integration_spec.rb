@@ -8,6 +8,7 @@ describe 'v2_api' do
   before do
     Chef::Config[:knife][:rackspace_version] = nil #v2 by default
   end
+
   it 'should list server flavors', :vcr do
     stdout, stderr, status = knife_capture('rackspace flavor list')
     status.should == 0
@@ -21,5 +22,13 @@ ID  Name                     VCPUs  RAM    Disk
 7   15GB Standard Instance   6      15360  620 GB
 8   30GB Standard Instance   8      30720  1200 GB
 """)
+  end
+
+  it 'should list images', :vcr do
+    stdout, stderr, status = knife_capture('rackspace image list')
+    status.should == 0
+    stdout = ANSI.unansi stdout
+    stdout.should match /^ID\s*Name\s*$/
+    stdout.should include 'Ubuntu 12.10 (Quantal Quetzal)'
   end
 end

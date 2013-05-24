@@ -26,11 +26,11 @@ http_interactions:
       X-Storage-Url:
       - https://storage101.dfw1.clouddrive.com/v1/<CDN-TENANT-NAME>
       Cache-Control:
-      - s-maxage=86849
+      - s-maxage=73638
       X-Cloud-Auth:
       - 'true'
       Date:
-      - Fri, 24 May 2013 14:28:00 GMT
+      - Fri, 24 May 2013 18:08:11 GMT
       Front-End-Https:
       - 'on'
       X-Auth-Token: <ONE-TIME-TOKEN>
@@ -49,10 +49,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:05 GMT
+  recorded_at: Fri, 24 May 2013 18:08:11 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/detail.json?ignore_awful_caching1369405685
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/detail.json?ignore_awful_caching1369418891
     body:
       encoding: US-ASCII
       string: ''
@@ -82,9 +82,8 @@ http_interactions:
       Content-Length:
       - '422'
       Date:
-      - Fri, 24 May 2013 14:28:01 GMT
-      X-Varnish:
-      - '1284677487'
+      - Fri, 24 May 2013 18:08:11 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -99,10 +98,10 @@ http_interactions:
         server"},{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"},{"id":8,"ram":30720,"disk":1200,"name":"30GB
         server"}]}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:05 GMT
+  recorded_at: Fri, 24 May 2013 18:08:11 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/1.json?ignore_awful_caching1369405685
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/1.json?ignore_awful_caching1369418891
     body:
       encoding: US-ASCII
       string: ''
@@ -132,9 +131,8 @@ http_interactions:
       Content-Length:
       - '59'
       Date:
-      - Fri, 24 May 2013 14:28:01 GMT
-      X-Varnish:
-      - '1284677501'
+      - Fri, 24 May 2013 18:08:11 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -145,10 +143,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":1,"ram":256,"disk":10,"name":"256 server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:06 GMT
+  recorded_at: Fri, 24 May 2013 18:08:11 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/2.json?ignore_awful_caching1369405686
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/2.json?ignore_awful_caching1369418891
     body:
       encoding: US-ASCII
       string: ''
@@ -178,9 +176,8 @@ http_interactions:
       Content-Length:
       - '59'
       Date:
-      - Fri, 24 May 2013 14:28:02 GMT
-      X-Varnish:
-      - '1284677515'
+      - Fri, 24 May 2013 18:08:12 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -191,10 +188,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":2,"ram":512,"disk":20,"name":"512 server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:06 GMT
+  recorded_at: Fri, 24 May 2013 18:08:12 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/3.json?ignore_awful_caching1369405686
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/3.json?ignore_awful_caching1369418892
     body:
       encoding: US-ASCII
       string: ''
@@ -224,9 +221,8 @@ http_interactions:
       Content-Length:
       - '60'
       Date:
-      - Fri, 24 May 2013 14:28:02 GMT
-      X-Varnish:
-      - '1466376357'
+      - Fri, 24 May 2013 18:08:12 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -237,10 +233,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":3,"ram":1024,"disk":40,"name":"1GB server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:07 GMT
+  recorded_at: Fri, 24 May 2013 18:08:12 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/4.json?ignore_awful_caching1369405687
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/4.json?ignore_awful_caching1369418892
     body:
       encoding: US-ASCII
       string: ''
@@ -270,9 +266,8 @@ http_interactions:
       Content-Length:
       - '60'
       Date:
-      - Fri, 24 May 2013 14:28:03 GMT
-      X-Varnish:
-      - '1466376378'
+      - Fri, 24 May 2013 18:08:13 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -283,10 +278,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":4,"ram":2048,"disk":80,"name":"2GB server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:07 GMT
+  recorded_at: Fri, 24 May 2013 18:08:13 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/5.json?ignore_awful_caching1369405687
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/5.json?ignore_awful_caching1369418893
     body:
       encoding: US-ASCII
       string: ''
@@ -316,9 +311,8 @@ http_interactions:
       Content-Length:
       - '61'
       Date:
-      - Fri, 24 May 2013 14:28:03 GMT
-      X-Varnish:
-      - '1466376396'
+      - Fri, 24 May 2013 18:08:13 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -329,10 +323,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":5,"ram":4096,"disk":160,"name":"4GB server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:08 GMT
+  recorded_at: Fri, 24 May 2013 18:08:13 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/6.json?ignore_awful_caching1369405688
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/6.json?ignore_awful_caching1369418893
     body:
       encoding: US-ASCII
       string: ''
@@ -362,9 +356,8 @@ http_interactions:
       Content-Length:
       - '61'
       Date:
-      - Fri, 24 May 2013 14:28:03 GMT
-      X-Varnish:
-      - '1466376414'
+      - Fri, 24 May 2013 18:08:14 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -375,10 +368,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":6,"ram":8192,"disk":320,"name":"8GB server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:08 GMT
+  recorded_at: Fri, 24 May 2013 18:08:14 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/7.json?ignore_awful_caching1369405688
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/7.json?ignore_awful_caching1369418894
     body:
       encoding: US-ASCII
       string: ''
@@ -408,9 +401,8 @@ http_interactions:
       Content-Length:
       - '65'
       Date:
-      - Fri, 24 May 2013 14:28:04 GMT
-      X-Varnish:
-      - '1284677607'
+      - Fri, 24 May 2013 18:08:14 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -421,10 +413,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:08 GMT
+  recorded_at: Fri, 24 May 2013 18:08:14 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/8.json?ignore_awful_caching1369405688
+    uri: https://servers.api.rackspacecloud.com/v1.0/<TENANT-ID>/flavors/8.json?ignore_awful_caching1369418894
     body:
       encoding: US-ASCII
       string: ''
@@ -454,9 +446,8 @@ http_interactions:
       Content-Length:
       - '64'
       Date:
-      - Fri, 24 May 2013 14:28:05 GMT
-      X-Varnish:
-      - '1284677625'
+      - Fri, 24 May 2013 18:08:14 GMT
+      X-Varnish: <VARNISH-REQUEST-ID>
       Age:
       - '0'
       Via:
@@ -467,5 +458,5 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":8,"ram":30720,"disk":1200,"name":"30GB server"}}'
     http_version: 
-  recorded_at: Fri, 24 May 2013 14:28:09 GMT
+  recorded_at: Fri, 24 May 2013 18:08:14 GMT
 recorded_with: VCR 2.5.0
