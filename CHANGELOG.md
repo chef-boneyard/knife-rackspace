@@ -1,5 +1,6 @@
 ## v0.6.4
 * KNIFE-182 default to Rackspace Open Cloud (v2)
+* KNIFE-282 Add the ability to inject files on server creation
 
 ## v0.6.2
 * bump release to fix permission issues inside the gem
