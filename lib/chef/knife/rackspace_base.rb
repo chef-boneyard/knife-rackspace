@@ -88,27 +88,40 @@ class Chef
         if (Chef::Config[:knife][:rackspace_version] == 'v1') || (config[:rackspace_version] == 'v1')
           Chef::Log.debug("rackspace v1")
           @connection ||= begin
-            connection = Fog::Compute.new(
-              :provider => 'Rackspace',
-              :version => 'v1',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-            )
+            connection = Fog::Compute.new(connection_params({
+              :version => 'v1'
+              }))
           end
         else
           Chef::Log.debug("rackspace v2")
           @connection ||= begin
-            connection = Fog::Compute.new(
-              :provider => 'Rackspace',
+            connection = Fog::Compute.new(connection_params({
               :version => 'v2',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url],
               :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
-            )
+            }))
           end
         end
+      end
+
+      def connection_params(options={})
+        hash = options.merge({
+          :provider => 'Rackspace',
+          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
+          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
+          :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+        })
+
+        hash[:connection_options] ||= {}
+        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
+        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
+        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
+          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+        end
+        Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
+        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].include?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
+        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].include?(:ssl_verify_peer)
+
+        hash
       end
 
       def locate_config_value(key)
