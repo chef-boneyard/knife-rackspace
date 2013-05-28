@@ -75,7 +75,7 @@ Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap
 
 If no name is provided, nodes created with  the v1 API are named after their instance ID, with the v2 API they are given a random 'rs-XXXXXXXXX' name.
 
-Files can be injected onto the provisioned system using the `--file` switch. For example to inject `my_script.sh` into `/root/initialize.sh` you would use the following switch
+Files can be injected onto the provisioned system using the <tt>--file</tt> switch. For example to inject <tt>my_script.sh</tt> into <tt>/root/initialize.sh</tt> you would use the following switch
 
     --file /root/initialize.sh=my_script.sh.
     
