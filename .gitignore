@@ -14,7 +14,7 @@ spec/reports
 .config
 InstalledFiles
 .bundle
-.rackspace_cloud_credentials
+.rackspace_cloud_credentials*
 *.lock
 
 # YARD artifacts

@@ -13,6 +13,7 @@ VCR.configure do |c|
   c.hook_into :excon
   c.configure_rspec_metadata!
 
+  # Sensitive data
   c.filter_sensitive_data('{RAX_USERNAME}') { Chef::Config[:knife][:rackspace_api_username] }
   c.filter_sensitive_data('{RAX_PASSWORD}') { Chef::Config[:knife][:rackspace_api_key] }
   c.filter_sensitive_data('{CDN-TENANT-NAME}') { ENV['RS_CDN_TENANT_NAME'] }
@@ -78,4 +79,17 @@ RSpec::Matchers.define :match_output do |expected_output|
   description do
     'Compare actual and expected output, ignoring ansi color and trailing whitespace'
   end
+end
+
+def server_list
+  stdout, stderr, status = knife_capture('rackspace server list')
+  status == 0 ? stdout : stderr
+end
+
+def capture_instance_data(stdout, labels = {})
+  result = {}
+  labels.each do | key, label |
+    result[key] = clean_output(stdout).match(/^#{label}: (.*)$/)[1]
+  end
+  result
 end

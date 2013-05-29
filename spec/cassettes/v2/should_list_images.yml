@@ -26,21 +26,21 @@ http_interactions:
       X-Storage-Url:
       - https://storage101.dfw1.clouddrive.com/v1/{CDN-TENANT-NAME}
       Cache-Control:
-      - s-maxage=61017
+      - s-maxage=65353
       X-Cloud-Auth:
       - 'true'
       Date:
-      - Tue, 28 May 2013 22:27:49 GMT
+      - Wed, 29 May 2013 21:19:06 GMT
       Front-End-Https:
       - 'on'
       X-Auth-Token: ! '{ONE-TIME-TOKEN}'
-      response-source:
-      - cloud-auth
       X-Storage-Token: ! '{ONE-TIME-TOKEN}'
       X-Server-Management-Url:
       - https://servers.api.rackspacecloud.com/v1.0/{TENANT-ID}
       VIA:
       - 1.0 Repose (Repose/2.3.5)
+      X-Global-Auth:
+      - 'true'
       Connection:
       - keep-alive
       X-CDN-Management-Url:
@@ -49,7 +49,7 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Tue, 28 May 2013 22:27:49 GMT
+  recorded_at: Wed, 29 May 2013 21:19:07 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/{TENANT-ID}/images
@@ -70,7 +70,7 @@ http_interactions:
       message: 
     headers:
       Date:
-      - Tue, 28 May 2013 22:27:52 GMT
+      - Wed, 29 May 2013 21:19:08 GMT
       Content-Length:
       - '22207'
       Content-Type:
@@ -285,5 +285,5 @@ http_interactions:
         "type": "application/vnd.openstack.image", "rel": "alternate"}], "name": "openSUSE
         12.1"}]}'
     http_version: 
-  recorded_at: Tue, 28 May 2013 22:27:52 GMT
+  recorded_at: Wed, 29 May 2013 21:19:09 GMT
 recorded_with: VCR 2.5.0
