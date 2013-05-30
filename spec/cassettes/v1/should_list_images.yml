@@ -10,9 +10,9 @@ http_interactions:
       User-Agent:
       - fog/1.11.1
       X-Auth-Key:
-      - ! '{RAX_PASSWORD}'
+      - ! '[RAX_PASSWORD]'
       X-Auth-User:
-      - ! '{RAX_USERNAME}'
+      - ! '[RAX_USERNAME]'
   response:
     status:
       code: 204
@@ -24,19 +24,19 @@ http_interactions:
       - Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass,
         X-Auth-User
       X-Storage-Url:
-      - https://storage101.dfw1.clouddrive.com/v1/{CDN-TENANT-NAME}
+      - https://storage101.dfw1.clouddrive.com/v1/[CDN-TENANT-NAME]
       Cache-Control:
-      - s-maxage=65356
+      - s-maxage=83181
       X-Cloud-Auth:
       - 'true'
       Date:
-      - Wed, 29 May 2013 21:19:03 GMT
+      - Thu, 30 May 2013 16:28:39 GMT
       Front-End-Https:
       - 'on'
-      X-Auth-Token: ! '{ONE-TIME-TOKEN}'
-      X-Storage-Token: ! '{ONE-TIME-TOKEN}'
+      X-Auth-Token: ! '[ONE-TIME-TOKEN]'
+      X-Storage-Token: ! '[ONE-TIME-TOKEN]'
       X-Server-Management-Url:
-      - https://servers.api.rackspacecloud.com/v1.0/{TENANT-ID}
+      - https://servers.api.rackspacecloud.com/v1.0/[TENANT-ID]
       VIA:
       - 1.0 Repose (Repose/2.3.5)
       X-Global-Auth:
@@ -44,15 +44,15 @@ http_interactions:
       Connection:
       - keep-alive
       X-CDN-Management-Url:
-      - https://cdn1.clouddrive.com/v1/{CDN-TENANT-NAME}
+      - https://cdn1.clouddrive.com/v1/[CDN-TENANT-NAME]
     body:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Wed, 29 May 2013 21:19:04 GMT
+  recorded_at: Thu, 30 May 2013 16:28:39 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/{TENANT-ID}/images/detail.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/[TENANT-ID]/images/detail.json
     body:
       encoding: US-ASCII
       string: ''
@@ -61,7 +61,7 @@ http_interactions:
       - fog/1.11.1
       Content-Type:
       - application/json
-      X-Auth-Token: ! '{ONE-TIME-TOKEN}'
+      X-Auth-Token: ! '[ONE-TIME-TOKEN]'
   response:
     status:
       code: 203
@@ -74,7 +74,7 @@ http_interactions:
       Last-Modified:
       - Mon, 09 Jul 2012 17:15:23 GMT
       X-PURGE-KEY:
-      - /{TENANT-ID}/images
+      - /[TENANT-ID]/images
       Cache-Control:
       - s-maxage=1800
       Content-Type:
@@ -82,10 +82,10 @@ http_interactions:
       Content-Length:
       - '2547'
       Date:
-      - Wed, 29 May 2013 21:19:03 GMT
-      X-Varnish: ! '{VARNISH-REQUEST-ID}'
+      - Thu, 30 May 2013 16:28:39 GMT
+      X-Varnish: ! '[VARNISH-REQUEST-ID]'
       Age:
-      - '1561'
+      - '95'
       Via:
       - 1.1 varnish
       Connection:
@@ -119,5 +119,5 @@ http_interactions:
         5.8"},{"id":89,"status":"ACTIVE","updated":"2011-10-04T08:39:34-05:00","name":"Windows
         Server 2008 R2 x64 + SQL Server 2008 R2 Web"}]}'
     http_version: 
-  recorded_at: Wed, 29 May 2013 21:19:04 GMT
+  recorded_at: Thu, 30 May 2013 16:28:39 GMT
 recorded_with: VCR 2.5.0
