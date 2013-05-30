@@ -43,6 +43,7 @@ VCR.configure do |c|
     # Ignores cache busting parameters.
     :match_requests_on => [:host, :path]
   }
+  c.default_cassette_options.merge!({:record => :all}) if ENV['INTEGRATION_TESTS'] == 'live'
 end
 
 def filter_headers(interaction, pattern, placeholder)

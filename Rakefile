@@ -22,4 +22,17 @@ Bundler::GemHelper.install_tasks
 
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
-task :default => :spec
+task :default => [:spec, 'integration:live']
+
+namespace :integration do
+  desc 'Run the integration tests'
+  RSpec::Core::RakeTask.new(:test) do |t|
+    t.pattern = 'spec/integration/**'
+  end
+
+  desc 'Run the integration tests live (no VCR cassettes)'
+  task :live do
+    ENV['INTEGRATION_TESTS'] = 'live'
+    Rake::Task['integration:test'].invoke
+  end
+end
