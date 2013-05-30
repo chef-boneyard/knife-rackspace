@@ -26,11 +26,11 @@ http_interactions:
       X-Storage-Url:
       - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
       Cache-Control:
-      - s-maxage=82443
+      - s-maxage=79790
       X-Cloud-Auth:
       - 'true'
       Date:
-      - Thu, 30 May 2013 16:40:57 GMT
+      - Thu, 30 May 2013 17:25:10 GMT
       Front-End-Https:
       - 'on'
       X-Auth-Token: _ONE-TIME-TOKEN_
@@ -49,7 +49,7 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 30 May 2013 16:40:57 GMT
+  recorded_at: Thu, 30 May 2013 17:25:10 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/images/detail.json
@@ -82,7 +82,7 @@ http_interactions:
       Content-Length:
       - '2547'
       Date:
-      - Thu, 30 May 2013 16:40:58 GMT
+      - Thu, 30 May 2013 17:25:11 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
       - '0'
@@ -119,5 +119,5 @@ http_interactions:
         5.8"},{"id":89,"status":"ACTIVE","updated":"2011-10-04T08:39:34-05:00","name":"Windows
         Server 2008 R2 x64 + SQL Server 2008 R2 Web"}]}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 16:40:58 GMT
+  recorded_at: Thu, 30 May 2013 17:25:11 GMT
 recorded_with: VCR 2.5.0

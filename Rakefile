@@ -32,7 +32,10 @@ namespace :integration do
 
   desc 'Run the integration tests live (no VCR cassettes)'
   task :live do
-    ENV['INTEGRATION_TESTS'] = 'live'
-    Rake::Task['integration:test'].invoke
+    unless ENV['TRAVIS'] == 'true' && ENV['TRAVIS_SECURE_ENV_VARS'] == 'false'
+      fail "Not all required variables detected" unless ENV['OS_USERNAME'] && ENV['OS_PASSWORD'] && ENV['RS_CDN_TENANT_NAME'] && ENV['RS_TENANT_ID']
+      ENV['INTEGRATION_TESTS'] = 'live'
+      Rake::Task['integration:test'].invoke
+    end
   end
 end
