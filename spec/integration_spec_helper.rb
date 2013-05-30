@@ -14,18 +14,18 @@ VCR.configure do |c|
   c.configure_rspec_metadata!
 
   # Sensitive data
-  c.filter_sensitive_data('[RAX_USERNAME]') { Chef::Config[:knife][:rackspace_api_username] }
-  c.filter_sensitive_data('[RAX_PASSWORD]') { Chef::Config[:knife][:rackspace_api_key] }
-  c.filter_sensitive_data('[CDN-TENANT-NAME]') { ENV['RS_CDN_TENANT_NAME'] }
-  c.filter_sensitive_data('[TENANT-ID]') { ENV['RS_TENANT_ID'] }
+  c.filter_sensitive_data('_RAX_USERNAME_') { Chef::Config[:knife][:rackspace_api_username] }
+  c.filter_sensitive_data('_RAX_PASSWORD_') { Chef::Config[:knife][:rackspace_api_key] }
+  c.filter_sensitive_data('_CDN-TENANT-NAME_') { ENV['RS_CDN_TENANT_NAME'] }
+  c.filter_sensitive_data('_TENANT-ID_') { ENV['RS_TENANT_ID'] }
 
   c.before_record do |interaction|
     # Sensitive data
-    filter_headers(interaction, /X-\w*-Token/, '[ONE-TIME-TOKEN]')
+    filter_headers(interaction, /X-\w*-Token/, '_ONE-TIME-TOKEN_')
 
     # Transient data (trying to avoid unnecessary cassette churn)
-    filter_headers(interaction, 'X-Compute-Request-Id', '[COMPUTE-REQUEST-ID]')
-    filter_headers(interaction, 'X-Varnish', '[VARNISH-REQUEST-ID]')
+    filter_headers(interaction, 'X-Compute-Request-Id', '_COMPUTE-REQUEST-ID_')
+    filter_headers(interaction, 'X-Varnish', '_VARNISH-REQUEST-ID_')
 
     # Throw away build state - just makes server.wait_for loops really long during replay
     begin
