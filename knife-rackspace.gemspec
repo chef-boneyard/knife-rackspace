@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "vcr"
   s.add_development_dependency "pry-debugger"
   s.add_development_dependency "ansi"
+  s.add_development_dependency "rake"
 end

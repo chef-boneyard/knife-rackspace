@@ -93,3 +93,34 @@ def capture_instance_data(stdout, labels = {})
   end
   result
 end
+
+# Ideally this belongs in knife-dsl, but it causes a scoping conflict with knife.rb.
+# See https://github.com/chef-workflow/knife-dsl/issues/2
+def knife_capture(command, args=[], input=nil)
+  null = Gem.win_platform? ? File.open('NUL:', 'r') : File.open('/dev/null', 'r')
+
+  if defined? Pry
+    Pry.config.input = STDIN
+    Pry.config.output = STDOUT
+  end
+
+  warn = $VERBOSE
+  $VERBOSE = nil
+  old_stderr, old_stdout, old_stdin = $stderr, $stdout, $stdin
+
+  $stderr = StringIO.new('', 'r+')
+  $stdout = StringIO.new('', 'r+')
+  $stdin = input ? StringIO.new(input, 'r') : null
+  $VERBOSE = warn
+
+  status = Chef::Knife::DSL::Support.run_knife(command, args)
+  return $stdout.string, $stderr.string, status
+ensure
+  warn = $VERBOSE
+  $VERBOSE = nil
+  $stderr = old_stderr
+  $stdout = old_stdout
+  $stdin = old_stdin
+  $VERBOSE = warn
+  null.close
+end

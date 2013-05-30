@@ -2,7 +2,7 @@ require 'integration_spec_helper'
 require 'fog'
 require 'knife/dsl'
 require 'chef/knife/rackspace_server_create'
-include Chef::Knife::DSL
+# include Chef::Knife::DSL
 
 [:v1, :v2].each do |api|
   describe api do
