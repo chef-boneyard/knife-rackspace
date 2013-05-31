@@ -7,11 +7,11 @@ log_location             STDOUT
 #validation_key           "#{current_dir}/knife-rackspace-validator.pem"
 #chef_server_url          "https://api.opscode.com/organizations/knife-rackspace"
 #cache_type               'basicfile'
-#cache_options( :path => "#{ENV['home']}/.chef/checksums" )
+#cache_options( :path => "#{env['home']}/.chef/checksums" )
 #cookbook_path            ["#{current_dir}/../cookbooks"]
 
-knife[:rackspace_api_username] = "#{ENV['OS_USERNAME']}"
-knife[:rackspace_api_key] = "#{ENV['OS_PASSWORD']}"
+#knife[:rackspace_api_username] = "#{env['os_username']}"
+#knife[:rackspace_api_key] = "#{env['os_password']}"
 
 #https_proxy 'https://localhost:8888'
 #knife[:ssl_verify_peer] = false
