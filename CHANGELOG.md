@@ -1,7 +1,8 @@
-## v0.6.4
+## v0.7.0
+* KNIFE_RACKSPACE-32 Ensure hint file is created to improve Ohai detection.
 * KNIFE-182 default to Rackspace Open Cloud (v2)
-* KNIFE-282 Add the ability to inject files on server creation
 * KNIFE-281 pass https_proxy and http_proxy setting onto fog; added ssl_verify_peer setting to disable certificate validation
+* KNIFE-282 Add the ability to inject files on server creation
 
 ## v0.6.2
 * bump release to fix permission issues inside the gem
