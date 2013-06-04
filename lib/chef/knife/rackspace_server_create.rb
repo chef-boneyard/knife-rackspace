@@ -162,6 +162,42 @@ class Chef
         tcp_socket && tcp_socket.close
       end
 
+
+      def parse_file_argument(arg)
+        dest, src = arg.split('=')
+        unless dest && src
+          ui.error "Unable to process file arguments #{arg}. The --file option requires both the destination on the remote machine as well as the local source be supplied using the form DESTINATION-PATH=SOURCE-PATH"
+          exit 1
+        end
+        [dest, src]
+      end
+      
+      def encode_file(file)
+        begin
+          filename = File.expand_path(file)
+          content = File.read(filename)
+        rescue Errno::ENOENT => e
+          ui.error "Unable to read source file - #{filename}"
+          exit 1
+        end
+        Base64.encode64(content)
+      end
+      
+      def files
+        return {} unless  Chef::Config[:knife][:file]
+
+        files = []
+        Chef::Config[:knife][:file].each do |arg|
+          dest, src = parse_file_argument(arg)
+          Chef::Log.debug("Inject file #{src} into #{dest}")
+          files << { 
+            :path => dest,
+            :contents => encode_file(src)
+          }
+      end
+      files
+    end
+
       def run
         $stdout.sync = true
 
@@ -176,8 +212,9 @@ class Chef
           :name => node_name,
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
-          :metadata => Chef::Config[:knife][:rackspace_metadata]
-          )
+          :metadata => Chef::Config[:knife][:rackspace_metadata],
+          :personality => files
+        )
 
         msg_pair("Instance ID", server.id)
         msg_pair("Host ID", server.host_id)
