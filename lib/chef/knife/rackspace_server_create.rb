@@ -145,7 +145,7 @@ class Chef
         :default => true
 
       option :default_networks,
-        :long => "--[no-]-default-networks",
+        :long => "--[no-]default-networks",
         :description => "Include public and service networks, enabled by default",
         :boolean => true,
         :default => true
@@ -405,7 +405,7 @@ class Chef
     end
 
     def get_networks(names)
-      names = Array(names) unless names.is_a?(Array)
+      names = Array(names)
       if(Chef::Config[:knife][:rackspace_version] == 'v2')
         if(config[:default_networks])
           nets = [
@@ -415,12 +415,10 @@ class Chef
         else
           nets = []
         end
-        found_nets = connection.networks.find_all do |n|
-          names.include?(n.label) || names.include?(n.id)
-        end
+        available_networks = connection.networks.all
         
         names.each do |name|
-          net = found_nets.detect{|n| n.label == name || n.id == name}
+          net = available_networks.detect{|n| n.label == name || n.id == name}
           if(net)
             nets << net.id
           else

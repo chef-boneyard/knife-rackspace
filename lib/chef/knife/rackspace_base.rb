@@ -157,7 +157,7 @@ class Chef
         @public_dns_name ||= begin
           Resolv.getname(ip_address)
         rescue
-          "#{ip_address.gsub('.','-')}.static.cloud-ips.com"
+          "#{ip_address.gsub('.','-')}.static.cloud-ips.com" unless ip_address == nil
         end
       end
 
