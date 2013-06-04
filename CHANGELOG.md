@@ -1,5 +1,6 @@
 ## v0.7.0
 * KNIFE_RACKSPACE-32 Ensure hint file is created to improve Ohai detection.
+* KNIFE-181 correct mixed use of 'rackspace_auth_url' and 'rackspace_api_auth_url'. Only 'rackspace_auth_url' is correct.
 * KNIFE-182 default to Rackspace Open Cloud (v2)
 * KNIFE-281 pass https_proxy and http_proxy setting onto fog; added ssl_verify_peer setting to disable certificate validation
 * KNIFE-282 Add the ability to inject files on server creation
