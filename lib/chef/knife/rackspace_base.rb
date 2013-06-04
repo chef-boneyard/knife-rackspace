@@ -64,9 +64,17 @@ class Chef
             :description => "Your rackspace API endpoint",
             :default => "https://dfw.servers.api.rackspacecloud.com/v2",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
+            
+          option :file,
+            :long => '--file DESTINATION-PATH=SOURCE-PATH',
+            :description => 'File to inject on node',
+            :proc => Proc.new {|arg| 
+              Chef::Config[:knife][:file] ||= []
+              Chef::Config[:knife][:file] << arg
+            }
         end
       end
-
+      
       def connection
         Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]} (config)")
         Chef::Log.debug("version #{config[:rackspace_version]} (cli)")
