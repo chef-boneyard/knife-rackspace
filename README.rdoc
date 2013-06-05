@@ -39,7 +39,7 @@ To select for the previous Rackspace API (aka 'v1'), you can use the <tt>--racks
 
 This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
 
-    knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
+    knife[:rackspace_auth_url] = "lon.auth.api.rackspacecloud.com"
 
 This plugin also has support for specifying which region to create servers into:
 
@@ -74,6 +74,12 @@ This plugin provides the following Knife subcommands. Specific command options c
 Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap (using the SSH protocol). The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server. By default the server is bootstrapped using the {chef-full}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/chef-full.erb] template. This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
 
 If no name is provided, nodes created with  the v1 API are named after their instance ID, with the v2 API they are given a random 'rs-XXXXXXXXX' name.
+
+Files can be injected onto the provisioned system using the <tt>--file</tt> switch. For example to inject <tt>my_script.sh</tt> into <tt>/root/initialize.sh</tt> you would use the following switch
+
+    --file /root/initialize.sh=my_script.sh.
+
+Note: You can only inject text files and the maximum destination path is 255 characters.
 
 == knife rackspace server delete
 
