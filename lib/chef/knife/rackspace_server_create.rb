@@ -251,6 +251,7 @@ class Chef
         false
       end
       
+
       def run
         $stdout.sync = true
 
