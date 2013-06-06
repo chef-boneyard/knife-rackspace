@@ -262,6 +262,7 @@ class Chef
           puts("done")
         }
         bootstrap_for_node(server, bootstrap_ip_address).run
+        add_dns_record(server)
 
         puts "\n"
         msg_pair("Instance ID", server.id)
@@ -278,9 +279,22 @@ class Chef
         msg_pair("Run List", config[:run_list].join(', '))
       end
 
+      def add_dns_record(server)
+        rackspace_add_dns_record = Chef::Config[:knife][:zone]
+        if rackspace_add_dns_record != ''
+          printf "\nAdding DNS record for %s ...\n", bootstrap.config[:chef_node_name]
+          zone = dnsconnection.zones.find { |z| z.domain == Chef::Config[:knife][:zone] }
+          record = zone.records.create(
+            :value => public_ip(server),
+            :name  => "#{bootstrap.config[:chef_node_name]}.#{Chef::Config[:knife][:zone]}",
+            :type => 'A'
+          )
+        end
+      end
+
+
       def bootstrap_for_node(server, bootstrap_ip_address)
 
-        rackspace_add_dns_record = Chef::Config[:knife][:zone]
 
         bootstrap = Chef::Knife::Bootstrap.new
         bootstrap.name_args = [bootstrap_ip_address]
@@ -308,16 +322,6 @@ class Chef
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
         bootstrap
 
-
-        if rackspace_add_dns_record
-          printf "\nAdding DNS record for %s ...\n", bootstrap.config[:chef_node_name]
-          zone = dnsconnection.zones.find { |z| z.domain == Chef::Config[:knife][:zone] }
-          record = zone.records.create(
-            :value => public_ip(server),
-            :name  => "#{bootstrap.config[:chef_node_name]}.#{Chef::Config[:knife][:zone]}",
-            :type => 'A'
-          )
-        end
       end
 
     end
