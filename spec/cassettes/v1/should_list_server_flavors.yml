@@ -26,17 +26,17 @@ http_interactions:
       X-Storage-Url:
       - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
       Cache-Control:
-      - s-maxage=79792
+      - s-maxage=85674
       X-Cloud-Auth:
       - 'true'
       Date:
-      - Thu, 30 May 2013 17:25:08 GMT
+      - Thu, 06 Jun 2013 15:49:22 GMT
       Front-End-Https:
       - 'on'
       X-Auth-Token: _ONE-TIME-TOKEN_
       X-Storage-Token: _ONE-TIME-TOKEN_
       X-Server-Management-Url:
-      - https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_
+      - https://servers.api.rackspacecloud.com/v1.0/000000
       VIA:
       - 1.0 Repose (Repose/2.3.5)
       X-Global-Auth:
@@ -49,10 +49,10 @@ http_interactions:
       encoding: UTF-8
       string: ''
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:08 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/detail.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/detail.json
     body:
       encoding: US-ASCII
       string: ''
@@ -64,7 +64,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -82,10 +82,10 @@ http_interactions:
       Content-Length:
       - '422'
       Date:
-      - Thu, 30 May 2013 17:25:08 GMT
+      - Thu, 06 Jun 2013 15:49:22 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '708'
       Via:
       - 1.1 varnish
       Connection:
@@ -98,10 +98,10 @@ http_interactions:
         server"},{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"},{"id":8,"ram":30720,"disk":1200,"name":"30GB
         server"}]}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:08 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/1.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/1.json
     body:
       encoding: US-ASCII
       string: ''
@@ -113,7 +113,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -131,10 +131,10 @@ http_interactions:
       Content-Length:
       - '59'
       Date:
-      - Thu, 30 May 2013 17:25:08 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '708'
       Via:
       - 1.1 varnish
       Connection:
@@ -143,10 +143,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":1,"ram":256,"disk":10,"name":"256 server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:08 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/2.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/2.json
     body:
       encoding: US-ASCII
       string: ''
@@ -158,7 +158,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -176,10 +176,10 @@ http_interactions:
       Content-Length:
       - '59'
       Date:
-      - Thu, 30 May 2013 17:25:09 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '724'
       Via:
       - 1.1 varnish
       Connection:
@@ -188,10 +188,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":2,"ram":512,"disk":20,"name":"512 server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:09 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/3.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/3.json
     body:
       encoding: US-ASCII
       string: ''
@@ -203,7 +203,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -221,10 +221,10 @@ http_interactions:
       Content-Length:
       - '60'
       Date:
-      - Thu, 30 May 2013 17:25:09 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '708'
       Via:
       - 1.1 varnish
       Connection:
@@ -233,10 +233,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":3,"ram":1024,"disk":40,"name":"1GB server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:09 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/4.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/4.json
     body:
       encoding: US-ASCII
       string: ''
@@ -248,7 +248,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -266,10 +266,10 @@ http_interactions:
       Content-Length:
       - '60'
       Date:
-      - Thu, 30 May 2013 17:25:09 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '10'
       Via:
       - 1.1 varnish
       Connection:
@@ -278,10 +278,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":4,"ram":2048,"disk":80,"name":"2GB server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:09 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/5.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/5.json
     body:
       encoding: US-ASCII
       string: ''
@@ -311,7 +311,7 @@ http_interactions:
       Content-Length:
       - '61'
       Date:
-      - Thu, 30 May 2013 17:25:09 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
       - '0'
@@ -323,10 +323,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":5,"ram":4096,"disk":160,"name":"4GB server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:09 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:22 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/6.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/6.json
     body:
       encoding: US-ASCII
       string: ''
@@ -356,7 +356,7 @@ http_interactions:
       Content-Length:
       - '61'
       Date:
-      - Thu, 30 May 2013 17:25:10 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
       - '0'
@@ -368,10 +368,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":6,"ram":8192,"disk":320,"name":"8GB server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:10 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:23 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/7.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/7.json
     body:
       encoding: US-ASCII
       string: ''
@@ -383,7 +383,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -401,10 +401,10 @@ http_interactions:
       Content-Length:
       - '65'
       Date:
-      - Thu, 30 May 2013 17:25:10 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '721'
       Via:
       - 1.1 varnish
       Connection:
@@ -413,10 +413,10 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:10 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:23 GMT
 - request:
     method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/_TENANT-ID_/flavors/8.json
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/8.json
     body:
       encoding: US-ASCII
       string: ''
@@ -428,7 +428,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 200
+      code: 203
       message: 
     headers:
       Server:
@@ -446,10 +446,10 @@ http_interactions:
       Content-Length:
       - '64'
       Date:
-      - Thu, 30 May 2013 17:25:10 GMT
+      - Thu, 06 Jun 2013 15:49:23 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '0'
+      - '10'
       Via:
       - 1.1 varnish
       Connection:
@@ -458,5 +458,5 @@ http_interactions:
       encoding: UTF-8
       string: ! '{"flavor":{"id":8,"ram":30720,"disk":1200,"name":"30GB server"}}'
     http_version: 
-  recorded_at: Thu, 30 May 2013 17:25:10 GMT
+  recorded_at: Thu, 06 Jun 2013 15:49:23 GMT
 recorded_with: VCR 2.5.0
