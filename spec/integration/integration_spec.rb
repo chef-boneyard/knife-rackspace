@@ -15,7 +15,7 @@ require 'chef/knife/rackspace_server_create'
 
     it 'should list server flavors', :vcr do
       stdout, stderr, status = knife_capture('rackspace flavor list')
-      status.should == 0
+      status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
 
       expected_output = {
         :v1 => """
@@ -50,8 +50,8 @@ ID  Name                     VCPUs  RAM    Disk
       }
 
       stdout, stderr, status = knife_capture('rackspace image list')
-      status.should == 0
-      stdout = ANSI.unansi stdout
+      status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
+      stdout = clean_output(stdout)
       stdout.should match /^ID\s*Name\s*$/
       stdout.should include sample_image[api]
     end
@@ -68,7 +68,7 @@ ID  Name                     VCPUs  RAM    Disk
 
       args = %W{rackspace server create -I #{image[api]} -f #{flavor} -N test-node -S test-server}
       stdout, stderr, status = knife_capture(args)
-      status.should == 0
+      status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
       instance_data = capture_instance_data(stdout, {
         :name => 'Name',
         :instance_id => 'Instance ID',
@@ -81,7 +81,7 @@ ID  Name                     VCPUs  RAM    Disk
 
       args = %W{rackspace server delete #{instance_data[:instance_id]} -y}
       stdout, stderr, status = knife_capture(args)
-      status.should == 0
+      status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
 
       # Need to deal with deleting vs deleted states before we can check this
       # server_list.should_not match /#{instance_data[:instance_id]}\s*#{instance_data[:name]}\s*#{instance_data[:public_ip]}\s*#{instance_data[:private_ip]}\s*#{flavor}\s*#{image}/

@@ -17,7 +17,7 @@ VCR.configure do |c|
   c.filter_sensitive_data('_RAX_USERNAME_') { Chef::Config[:knife][:rackspace_api_username] }
   c.filter_sensitive_data('_RAX_PASSWORD_') { Chef::Config[:knife][:rackspace_api_key] }
   c.filter_sensitive_data('_CDN-TENANT-NAME_') { ENV['RS_CDN_TENANT_NAME'] }
-  c.filter_sensitive_data('_TENANT-ID_') { ENV['RS_TENANT_ID'] }
+  c.filter_sensitive_data('000000') { ENV['RS_TENANT_ID'] }
 
   c.before_record do |interaction|
     # Sensitive data
@@ -36,6 +36,10 @@ VCR.configure do |c|
       end
     rescue
     end
+  end
+
+  c.before_playback do | interaction |
+    interaction.filter!('_TENANT-ID_', '0000000')
   end
 
   c.default_cassette_options = {
@@ -62,7 +66,10 @@ RSpec.configure do |c|
 end
 
 def clean_output(output)
-  ANSI.unansi(output).gsub(/\s+$/,'')
+  output = ANSI.unansi(output)
+  output.gsub!(/\s+$/,'')
+  output.gsub!("\e[0G", '')
+  output
 end
 
 RSpec::Matchers.define :match_output do |expected_output|
