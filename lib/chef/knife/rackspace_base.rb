@@ -88,14 +88,6 @@ class Chef
               :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
             )
           end
-          @dnsconnection ||= begin
-            dnsconnection = Fog::DNS.new(
-              :provider => 'Rackspace',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-            )
-          end
         else
           @connection ||= begin
             connection = Fog::Compute.new(
@@ -106,14 +98,14 @@ class Chef
               :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
             )
           end
-          @dnsconnection ||= begin
-            dnsconnection = Fog::DNS.new(
-              :provider => 'Rackspace',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-            )
-          end
+        end
+        @dnsconnection ||= begin
+          dnsconnection = Fog::DNS.new(
+            :provider => 'Rackspace',
+            :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
+            :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
+            :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+          )
         end
       end
 
