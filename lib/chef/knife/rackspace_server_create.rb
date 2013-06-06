@@ -280,13 +280,20 @@ class Chef
       end
 
       def add_dns_record(server)
+
+        if version_one?
+          chef_node_name = config[:chef_node_name] || server.id
+        else
+          chef_node_name = server.name
+        end
+
         rackspace_add_dns_record = Chef::Config[:knife][:zone]
         if rackspace_add_dns_record != ''
-          printf "\nAdding DNS record for %s ...\n", bootstrap.config[:chef_node_name]
+          printf "\nAdding DNS record for %s ...\n", chef_node_name
           zone = dnsconnection.zones.find { |z| z.domain == Chef::Config[:knife][:zone] }
           record = zone.records.create(
             :value => public_ip(server),
-            :name  => "#{bootstrap.config[:chef_node_name]}.#{Chef::Config[:knife][:zone]}",
+            :name  => "#{chef_node_name}.#{Chef::Config[:knife][:zone]}",
             :type => 'A'
           )
         end
