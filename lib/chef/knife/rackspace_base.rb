@@ -99,6 +99,18 @@ class Chef
             )
           end
         end
+      end
+
+      def dnsconnection
+        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]}") #config file
+        Chef::Log.debug("version #{config[:rackspace_version]}") #cli
+        Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
+        Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
+        Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
+        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
+        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]}")
+        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]}")
         @dnsconnection ||= begin
           dnsconnection = Fog::DNS.new(
             :provider => 'Rackspace',
