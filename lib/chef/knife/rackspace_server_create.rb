@@ -192,7 +192,6 @@ class Chef
 
         rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
         rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
-        rackspace_add_dns_record = Chef::Config[:knife][:zone]
 
         server = connection.servers.create(
           :name => node_name,
@@ -280,6 +279,9 @@ class Chef
       end
 
       def bootstrap_for_node(server, bootstrap_ip_address)
+
+        rackspace_add_dns_record = Chef::Config[:knife][:zone]
+
         bootstrap = Chef::Knife::Bootstrap.new
         bootstrap.name_args = [bootstrap_ip_address]
         bootstrap.config[:run_list] = config[:run_list]
