@@ -135,6 +135,12 @@ class Chef
         :boolean => true,
         :default => false
 
+      option :rackspace_add_dns_record,
+        :long => "--rackspace-add-dns-record ZONE",
+        :description => "Creates an 'A' record in Cloud DNS for NODE_NAME under ZONE",
+        :proc => Proc.new { |z| Chef::Config[:knife][:zone] = z },
+        :default => ""
+
       option :hint,
         :long => "--hint HINT_NAME[=HINT_FILE]",
         :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
@@ -298,6 +304,17 @@ class Chef
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
         bootstrap
+
+
+        if rackspace_add_dns_record
+          printf "\nAdding DNS record for %s ...\n", bootstrap.config[:chef_node_name]
+          zone = dnsconnection.zones.find { |z| z.domain == Chef::Config[:knife][:zone] }
+          record = zone.records.create(
+            :value => public_ip(server),
+            :name  => "#{bootstrap.config[:chef_node_name]}.#{Chef::Config[:knife][:zone]}",
+            :type => 'A'
+          )
+        end
       end
 
     end
