@@ -8,6 +8,8 @@
 * KNIFE-282 Add the ability to inject files on server creation
 * KNIFE-289 Add Integration Tests
 
+* KNOWN ISSUES: KNIFE-296 knife-windows overrides -x option with winrm-user
+
 ## v0.6.2
 * bump release to fix permission issues inside the gem
 
