@@ -26,7 +26,7 @@ http_interactions:
       X-Storage-Url:
       - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
       Cache-Control:
-      - s-maxage=85673
+      - s-maxage=71190
       X-Cloud-Auth:
       - 'true'
       Date:

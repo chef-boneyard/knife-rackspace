@@ -1,0 +1,462 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://auth.api.rackspacecloud.com/v1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      X-Auth-Key:
+      - _RAX_PASSWORD_
+      X-Auth-User:
+      - _RAX_USERNAME_
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass,
+        X-Auth-User
+      X-Storage-Url:
+      - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
+      Cache-Control:
+      - s-maxage=71193
+      X-Cloud-Auth:
+      - 'true'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      Front-End-Https:
+      - 'on'
+      X-Auth-Token: _ONE-TIME-TOKEN_
+      X-Storage-Token: _ONE-TIME-TOKEN_
+      X-Server-Management-Url:
+      - https://servers.api.rackspacecloud.com/v1.0/000000
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      X-Global-Auth:
+      - 'true'
+      Connection:
+      - keep-alive
+      X-CDN-Management-Url:
+      - https://cdn1.clouddrive.com/v1/_CDN-TENANT-NAME_
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/detail.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Tue, 06 Dec 2011 17:31:55 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '422'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '512'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavors":[{"id":1,"ram":256,"disk":10,"name":"256 server"},{"id":2,"ram":512,"disk":20,"name":"512
+        server"},{"id":3,"ram":1024,"disk":40,"name":"1GB server"},{"id":4,"ram":2048,"disk":80,"name":"2GB
+        server"},{"id":5,"ram":4096,"disk":160,"name":"4GB server"},{"id":6,"ram":8192,"disk":320,"name":"8GB
+        server"},{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"},{"id":8,"ram":30720,"disk":1200,"name":"30GB
+        server"}]}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/1.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Wed, 19 Sep 2007 18:24:59 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '59'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '792'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":1,"ram":256,"disk":10,"name":"256 server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/2.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Wed, 19 Sep 2007 18:25:10 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '59'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '1776'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":2,"ram":512,"disk":20,"name":"512 server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/3.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Fri, 21 Sep 2007 23:11:39 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '60'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '791'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":3,"ram":1024,"disk":40,"name":"1GB server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/4.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Wed, 19 Sep 2007 18:25:33 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '60'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '511'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":4,"ram":2048,"disk":80,"name":"2GB server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/5.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Tue, 18 Mar 2008 17:54:15 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '61'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '626'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":5,"ram":4096,"disk":160,"name":"4GB server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/6.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Mon, 28 Jan 2008 13:35:30 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '61'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '1615'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":6,"ram":8192,"disk":320,"name":"8GB server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/7.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Fri, 01 Apr 2011 00:02:01 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '65'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '626'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/8.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Tue, 06 Dec 2011 17:31:55 GMT
+      X-PURGE-KEY:
+      - /flavors
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '64'
+      Date:
+      - Mon, 10 Jun 2013 22:32:10 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '1776'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor":{"id":8,"ram":30720,"disk":1200,"name":"30GB server"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:10 GMT
+recorded_with: VCR 2.5.0
