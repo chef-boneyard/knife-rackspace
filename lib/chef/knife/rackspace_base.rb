@@ -59,11 +59,11 @@ class Chef
             :default => "auth.api.rackspacecloud.com",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
 
-          option :rackspace_endpoint,
-            :long => "--rackspace-endpoint URL",
+          option :rackspace_compute_url,
+            :long => "--rackspace-compute-url URL",
             :description => "Your rackspace API endpoint",
             :default => "https://dfw.servers.api.rackspacecloud.com/v2",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_compute_url] = url }
 
           option :file,
             :long => '--file DESTINATION-PATH=SOURCE-PATH',
@@ -83,8 +83,8 @@ class Chef
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
         Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]} (config)")
         Chef::Log.debug("rackspace_auth_url #{config[:rackspace_auth_url]} (cli)")
-        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]} (config)")
-        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]} (cli)")
+        Chef::Log.debug("rackspace_compute_url #{Chef::Config[:knife][:rackspace_compute_url]} (config)")
+        Chef::Log.debug("rackspace_compute_url #{config[:rackspace_compute_url]} (cli)")
         if (Chef::Config[:knife][:rackspace_version] == 'v1') || (config[:rackspace_version] == 'v1')
           Chef::Log.debug("rackspace v1")
           @connection ||= begin
@@ -97,7 +97,7 @@ class Chef
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
               :version => 'v2',
-              :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
+              :rackspace_compute_url => Chef::Config[:knife][:rackspace_compute_url] || config[:rackspace_compute_url]
             }))
           end
         end

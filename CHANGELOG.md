@@ -1,3 +1,6 @@
+## v0.7.1
+* Use rackspace_compute_url instead of deprecated rackspace_endpoint
+
 ## v0.7.0
 * KNIFE_RACKSPACE-32 Ensure hint file is created to improve Ohai detection.
 * KNIFE-181 correct mixed use of 'rackspace_auth_url' and 'rackspace_api_auth_url'. Only 'rackspace_auth_url' is correct.

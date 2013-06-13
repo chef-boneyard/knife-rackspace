@@ -43,7 +43,7 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
 This plugin also has support for specifying which region to create servers into:
 
-    knife[:rackspace_endpoint] = "https://dfw.servers.api.rackspacecloud.com/v2"
+    knife[:rackspace_compute_url] = "https://dfw.servers.api.rackspacecloud.com/v2"
 
 valid options include:
       DFW_ENDPOINT = 'https://dfw.servers.api.rackspacecloud.com/v2'
