@@ -94,7 +94,7 @@ class Chef
         Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
         Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
         
-        if (Chef::Config[:knife][:rackspace_version] == 'v2') || (config[:rackspace_version] == 'v2')
+        if version_one?
           region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
@@ -182,7 +182,7 @@ class Chef
       end
 
       def rackspace_api_version
-        version = Chef::Config[:knife][:rackspace_version] || 'v2'
+        version = locate_config_value(:rackspace_version) || 'v2'
         version.downcase
       end
 
