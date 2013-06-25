@@ -95,6 +95,7 @@ class Chef
         Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
         
         if version_one?
+          Chef::Log.debug("rackspace v1")
           region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
@@ -102,6 +103,7 @@ class Chef
               }))
           end
         else
+          Chef::Log.debug("rackspace v2")
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
               :version => 'v2',
