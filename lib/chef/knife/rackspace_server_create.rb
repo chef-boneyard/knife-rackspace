@@ -293,7 +293,7 @@ class Chef
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
-          :disk_config => Chef::Config[:knife][:rackspace_disk_config]
+          :disk_config => Chef::Config[:knife][:rackspace_disk_config],
           :personality => files
         )
         server.save(
