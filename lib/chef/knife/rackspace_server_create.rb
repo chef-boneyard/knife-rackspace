@@ -27,7 +27,7 @@ class Chef
 
       include Knife::RackspaceBase
       include Chef::Knife::WinrmBase
-      
+
 
       deps do
         require 'fog'
@@ -157,23 +157,29 @@ class Chef
           Chef::Config[:knife][:rackspace_networks] ||= []
           (Chef::Config[:knife][:rackspace_networks] << name).uniq!
         }
-        
+
       option :bootstrap_protocol,
-      :long => "--bootstrap-protocol protocol",
-      :description => "Protocol to bootstrap Windows servers. options: winrm",
-      :default => nil
+        :long => "--bootstrap-protocol protocol",
+        :description => "Protocol to bootstrap Windows servers. options: winrm",
+        :default => nil
 
       option :server_create_timeout,
-      :long => "--server-create-timeout timeout",
-      :description => "How long to wait until the server is ready; default is 600 seconds",
-      :default => 600,
-      :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeouts] = v}
+        :long => "--server-create-timeout timeout",
+        :description => "How long to wait until the server is ready; default is 600 seconds",
+        :default => 600,
+        :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeouts] = v}
 
       option :bootstrap_proxy,
-      :long => "--bootstrap-proxy PROXY_URL",
-      :description => "The proxy server for the node being bootstrapped",
-      :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_proxy] = v }
-     
+        :long => "--bootstrap-proxy PROXY_URL",
+        :description => "The proxy server for the node being bootstrapped",
+        :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_proxy] = v }
+
+      option :rackspace_disk_config,
+        :long => "--rackspace-disk-config DISKCONFIG",
+        :description => "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL), default is AUTO",
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k },
+        :default => "AUTO"
+
 
       def load_winrm_deps
         require 'winrm'
@@ -182,7 +188,7 @@ class Chef
         require 'chef/knife/core/windows_bootstrap_context'
         require 'chef/knife/winrm'
       end
-      
+
       def tcp_test_ssh(hostname)
         tcp_socket = TCPSocket.new(hostname, 22)
         readable = IO.select([tcp_socket], nil, nil, 5)
@@ -216,7 +222,7 @@ class Chef
         end
         [dest, src]
       end
-      
+
       def encode_file(file)
         begin
           filename = File.expand_path(file)
@@ -227,7 +233,7 @@ class Chef
         end
         Base64.encode64(content)
       end
-      
+
       def files
         return {} unless  Chef::Config[:knife][:file]
 
@@ -235,7 +241,7 @@ class Chef
         Chef::Config[:knife][:file].each do |arg|
           dest, src = parse_file_argument(arg)
           Chef::Log.debug("Inject file #{src} into #{dest}")
-          files << { 
+          files << {
             :path => dest,
             :contents => encode_file(src)
           }
@@ -244,7 +250,7 @@ class Chef
     end
 
 
-      
+
       def tcp_test_winrm(hostname, port)
         TCPSocket.new(hostname, port)
         return true
@@ -265,7 +271,7 @@ class Chef
         sleep 2
         false
       end
-      
+
 
       def run
         $stdout.sync = true
@@ -274,11 +280,11 @@ class Chef
           ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
           exit 1
         end
-        
+
         if locate_config_value(:bootstrap_protocol) == 'winrm'
           load_winrm_deps
         end
-        
+
         node_name = get_node_name(config[:chef_node_name] || config[:server_name])
         networks = get_networks(Chef::Config[:knife][:rackspace_networks])
 
@@ -287,6 +293,7 @@ class Chef
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
+          :disk_config => Chef::Config[:knife][:rackspace_disk_config]
           :personality => files
         )
         server.save(
@@ -304,7 +311,7 @@ class Chef
         end
 
         print "\n#{ui.color("Waiting server", :magenta)}"
-        
+
         server.wait_for(Integer(locate_config_value(:server_create_timeout))) { print "."; ready? }
         # wait for it to be ready to do stuff
 
@@ -364,7 +371,7 @@ class Chef
         bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
         bootstrap_common_params(bootstrap, server)
       end
-      
+
       def bootstrap_common_params(bootstrap, server)
         bootstrap.config[:environment] = config[:environment]
         bootstrap.config[:run_list] = config[:run_list]
@@ -380,12 +387,12 @@ class Chef
         bootstrap.config[:first_boot_attributes] = config[:first_boot_attributes]
         bootstrap.config[:bootstrap_proxy] = locate_config_value(:bootstrap_proxy)
         bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
-        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]  
+        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
         bootstrap
       end
-      
+
       def bootstrap_for_windows_node(server, bootstrap_ip_address)
         bootstrap = Chef::Knife::BootstrapWindowsWinrm.new
         bootstrap.name_args = [bootstrap_ip_address]
@@ -416,7 +423,7 @@ class Chef
           nets = []
         end
         available_networks = connection.networks.all
-        
+
         names.each do |name|
           net = available_networks.detect{|n| n.label == name || n.id == name}
           if(net)
