@@ -52,6 +52,11 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
     knife[:rackspace_auth_url] = "lon.auth.api.rackspacecloud.com"
 
+valid options include:
+      DFW_ENDPOINT = 'https://dfw.auth.api.rackspacecloud.com'
+      ORD_ENDPOINT = 'https://ord.auth.api.rackspacecloud.com'
+      LON_ENDPOINT = 'https://lon.auth.api.rackspacecloud.com'
+
 This plugin also has support for specifying which region to create servers into:
 
     knife[:rackspace_endpoint] = "https://dfw.servers.api.rackspacecloud.com/v2"
@@ -108,6 +113,8 @@ Outputs a list of all available flavors (available hardware configuration for a 
 
 Outputs a list of all available images available to the currently configured Rackspace Cloud account. An image is a collection of files used to create or rebuild a server. Rackspace provides a number of pre-built OS images by default. This data can be useful when choosing an image id to pass to the <tt>knife rackspace server create</tt> subcommand. You may need to use the <tt>--rackspace-version</tt> and possibly a <tt>--rackspace-endpoint</tt> options to see nodes in different Rackspace regions.
 
+= Issues Tracking:
+Please check the opscode jira at http://tickets.opscode.com/ for tickets or outstanding issues related to this gem.
 
 = LICENSE:
 
