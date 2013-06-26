@@ -57,7 +57,6 @@ class Chef
           option :rackspace_auth_url,
             :long => "--rackspace-auth-url URL",
             :description => "Your rackspace API auth url",
-            :default => ::Fog::Rackspace::US_AUTH_ENDPOINT,
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
 
           option :rackspace_region,
@@ -66,10 +65,10 @@ class Chef
             :default => "dfw",
             :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
-          option :rackspace_endpoint,
-            :long => "--rackspace-endpoint URL",
+          option :rackspace_compute_url,
+            :long => "--rackspace_compute_url URL",
             :description => "Your custom API endpoint",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_compute_url] = url }
 
           option :file,
             :long => '--file DESTINATION-PATH=SOURCE-PATH',
@@ -89,8 +88,9 @@ class Chef
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
         Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
         Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
-        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]}")
-        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]}")
+        Chef::Log.debug("rackspace_auth_url #{auth_endpoint} (using)")
+        Chef::Log.debug("rackspace_compute_url #{Chef::Config[:knife][:rackspace_compute_url]}")
+        Chef::Log.debug("rackspace_compute_url #{config[:rackspace_compute_url]}")
         Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
         Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
         
@@ -99,7 +99,8 @@ class Chef
           region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => 'v1'
+              :version => 'v1',
+              :rackspace_compute_v1_url => locate_config_value(:rackspace_compute_url)
               }))
           end
         else
@@ -107,7 +108,7 @@ class Chef
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
               :version => 'v2',
-              :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
+              :rackspace_compute_url => locate_config_value(:rackspace_compute_url)
             }))
           end
         end
@@ -124,7 +125,8 @@ class Chef
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => Chef::Config[:knife][:rackspace_auth_url] || config[:rackspace_auth_url]
+          :rackspace_auth_url => auth_endpoint,
+          :rackspace_region => locate_config_value(:rackspace_region)
         })
 
         hash[:connection_options] ||= {}
@@ -138,6 +140,12 @@ class Chef
         hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].include?(:ssl_verify_peer)
 
         hash
+      end
+
+      def auth_endpoint
+        url = locate_config_value(:rackspace_auth_url)
+        return url if url
+        (locate_config_value(:rackspace_region) == 'lon') ? ::Fog::Rackspace::UK_AUTH_ENDPOINT : ::Fog::Rackspace::US_AUTH_ENDPOINT
       end
 
       def locate_config_value(key)
