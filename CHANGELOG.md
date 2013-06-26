@@ -1,4 +1,5 @@
 ## v0.8.0
+* KNIFE-314 provisioning First Gen Cloud Server is broken
 * KNIFE-315 fixed DEPRECATION warnings related to use of old rackpace_auth_url and removed rackspace_endpoint
 
 ## v0.7.0
