@@ -16,7 +16,7 @@ This plugin is distributed as a Ruby Gem. To install it, run:
 
 Depending on your system's configuration, you may need to run this command with root privileges.
 
-Ensure only the latest knife-rackspace gem and no other is installed.  In some cases having older versions of the gem 
+Ensure only the latest knife-rackspace gem and no other is installed.  In some cases having older versions of the gem
 will cause the new OpenStack functionality not to function properly.  To check:
 
     $> gem list --local | grep knife-rackspace
@@ -25,7 +25,7 @@ will cause the new OpenStack functionality not to function properly.  To check:
     Successfully uninstalled knife-rackspace-0.5.12
     $> gem list --local | grep knife-rackspace
     knife-rackspace (0.6.2)
-    
+
 
 = CONFIGURATION:
 
@@ -48,18 +48,9 @@ To select for the previous Rackspace API (aka 'v1'), you can use the <tt>--racks
 
     knife[:rackspace_version] = 'v1'
 
-This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
+This plugin also has support for authenticating against an alternate API Auth URL. Please refer to this Rackspace documentation page for the support choices: http://docs.rackspace.com/auth/api/v2.0/auth-client-devguide/content/Endpoints-d1e180.html This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
 
-    knife[:rackspace_auth_url] = "lon.auth.api.rackspacecloud.com"
-
-This plugin also has support for specifying which region to create servers into:
-
-    knife[:rackspace_endpoint] = "https://dfw.servers.api.rackspacecloud.com/v2"
-
-valid options include:
-      DFW_ENDPOINT = 'https://dfw.servers.api.rackspacecloud.com/v2'
-      ORD_ENDPOINT = 'https://ord.servers.api.rackspacecloud.com/v2'
-      LON_ENDPOINT = 'https://lon.servers.api.rackspacecloud.com/v2'
+    knife[:rackspace_auth_url] = "https://lon.identity.api.rackspacecloud.com/v2.0"
 
 If you are behind a proxy you can specify it in the knife.rb file as follows:
 
