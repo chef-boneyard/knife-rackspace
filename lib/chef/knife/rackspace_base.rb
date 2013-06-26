@@ -56,14 +56,8 @@ class Chef
           option :rackspace_auth_url,
             :long => "--rackspace-auth-url URL",
             :description => "Your rackspace API auth url",
-            :default => "auth.api.rackspacecloud.com",
+            :default => "https://identity.api.rackspacecloud.com/v2.0",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
-
-          option :rackspace_endpoint,
-            :long => "--rackspace-endpoint URL",
-            :description => "Your rackspace API endpoint",
-            :default => "https://dfw.servers.api.rackspacecloud.com/v2",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
 
           option :file,
             :long => '--file DESTINATION-PATH=SOURCE-PATH',
@@ -83,8 +77,6 @@ class Chef
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
         Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]} (config)")
         Chef::Log.debug("rackspace_auth_url #{config[:rackspace_auth_url]} (cli)")
-        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]} (config)")
-        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]} (cli)")
         if (Chef::Config[:knife][:rackspace_version] == 'v1') || (config[:rackspace_version] == 'v1')
           Chef::Log.debug("rackspace v1")
           @connection ||= begin
@@ -96,8 +88,7 @@ class Chef
           Chef::Log.debug("rackspace v2")
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => 'v2',
-              :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
+              :version => 'v2'
             }))
           end
         end
