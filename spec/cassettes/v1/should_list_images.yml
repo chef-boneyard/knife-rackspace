@@ -1,0 +1,123 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://auth.api.rackspacecloud.com/v1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      X-Auth-Key:
+      - _RAX_PASSWORD_
+      X-Auth-User:
+      - _RAX_USERNAME_
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass,
+        X-Auth-User
+      X-Storage-Url:
+      - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
+      Cache-Control:
+      - s-maxage=85673
+      X-Cloud-Auth:
+      - 'true'
+      Date:
+      - Thu, 06 Jun 2013 15:49:24 GMT
+      Front-End-Https:
+      - 'on'
+      X-Auth-Token: _ONE-TIME-TOKEN_
+      X-Storage-Token: _ONE-TIME-TOKEN_
+      X-Server-Management-Url:
+      - https://servers.api.rackspacecloud.com/v1.0/000000
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      X-Global-Auth:
+      - 'true'
+      Connection:
+      - keep-alive
+      X-CDN-Management-Url:
+      - https://cdn1.clouddrive.com/v1/_CDN-TENANT-NAME_
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Thu, 06 Jun 2013 15:49:23 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/images/detail.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Server:
+      - Apache-Coyote/1.1
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      Last-Modified:
+      - Mon, 09 Jul 2012 17:15:23 GMT
+      X-PURGE-KEY:
+      - /000000/images
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Content-Length:
+      - '2547'
+      Date:
+      - Thu, 06 Jun 2013 15:49:24 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '720'
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"images":[{"id":118,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"CentOS
+        6.0"},{"id":104,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"Debian
+        6 (Squeeze)"},{"id":125,"status":"ACTIVE","updated":"2012-05-03T07:21:06-05:00","name":"Ubuntu
+        12.04 LTS"},{"id":107,"status":"ACTIVE","updated":"2012-04-24T10:48:08-05:00","name":"FreeBSD
+        9.0"},{"id":24,"status":"ACTIVE","updated":"2010-01-26T12:07:04-06:00","name":"Windows
+        Server 2008 SP2 x64"},{"id":109,"status":"ACTIVE","updated":"2011-11-03T06:28:56-05:00","name":"openSUSE
+        12"},{"id":127,"status":"ACTIVE","updated":"2012-07-09T12:15:23-05:00","name":"CentOS
+        6.3"},{"id":85,"status":"ACTIVE","updated":"2010-01-26T12:07:17-06:00","name":"Windows
+        Server 2008 R2 x64"},{"id":110,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"Red
+        Hat Enterprise Linux 5.5"},{"id":114,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"CentOS
+        5.6"},{"id":112,"status":"ACTIVE","updated":"2011-04-21T10:24:01-05:00","name":"Ubuntu
+        10.04 LTS"},{"id":56,"status":"ACTIVE","updated":"2010-09-17T07:12:56-05:00","name":"Windows
+        Server 2008 SP2 x86 + SQL Server 2008 R2 Standard"},{"id":122,"status":"ACTIVE","updated":"2012-02-06T04:34:21-06:00","name":"CentOS
+        6.2"},{"id":100,"status":"ACTIVE","updated":"2011-09-12T09:09:23-05:00","name":"Arch
+        2012.08"},{"id":31,"status":"ACTIVE","updated":"2010-01-26T12:07:44-06:00","name":"Windows
+        Server 2008 SP2 x86"},{"id":91,"status":"ACTIVE","updated":"2012-04-24T16:44:01-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2012 Standard"},{"id":111,"status":"ACTIVE","updated":"2011-09-12T10:53:12-05:00","name":"Red
+        Hat Enterprise Linux 6"},{"id":92,"status":"ACTIVE","updated":"2012-04-24T16:44:01-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2012 Web"},{"id":57,"status":"ACTIVE","updated":"2010-09-17T07:16:25-05:00","name":"Windows
+        Server 2008 SP2 x64 + SQL Server 2008 R2 Standard"},{"id":120,"status":"ACTIVE","updated":"2012-01-03T04:39:05-06:00","name":"Fedora
+        16"},{"id":86,"status":"ACTIVE","updated":"2010-09-17T07:19:20-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2008 R2 Standard"},{"id":108,"status":"ACTIVE","updated":"2011-11-01T08:32:30-05:00","name":"Gentoo
+        12.3"},{"id":126,"status":"ACTIVE","updated":"2012-05-29T17:11:45-05:00","name":"Fedora
+        17"},{"id":121,"status":"ACTIVE","updated":"2012-05-04T10:51:28-05:00","name":"CentOS
+        5.8"},{"id":89,"status":"ACTIVE","updated":"2011-10-04T08:39:34-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2008 R2 Web"}]}'
+    http_version: 
+  recorded_at: Thu, 06 Jun 2013 15:49:23 GMT
+recorded_with: VCR 2.5.0

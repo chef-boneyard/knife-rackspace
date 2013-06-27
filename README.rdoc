@@ -16,6 +16,17 @@ This plugin is distributed as a Ruby Gem. To install it, run:
 
 Depending on your system's configuration, you may need to run this command with root privileges.
 
+Ensure only the latest knife-rackspace gem and no other is installed.  In some cases having older versions of the gem 
+will cause the new OpenStack functionality not to function properly.  To check:
+
+    $> gem list --local | grep knife-rackspace
+    knife-rackspace (0.6.2, 0.5.12)
+    $> gem uninstall knife-rackspace -v "= 0.5.12"
+    Successfully uninstalled knife-rackspace-0.5.12
+    $> gem list --local | grep knife-rackspace
+    knife-rackspace (0.6.2)
+    
+
 = CONFIGURATION:
 
 In order to communicate with the Rackspace Cloud API you will have to tell Knife about your Username and API Key. The easiest way to accomplish this is to create some entries in your <tt>knife.rb</tt> file:
@@ -33,13 +44,13 @@ You also have the option of passing your Rackspace API Username/Key into the ind
     # provision a new 1GB Ubuntu 10.04 webserver
     knife rackspace server create -I 112 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key" -r 'role[webserver]'
 
-To select for the new OpenStack-based "Rackspace Open Cloud" API (aka 'v2'), you can use the <tt>--rackspace-version v2</tt> command option. 'v1' is still the default, so if you're using exclusively 'v2' you will probably want to add the following to your <tt>knife.rb</tt>:
+To select for the previous Rackspace API (aka 'v1'), you can use the <tt>--rackspace-version v1</tt> command option. 'v2' is the default, so if you're still using exclusively 'v1' you will probably want to add the following to your <tt>knife.rb</tt>:
 
-    knife[:rackspace_version] = 'v2'
+    knife[:rackspace_version] = 'v1'
 
 This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
 
-    knife[:rackspace_api_auth_url] = "lon.auth.api.rackspacecloud.com"
+    knife[:rackspace_auth_url] = "lon.auth.api.rackspacecloud.com"
 
 This plugin also has support for specifying which region to create servers into:
 
@@ -49,6 +60,14 @@ valid options include:
       DFW_ENDPOINT = 'https://dfw.servers.api.rackspacecloud.com/v2'
       ORD_ENDPOINT = 'https://ord.servers.api.rackspacecloud.com/v2'
       LON_ENDPOINT = 'https://lon.servers.api.rackspacecloud.com/v2'
+
+If you are behind a proxy you can specify it in the knife.rb file as follows:
+
+	https_proxy https://PROXY_IP_ADDRESS:PORT
+
+SSL certificate verification can be disabled by include the following in your knife.rb file:
+
+	knife[:ssl_verify_peer] = false
 
 Additionally the following options may be set in your `knife.rb`:
 
@@ -66,6 +85,12 @@ This plugin provides the following Knife subcommands. Specific command options c
 Provisions a new server in the Rackspace Cloud and then perform a Chef bootstrap (using the SSH protocol). The goal of the bootstrap is to get Chef installed on the target system so it can run Chef Client with a Chef Server. The main assumption is a baseline OS installation exists (provided by the provisioning). It is primarily intended for Chef Client systems that talk to a Chef server. By default the server is bootstrapped using the {chef-full}[https://github.com/opscode/chef/blob/master/chef/lib/chef/knife/bootstrap/chef-full.erb] template. This can be overridden using the <tt>-d</tt> or <tt>--template-file</tt> command options.
 
 If no name is provided, nodes created with  the v1 API are named after their instance ID, with the v2 API they are given a random 'rs-XXXXXXXXX' name.
+
+Files can be injected onto the provisioned system using the <tt>--file</tt> switch. For example to inject <tt>my_script.sh</tt> into <tt>/root/initialize.sh</tt> you would use the following switch
+
+    --file /root/initialize.sh=my_script.sh.
+
+Note: You can only inject text files and the maximum destination path is 255 characters.
 
 == knife rackspace server delete
 
