@@ -289,9 +289,12 @@ class Chef
           :metadata => Chef::Config[:knife][:rackspace_metadata],
           :personality => files
         )
-        server.save(
-          :networks => networks
-        )
+
+        if version_one?
+          server.save
+        else
+          server.save(:networks => networks)
+        end
 
         msg_pair("Instance ID", server.id)
         msg_pair("Host ID", server.host_id)

@@ -16,6 +16,17 @@ This plugin is distributed as a Ruby Gem. To install it, run:
 
 Depending on your system's configuration, you may need to run this command with root privileges.
 
+Ensure only the latest knife-rackspace gem and no other is installed.  In some cases having older versions of the gem
+will cause the new OpenStack functionality not to function properly.  To check:
+
+    $> gem list --local | grep knife-rackspace
+    knife-rackspace (0.6.2, 0.5.12)
+    $> gem uninstall knife-rackspace -v "= 0.5.12"
+    Successfully uninstalled knife-rackspace-0.5.12
+    $> gem list --local | grep knife-rackspace
+    knife-rackspace (0.6.2)
+
+
 = CONFIGURATION:
 
 In order to communicate with the Rackspace Cloud API you will have to tell Knife about your Username and API Key. The easiest way to accomplish this is to create some entries in your <tt>knife.rb</tt> file:
