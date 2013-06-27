@@ -83,6 +83,10 @@ Files can be injected onto the provisioned system using the <tt>--file</tt> swit
 
 Note: You can only inject text files and the maximum destination path is 255 characters.
 
+You may specify if want to manage your disk partitioning scheme with the `--rackspace-disk-config DISKCONFIG` option. If you bootstrap a `v2` node and leave this set to the default "AUTO", larger nodes take longer to bootstrap as it grows the disk from 10G to fill the full amount of local disk provided. This option allows you to pass "MANUAL" - which give you a node (in 1/2 to 1/4 of the time) and lets you manage ignoring, or formatting the rest of the disk on your own.
+
+http://docs.openstack.org/essex/openstack-compute/starter/content/Launch_and_manage_instances-d1e1885.html
+
 == knife rackspace server delete
 
 Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering 'knife rackspace server list'. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option. Using the <tt>--purge</tt> option with v2 nodes will attempt to delete the node and client by the name of the node.
