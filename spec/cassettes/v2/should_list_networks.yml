@@ -1,0 +1,87 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://auth.api.rackspacecloud.com/v1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      X-Auth-Key:
+      - _RAX_PASSWORD_
+      X-Auth-User:
+      - _RAX_USERNAME_
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass,
+        X-Auth-User
+      X-Storage-Url:
+      - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
+      Cache-Control:
+      - s-maxage=71187
+      X-Cloud-Auth:
+      - 'true'
+      Date:
+      - Mon, 10 Jun 2013 22:32:16 GMT
+      Front-End-Https:
+      - 'on'
+      X-Auth-Token: _ONE-TIME-TOKEN_
+      X-Storage-Token: _ONE-TIME-TOKEN_
+      X-Server-Management-Url:
+      - https://servers.api.rackspacecloud.com/v1.0/000000
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      X-Global-Auth:
+      - 'true'
+      Connection:
+      - keep-alive
+      X-CDN-Management-Url:
+      - https://cdn1.clouddrive.com/v1/_CDN-TENANT-NAME_
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:16 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/os-networksv2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:17 GMT
+      Content-Length:
+      - '149'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"networks": [{"id": "00000000-0000-0000-0000-000000000000", "label":
+        "public"}, {"id": "11111111-1111-1111-1111-111111111111", "label": "private"}]}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:17 GMT
+recorded_with: VCR 2.5.0

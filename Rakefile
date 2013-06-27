@@ -21,7 +21,11 @@ require 'bundler'
 Bundler::GemHelper.install_tasks
 
 require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
+# RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec, :example) do |t, task_args|
+  t.rspec_opts = "-e '#{task_args[:example]}'"
+end
+
 task :default => [:credentials, :spec, 'integration:live']
 
 task :credentials do
@@ -29,16 +33,17 @@ task :credentials do
     puts "Setting vars"
     ENV['OS_USERNAME'] = '_RAX_USERNAME_'
     ENV['OS_PASSWORD'] = '_RAX_PASSWORD_'
-    ENV['RS_TENANT_ID'] = '000000'
-    ENV['RS_CDN_TENANT_NAME'] = '_CDN-TENANT-NAME_'
   end
+  ENV['RS_TENANT_ID'] ||= '000000'
+  ENV['RS_CDN_TENANT_NAME'] ||= '_CDN-TENANT-NAME_'
   fail "Not all required variables detected" unless ENV['OS_USERNAME'] && ENV['OS_PASSWORD'] && ENV['RS_CDN_TENANT_NAME'] && ENV['RS_TENANT_ID']
 end
 
 namespace :integration do
   desc 'Run the integration tests'
-  RSpec::Core::RakeTask.new(:test) do |t|
+  RSpec::Core::RakeTask.new(:test, :example) do |t, task_args|
     t.pattern = 'spec/integration/**'
+    t.rspec_opts = "-e '#{task_args[:example]}'"
   end
 
   desc 'Run the integration tests live (no VCR cassettes)'

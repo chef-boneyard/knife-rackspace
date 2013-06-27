@@ -1,0 +1,361 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://auth.api.rackspacecloud.com/v1.0
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      X-Auth-Key:
+      - _RAX_PASSWORD_
+      X-Auth-User:
+      - _RAX_USERNAME_
+  response:
+    status:
+      code: 204
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token, X-Auth-Key, X-Storage-User, X-Storage-Pass,
+        X-Auth-User
+      X-Storage-Url:
+      - https://storage101.dfw1.clouddrive.com/v1/_CDN-TENANT-NAME_
+      Cache-Control:
+      - s-maxage=71193
+      X-Cloud-Auth:
+      - 'true'
+      Date:
+      - Mon, 10 Jun 2013 22:32:11 GMT
+      Front-End-Https:
+      - 'on'
+      X-Auth-Token: _ONE-TIME-TOKEN_
+      X-Storage-Token: _ONE-TIME-TOKEN_
+      X-Server-Management-Url:
+      - https://servers.api.rackspacecloud.com/v1.0/000000
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      X-Global-Auth:
+      - 'true'
+      Connection:
+      - keep-alive
+      X-CDN-Management-Url:
+      - https://cdn1.clouddrive.com/v1/_CDN-TENANT-NAME_
+    body:
+      encoding: UTF-8
+      string: ''
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:11 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:11 GMT
+      Content-Length:
+      - '1697'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavors": [{"id": "2", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2",
+        "rel": "bookmark"}], "name": "512MB Standard Instance"}, {"id": "3", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
+        "rel": "bookmark"}], "name": "1GB Standard Instance"}, {"id": "4", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
+        "rel": "bookmark"}], "name": "2GB Standard Instance"}, {"id": "5", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
+        "rel": "bookmark"}], "name": "4GB Standard Instance"}, {"id": "6", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
+        "rel": "bookmark"}], "name": "8GB Standard Instance"}, {"id": "7", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
+        "rel": "bookmark"}], "name": "15GB Standard Instance"}, {"id": "8", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
+        "rel": "bookmark"}], "name": "30GB Standard Instance"}]}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:11 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:11 GMT
+      Content-Length:
+      - '353'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "512MB Standard Instance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2", "rel": "self"},
+        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2", "rel":
+        "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 2.0, "OS-FLV-EXT-DATA:ephemeral":
+        0, "disk": 20, "id": "2"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:11 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:11 GMT
+      Content-Length:
+      - '353'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "1GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
+        "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": 1024, "rxtx_factor":
+        3.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 40, "id": "3"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:12 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:12 GMT
+      Content-Length:
+      - '353'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "2GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
+        "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": 2048, "rxtx_factor":
+        6.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 80, "id": "4"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:12 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:12 GMT
+      Content-Length:
+      - '355'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "4GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
+        "rel": "bookmark"}], "ram": 4096, "vcpus": 2, "swap": 2048, "rxtx_factor":
+        10.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 160, "id": "5"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:12 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:13 GMT
+      Content-Length:
+      - '355'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "8GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
+        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
+        "rel": "bookmark"}], "ram": 8192, "vcpus": 4, "swap": 2048, "rxtx_factor":
+        15.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 320, "id": "6"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:13 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:13 GMT
+      Content-Length:
+      - '357'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "15GB Standard Instance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7", "rel": "self"},
+        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7", "rel":
+        "bookmark"}], "ram": 15360, "vcpus": 6, "swap": 2048, "rxtx_factor": 20.0,
+        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 620, "id": "7"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:13 GMT
+- request:
+    method: get
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.11.1
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Date:
+      - Mon, 10 Jun 2013 22:32:13 GMT
+      Content-Length:
+      - '358'
+      Content-Type:
+      - application/json
+      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+    body:
+      encoding: UTF-8
+      string: ! '{"flavor": {"name": "30GB Standard Instance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8", "rel": "self"},
+        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8", "rel":
+        "bookmark"}], "ram": 30720, "vcpus": 8, "swap": 2048, "rxtx_factor": 30.0,
+        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1200, "id": "8"}}'
+    http_version: 
+  recorded_at: Mon, 10 Jun 2013 22:32:13 GMT
+recorded_with: VCR 2.5.0

@@ -16,6 +16,7 @@ InstalledFiles
 .bundle
 .rackspace_cloud_credentials*
 *.lock
+.chef/
 
 # YARD artifacts
 .yardoc

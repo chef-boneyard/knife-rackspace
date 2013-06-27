@@ -2,6 +2,9 @@ require 'spec_helper'
 require 'vcr'
 require 'ansi/code'
 require 'ansi/diff'
+require 'fog'
+require 'knife/dsl'
+require 'vcr/filters/network'
 
 Chef::Config[:knife][:rackspace_api_username] = "#{ENV['OS_USERNAME']}"
 Chef::Config[:knife][:rackspace_api_key] = "#{ENV['OS_PASSWORD']}"
