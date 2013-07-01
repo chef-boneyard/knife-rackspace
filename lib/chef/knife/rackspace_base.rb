@@ -65,11 +65,6 @@ class Chef
             :default => "dfw",
             :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
-          option :rackspace_compute_url,
-            :long => "--rackspace_compute_url URL",
-            :description => "Your custom API endpoint",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_compute_url] = url }
-
           option :file,
             :long => '--file DESTINATION-PATH=SOURCE-PATH',
             :description => 'File to inject on node',
@@ -89,8 +84,6 @@ class Chef
         Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
         Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
         Chef::Log.debug("rackspace_auth_url #{auth_endpoint} (using)")
-        Chef::Log.debug("rackspace_compute_url #{Chef::Config[:knife][:rackspace_compute_url]}")
-        Chef::Log.debug("rackspace_compute_url #{config[:rackspace_compute_url]}")
         Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
         Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
         
@@ -99,16 +92,14 @@ class Chef
           region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => 'v1',
-              :rackspace_compute_v1_url => locate_config_value(:rackspace_compute_url)
+              :version => 'v1'
               }))
           end
         else
           Chef::Log.debug("rackspace v2")
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => 'v2',
-              :rackspace_compute_url => locate_config_value(:rackspace_compute_url)
+              :version => 'v2'
             }))
           end
         end
