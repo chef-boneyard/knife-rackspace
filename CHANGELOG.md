@@ -1,4 +1,5 @@
 ## v0.8.0
+* KNIFE-180 include option to pass :disk_config option to fog for new node bootstrap
 * KNIFE-312 updated to reflect new configuration options in Fog 1.10.1
 * KNIFE-314 provisioning First Gen Cloud Server is broken
 * KNIFE-315 fixed DEPRECATION warnings related to use of old rackpace_auth_url and removed rackspace_endpoint
