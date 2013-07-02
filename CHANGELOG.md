@@ -1,3 +1,20 @@
+## v0.8.0
+* KNIFE-180 include option to pass :disk_config option to fog for new node bootstrap
+* KNIFE-314 provisioning First Gen Cloud Server is broken
+* KNIFE-315 fixed DEPRECATION warnings related to use of old rackpace_auth_url and removed rackspace_endpoint
+
+## v0.7.0
+* KNIFE_RACKSPACE-32 Ensure hint file is created to improve Ohai detection.
+* KNIFE-181 correct mixed use of 'rackspace_auth_url' and 'rackspace_api_auth_url'. Only 'rackspace_auth_url' is correct.
+* KNIFE-182 default to Rackspace Open Cloud (v2)
+* KNIFE-267 Rackspace server create with networks
+* KNIFE-271 Enable winrm authentication on knife-rackspace
+* KNIFE-281 pass https_proxy and http_proxy setting onto fog; added ssl_verify_peer setting to disable certificate validation
+* KNIFE-282 Add the ability to inject files on server creation
+* KNIFE-289 Add Integration Tests
+
+* KNOWN ISSUES: KNIFE-296 knife-windows overrides -x option with winrm-user
+
 ## v0.6.2
 * bump release to fix permission issues inside the gem
 

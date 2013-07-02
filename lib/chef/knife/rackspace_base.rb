@@ -1,6 +1,6 @@
 #
 # Author:: Seth Chisamore (<schisamo@opscode.com>)
-# Copyright:: Copyright (c) 2011 Opscode, Inc.
+# Copyright:: Copyright (c) 2011-2013 Opscode, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -50,53 +50,46 @@ class Chef
           option :rackspace_version,
             :long => '--rackspace-version VERSION',
             :description => 'Rackspace Cloud Servers API version',
-            :default => "v1",
+            :default => "v2",
             :proc => Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
 
-          option :rackspace_api_auth_url,
-            :long => "--rackspace-api-auth-url URL",
+          option :rackspace_auth_url,
+            :long => "--rackspace-auth-url URL",
             :description => "Your rackspace API auth url",
-            :default => "auth.api.rackspacecloud.com",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_api_auth_url] = url }
+            :default => "https://identity.api.rackspacecloud.com/v2.0",
+            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
 
-          option :rackspace_endpoint,
-            :long => "--rackspace-endpoint URL",
-            :description => "Your rackspace API endpoint",
-            :default => "https://dfw.servers.api.rackspacecloud.com/v2",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_endpoint] = url }
+          option :file,
+            :long => '--file DESTINATION-PATH=SOURCE-PATH',
+            :description => 'File to inject on node',
+            :proc => Proc.new {|arg|
+              Chef::Config[:knife][:file] ||= []
+              Chef::Config[:knife][:file] << arg
+            }
         end
       end
 
       def connection
-        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]}") #config file
-        Chef::Log.debug("version #{config[:rackspace_version]}") #cli
+        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]} (config)")
+        Chef::Log.debug("version #{config[:rackspace_version]} (cli)")
         Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
         Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
-        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
-        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
-        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]}")
-        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]}")
-        if (Chef::Config[:knife][:rackspace_version] == 'v2') || (config[:rackspace_version] == 'v2')
+        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]} (config)")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_auth_url]} (cli)")
+        if (Chef::Config[:knife][:rackspace_version] == 'v1') || (config[:rackspace_version] == 'v1')
+          Chef::Log.debug("rackspace v1")
           @connection ||= begin
-            connection = Fog::Compute.new(
-              :provider => 'Rackspace',
-              :version => 'v2',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url],
-              :rackspace_endpoint => Chef::Config[:knife][:rackspace_endpoint] || config[:rackspace_endpoint]
-            )
+            connection = Fog::Compute.new(connection_params({
+              :version => 'v1'
+              }))
           end
         else
+          Chef::Log.debug("rackspace v2")
           @connection ||= begin
-            connection = Fog::Compute.new(
-              :provider => 'Rackspace',
-              :version => 'v1',
-              :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-              :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-              :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
-            )
+            connection = Fog::Compute.new(connection_params({
+              :version => 'v2'
+            }))
           end
         end
       end
@@ -119,6 +112,27 @@ class Chef
             :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
           )
         end
+      end
+
+      def connection_params(options={})
+        hash = options.merge({
+          :provider => 'Rackspace',
+          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
+          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
+          :rackspace_auth_url => Chef::Config[:knife][:rackspace_auth_url] || config[:rackspace_auth_url]
+        })
+
+        hash[:connection_options] ||= {}
+        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
+        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
+        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
+          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+        end
+        Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
+        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].include?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
+        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].include?(:ssl_verify_peer)
+
+        hash
       end
 
       def locate_config_value(key)
@@ -154,7 +168,7 @@ class Chef
         @public_dns_name ||= begin
           Resolv.getname(ip_address)
         rescue
-          "#{ip_address.gsub('.','-')}.static.cloud-ips.com"
+          "#{ip_address.gsub('.','-')}.static.cloud-ips.com" if ip_address
         end
       end
 
@@ -165,7 +179,7 @@ class Chef
       end
 
       def rackspace_api_version
-        version = Chef::Config[:knife][:rackspace_version] || 'v1'
+        version = Chef::Config[:knife][:rackspace_version] || 'v2'
         version.downcase
       end
 
