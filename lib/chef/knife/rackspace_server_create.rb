@@ -398,9 +398,9 @@ class Chef
         }
         bootstrap_for_node(server, bootstrap_ip_address).run
 
-        # Check to see if a DNS 'A' record has been requeested
+        # Check to see if a DNS 'A' record has been requested
         rackspace_add_dns_record = Chef::Config[:knife][:zone]
-        if rackspace_add_dns_record != ''
+        unless rackspace_add_dns_record.nil?
            # Add a DNS 'A' record for this node.
            add_dns_record(server)
         end
