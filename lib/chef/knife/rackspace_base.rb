@@ -17,6 +17,7 @@
 #
 
 require 'chef/knife'
+require 'fog'
 
 class Chef
   class Knife
@@ -56,8 +57,13 @@ class Chef
           option :rackspace_auth_url,
             :long => "--rackspace-auth-url URL",
             :description => "Your rackspace API auth url",
-            :default => "https://identity.api.rackspacecloud.com/v2.0",
             :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
+
+          option :rackspace_region,
+            :long => "--rackspace-region REGION",
+            :description => "Your rackspace region",
+            :default => "dfw",
+            :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
           option :file,
             :long => '--file DESTINATION-PATH=SOURCE-PATH',
@@ -75,10 +81,15 @@ class Chef
         Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
         Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
         Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
-        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]} (config)")
-        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_auth_url]} (cli)")
-        if (Chef::Config[:knife][:rackspace_version] == 'v1') || (config[:rackspace_version] == 'v1')
+        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{auth_endpoint} (using)")
+        Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
+        Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
+        
+        if version_one?
           Chef::Log.debug("rackspace v1")
+          region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
               :version => 'v1'
@@ -93,13 +104,20 @@ class Chef
           end
         end
       end
+      
+      def region_warning_for_v1
+        if Chef::Config[:knife][:rackspace_region] || config[:rackspace_region]
+          Chef::Log.warn("Ignoring the rackspace_region parameter as it is only supported for Next Gen Cloud Servers (v2)")
+        end
+      end
 
       def connection_params(options={})
         hash = options.merge({
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => Chef::Config[:knife][:rackspace_auth_url] || config[:rackspace_auth_url]
+          :rackspace_auth_url => auth_endpoint,
+          :rackspace_region => locate_config_value(:rackspace_region)
         })
 
         hash[:connection_options] ||= {}
@@ -113,6 +131,12 @@ class Chef
         hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].include?(:ssl_verify_peer)
 
         hash
+      end
+
+      def auth_endpoint
+        url = locate_config_value(:rackspace_auth_url)
+        return url if url
+        (locate_config_value(:rackspace_region) == 'lon') ? ::Fog::Rackspace::UK_AUTH_ENDPOINT : ::Fog::Rackspace::US_AUTH_ENDPOINT
       end
 
       def locate_config_value(key)
@@ -159,7 +183,7 @@ class Chef
       end
 
       def rackspace_api_version
-        version = Chef::Config[:knife][:rackspace_version] || 'v2'
+        version = locate_config_value(:rackspace_version) || 'v2'
         version.downcase
       end
 

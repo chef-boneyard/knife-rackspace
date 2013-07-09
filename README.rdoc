@@ -48,9 +48,12 @@ To select for the previous Rackspace API (aka 'v1'), you can use the <tt>--racks
 
     knife[:rackspace_version] = 'v1'
 
-This plugin also has support for authenticating against an alternate API Auth URL. Please refer to this Rackspace documentation page for the support choices: http://docs.rackspace.com/auth/api/v2.0/auth-client-devguide/content/Endpoints-d1e180.html This is useful if you are a Rackspace Cloud UK user, here is an example of configuring your <tt>knife.rb</tt>:
+This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a using a custom endpoint, here is an example of configuring your <tt>knife.rb</tt>:
 
-    knife[:rackspace_auth_url] = "https://lon.identity.api.rackspacecloud.com/v2.0"
+    knife[:rackspace_auth_url] = "auth.my-custom-endpoint.com"
+
+
+Different regions can be specified by using the `--rackspace-region` switch or using the `knife[:rackspace_region]` in the knife.rb file. Valid regions include :dfw, :ord, :lon, and :syd.
 
 If you are behind a proxy you can specify it in the knife.rb file as follows:
 
