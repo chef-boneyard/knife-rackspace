@@ -55,11 +55,6 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
 Different regions can be specified by using the `--rackspace-region` switch or using the `knife[:rackspace_region]` in the knife.rb file. Valid regions include :dfw, :ord, :lon, and :syd.
 
-This plugin also support custom end points as follows:
-
-    knife[:rackspace_compute_url] = "https://my-custom-endpoint.com"
-
-
 If you are behind a proxy you can specify it in the knife.rb file as follows:
 
 	https_proxy https://PROXY_IP_ADDRESS:PORT
