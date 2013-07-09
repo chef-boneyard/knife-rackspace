@@ -57,13 +57,13 @@ Different regions can be specified by using the `--rackspace-region` switch or u
 
 If you are behind a proxy you can specify it in the knife.rb file as follows:
 
-	https_proxy https://PROXY_IP_ADDRESS:PORT
+    https_proxy https://PROXY_IP_ADDRESS:PORT
 
 SSL certificate verification can be disabled by include the following in your knife.rb file:
 
-	knife[:ssl_verify_peer] = false
+    knife[:ssl_verify_peer] = false
 
-Additionally the following options may be set in your `knife.rb`:
+Additionally the following options may be set in your <tt>knife.rb</tt>:
 
 * flavor
 * image
@@ -86,13 +86,13 @@ Files can be injected onto the provisioned system using the <tt>--file</tt> swit
 
 Note: You can only inject text files and the maximum destination path is 255 characters.
 
-You may specify if want to manage your disk partitioning scheme with the `--rackspace-disk-config DISKCONFIG` option. If you bootstrap a `v2` node and leave this set to the default "AUTO", larger nodes take longer to bootstrap as it grows the disk from 10G to fill the full amount of local disk provided. This option allows you to pass "MANUAL" - which give you a node (in 1/2 to 1/4 of the time) and lets you manage ignoring, or formatting the rest of the disk on your own.
+You may specify if want to manage your disk partitioning scheme with the <tt>--rackspace-disk-config DISKCONFIG</tt> option. If you bootstrap a `v2` node and leave this set to the default "AUTO", larger nodes take longer to bootstrap as it grows the disk from 10G to fill the full amount of local disk provided. This option allows you to pass "MANUAL" - which give you a node (in 1/2 to 1/4 of the time) and lets you manage ignoring, or formatting the rest of the disk on your own.
 
 http://docs.openstack.org/essex/openstack-compute/starter/content/Launch_and_manage_instances-d1e1885.html
 
 == knife rackspace server delete
 
-Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering 'knife rackspace server list'. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option. Using the <tt>--purge</tt> option with v2 nodes will attempt to delete the node and client by the name of the node.
+Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering <tt>knife rackspace server list</tt>. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option. Using the <tt>--purge</tt> option with v2 nodes will attempt to delete the node and client by the name of the node.
 
 == knife rackspace server list
 
