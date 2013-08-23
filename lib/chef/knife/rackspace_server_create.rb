@@ -136,6 +136,24 @@ class Chef
         :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
         :default => ""
 
+      option :rackconnect_wait,
+        :long => "--rackconnect-wait",
+        :description => "Wait until the Rackconnect automation setup is complete before bootstrapping chef",
+        :boolean => true,
+        :default => false
+
+      option :rackspace_servicelevel_wait,
+        :long => "--rackspace-servicelevel-wait",
+        :description => "Wait until the Rackspace service level automation setup is complete before bootstrapping chef",
+        :boolean => true,
+        :default => false
+
+      option :rackspace_add_dns_record,
+        :long => "--rackspace-add-dns-record ZONE",
+        :description => "Creates an 'A' record in Cloud DNS for NODE_NAME under ZONE",
+        :proc => Proc.new { |z| Chef::Config[:knife][:zone] = z },
+        :default => ""
+
       option :hint,
         :long => "--hint HINT_NAME[=HINT_FILE]",
         :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
@@ -296,6 +314,9 @@ class Chef
         node_name = get_node_name(config[:chef_node_name] || config[:server_name])
         networks = get_networks(Chef::Config[:knife][:rackspace_networks])
 
+        rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
+        rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
+
         server = connection.servers.new(
           :name => node_name,
           :image_id => Chef::Config[:knife][:image],
@@ -316,6 +337,9 @@ class Chef
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
+        msg_pair("Metadata", server.metadata.all)
+        msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
+        msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
         msg_pair("Metadata", server.metadata)
         if(networks && Chef::Config[:knife][:rackspace_networks])
           msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
@@ -323,8 +347,31 @@ class Chef
 
         print "\n#{ui.color("Waiting server", :magenta)}"
 
-        server.wait_for(Integer(locate_config_value(:server_create_timeout))) { print "."; ready? }
-        # wait for it to be ready to do stuff
+        begin
+          server.wait_for(Integer(locate_config_value(:server_create_timeout))) { 
+            print "."; 
+            Chef::Log.debug("#{progress}%")
+            if rackconnect_wait and rackspace_servicelevel_wait
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
+              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED' and metadata.all['rax_service_level_automation'] == 'Complete'
+            elsif rackconnect_wait
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
+              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED'
+            elsif rackspace_servicelevel_wait
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
+              ready? and metadata.all['rax_service_level_automation'] == 'Complete'
+            else
+              ready?
+            end
+          }
+        rescue Fog::Errors::TimeoutError
+          ui.error('Timeout waiting for the server to be created')
+          msg_pair('Progress', "#{server.progress}%")
+          msg_pair('rackconnect_automation_status', server.metadata.all['rackconnect_automation_status'])
+          msg_pair('rax_service_level_automation', server.metadata.all['rax_service_level_automation'])
+          Chef::Application.fatal! 'Server didn\'t finish on time'
+        end
 
         puts("\n")
 
@@ -332,6 +379,10 @@ class Chef
         msg_pair("Public IP Address", public_ip(server))
         msg_pair("Private IP Address", private_ip(server))
         msg_pair("Password", server.password)
+        msg_pair("Metadata", server.metadata.all)
+
+        print "\n#{ui.color("Waiting for sshd", :magenta)}"
+
         #which IP address to bootstrap
         bootstrap_ip_address = public_ip(server)
         if config[:private_network]
@@ -354,6 +405,13 @@ class Chef
           puts("done")
         }
         bootstrap_for_node(server, bootstrap_ip_address).run
+
+        # Check to see if a DNS 'A' record has been requested
+        rackspace_add_dns_record = Chef::Config[:knife][:zone]
+        unless rackspace_add_dns_record.nil?
+           # Add a DNS 'A' record for this node.
+           add_dns_record(server)
+        end
       end
 
         puts "\n"
@@ -371,7 +429,27 @@ class Chef
         msg_pair("Run List", config[:run_list].join(', '))
       end
 
+      def add_dns_record(server)
+
+        if version_one?
+          chef_node_name = config[:chef_node_name] || server.id
+        else
+          chef_node_name = server.name
+        end
+
+        printf "\nAdding DNS record for %s ...\n", chef_node_name
+        zone = dnsconnection.zones.find { |z| z.domain == Chef::Config[:knife][:zone] }
+        record = zone.records.create(
+          :value => public_ip(server),
+          :name  => "#{chef_node_name}.#{Chef::Config[:knife][:zone]}",
+          :type => 'A'
+        )
+      end
+
+
       def bootstrap_for_node(server, bootstrap_ip_address)
+
+
         bootstrap = Chef::Knife::Bootstrap.new
         bootstrap.name_args = [bootstrap_ip_address]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
@@ -403,6 +481,7 @@ class Chef
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
         bootstrap
+
       end
 
       def bootstrap_for_windows_node(server, bootstrap_ip_address)

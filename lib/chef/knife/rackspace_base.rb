@@ -111,6 +111,26 @@ class Chef
         end
       end
 
+      def dnsconnection
+        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]}") #config file
+        Chef::Log.debug("version #{config[:rackspace_version]}") #cli
+        Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
+        Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
+        Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
+        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
+        Chef::Log.debug("rackspace_endpoint #{Chef::Config[:knife][:rackspace_endpoint]}")
+        Chef::Log.debug("rackspace_endpoint #{config[:rackspace_endpoint]}")
+        @dnsconnection ||= begin
+          dnsconnection = Fog::DNS.new(
+            :provider => 'Rackspace',
+            :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
+            :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
+            :rackspace_auth_url => Chef::Config[:knife][:rackspace_api_auth_url] || config[:rackspace_api_auth_url]
+          )
+        end
+      end
+
       def connection_params(options={})
         hash = options.merge({
           :provider => 'Rackspace',
@@ -154,7 +174,7 @@ class Chef
         if version_one?
           v1_public_ip(server)
         else
-          v2_public_ip(server)
+          v2_access_ip(server) ? v2_access_ip(server) : v2_public_ip(server)
         end
       end
 
@@ -203,6 +223,10 @@ class Chef
       def v2_private_ip(server)
         private_ips = server.addresses["private"]
         extract_ipv4_address(private_ips) if private_ips
+      end
+
+      def v2_access_ip(server)
+        server.access_ipv4_address == nil ? "" : server.access_ipv4_address
       end
 
       def extract_ipv4_address(ip_addresses)
