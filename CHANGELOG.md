@@ -1,3 +1,6 @@
+## v0.8.1
+* KNIFE-335 Wait for RackConnect and/or Service Level automation before bootstrapping
+
 ## v0.8.0
 * KNIFE-68 enable ability to modify ssh port number
 * KNIFE-180 include option to pass :disk_config option to fog for new node bootstrap
