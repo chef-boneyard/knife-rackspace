@@ -379,8 +379,6 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
-        print "\n#{ui.color("Waiting for sshd", :magenta)}"
-
         #which IP address to bootstrap
         bootstrap_ip_address = public_ip(server)
         if config[:private_network]
