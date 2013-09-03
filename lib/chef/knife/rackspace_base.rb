@@ -154,7 +154,7 @@ class Chef
         if version_one?
           v1_public_ip(server)
         else
-          v2_public_ip(server)
+          v2_access_ip(server) ? v2_access_ip(server) : v2_public_ip(server)
         end
       end
 
@@ -203,6 +203,10 @@ class Chef
       def v2_private_ip(server)
         private_ips = server.addresses["private"]
         extract_ipv4_address(private_ips) if private_ips
+      end
+
+      def v2_access_ip(server)
+        server.access_ipv4_address == nil ? "" : server.access_ipv4_address
       end
 
       def extract_ipv4_address(ip_addresses)
