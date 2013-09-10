@@ -64,8 +64,8 @@ class Chef
         :long => "--node-name NAME",
         :description => "The Chef node name for your new node"
 
-      option :private_network,
-        :long => "--private-network",
+      option :private_address,
+        :long => "--private-address",
         :description => "Use the private IP for bootstrapping rather than the public IP",
         :boolean => true,
         :default => false
@@ -381,7 +381,7 @@ class Chef
 
         #which IP address to bootstrap
         bootstrap_ip_address = public_ip(server)
-        if config[:private_network]
+        if config[:private_address]
           bootstrap_ip_address = private_ip(server)
         end
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
