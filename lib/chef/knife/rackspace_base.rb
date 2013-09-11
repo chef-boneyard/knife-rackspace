@@ -150,7 +150,7 @@ class Chef
         end
       end
 
-      def ip_addr(server, network='public')
+      def ip_address(server, network='public')
         if version_one?
           case network
           when 'public'; v1_public_ip(server)
@@ -161,17 +161,17 @@ class Chef
           if network == 'public' && v2_access_ip(server) != ""
             v2_access_ip(server)
           else
-            v2_ip_addr(server, network)
+            v2_ip_address(server, network)
           end
         end
       end
 
       def public_dns_name(server)
-        if ip_address = ip_addr(server, 'public')
+        if public_ip_address = ip_address(server, 'public')
           @public_dns_name ||= begin
-            Resolv.getname(ip_address)
+            Resolv.getname(public_ip_address)
           rescue
-            "#{ip_address.gsub('.','-')}.static.cloud-ips.com"
+            "#{public_ip_address.gsub('.','-')}.static.cloud-ips.com"
           end
         end
       end
@@ -195,7 +195,7 @@ class Chef
         server.addresses["private"].first == nil ? "" : server.addresses["private"].first
       end
 
-      def v2_ip_addr(server, network)
+      def v2_ip_address(server, network)
         network_ips = server.addresses[network]
         extract_ipv4_address(network_ips) if network_ips
       end
