@@ -158,7 +158,11 @@ class Chef
           else raise NotImplementedError
           end
         else
-          v2_access_ip(server) ? v2_access_ip(server) : v2_ip_addr(server, network)
+          if network == 'public' && v2_access_ip(server) != ""
+            v2_access_ip(server)
+          else
+            v2_ip_addr(server, network)
+          end
         end
       end
 
