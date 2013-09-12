@@ -65,7 +65,7 @@ class Chef
         :description => "The Chef node name for your new node"
 
       option :bootstrap_network,
-        :long => "--bootstrap-network NAME",
+        :long => "--bootstrap-network LABEL",
         :description => "Use IP address on this network for bootstrap",
         :default => 'public'
 

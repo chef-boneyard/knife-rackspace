@@ -90,7 +90,7 @@ You may specify if want to manage your disk partitioning scheme with the <tt>--r
 
 http://docs.openstack.org/essex/openstack-compute/starter/content/Launch_and_manage_instances-d1e1885.html
 
-You may specify a custom network using the <tt>--network [LABEL_OR_ID]</tt> option. You can also remove the default internal ServiceNet and PublicNet networks by specifying the <tt>--no-default-networks</tt> switch.
+You may specify a custom network using the <tt>--network [LABEL_OR_ID]</tt> option. You can also remove the default internal ServiceNet and PublicNet networks by specifying the <tt>--no-default-networks</tt> switch. To use a network other than PublicNet for the bootstrap connection, specify the <tt>--bootstrap-network LABEL</tt> option.
 
 == knife rackspace server delete
 
