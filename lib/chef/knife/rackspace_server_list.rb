@@ -42,8 +42,8 @@ class Chef
           server = connection.servers.get(server.id)
           server_list << server.id.to_s
           server_list << server.name
-          server_list << public_ip(server)
-          server_list << private_ip(server)
+          server_list << ip_address(server, 'public')
+          server_list << ip_address(server, 'private')
           server_list << (server.flavor_id == nil ? "" : server.flavor_id.to_s)
           server_list << (server.image_id == nil ? "" : server.image_id.to_s)
           server_list << begin
