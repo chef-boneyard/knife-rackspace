@@ -64,9 +64,14 @@ class Chef
         :long => "--node-name NAME",
         :description => "The Chef node name for your new node"
 
+      option :bootstrap_network,
+        :long => "--bootstrap-network LABEL",
+        :description => "Use IP address on this network for bootstrap",
+        :default => 'public'
+
       option :private_network,
         :long => "--private-network",
-        :description => "Use the private IP for bootstrapping rather than the public IP",
+        :description => "Equivalent to --bootstrap-network private",
         :boolean => true,
         :default => false
 
@@ -296,6 +301,9 @@ class Chef
       def run
         $stdout.sync = true
 
+        # Maybe deprecate this option at some point
+        config[:bootstrap_network] = 'private' if config[:private_network]
+
         unless Chef::Config[:knife][:image]
           ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
           exit 1
@@ -374,16 +382,12 @@ class Chef
         puts("\n")
 
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", public_ip(server))
-        msg_pair("Private IP Address", private_ip(server))
+        msg_pair("Public IP Address", ip_address(server, 'public'))
+        msg_pair("Private IP Address", ip_address(server, 'private'))
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
-        #which IP address to bootstrap
-        bootstrap_ip_address = public_ip(server)
-        if config[:private_network]
-          bootstrap_ip_address = private_ip(server)
-        end
+        bootstrap_ip_address = ip_address(server, config[:bootstrap_network])
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
           ui.error("No IP address available for bootstrapping.")
@@ -411,8 +415,8 @@ class Chef
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", public_ip(server))
-        msg_pair("Private IP Address", private_ip(server))
+        msg_pair("Public IP Address", ip_address(server, 'public'))
+        msg_pair("Private IP Address", ip_address(server, 'private'))
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
