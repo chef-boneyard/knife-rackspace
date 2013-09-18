@@ -67,8 +67,8 @@ class Chef
             msg_pair("Name", server.name)
             msg_pair("Flavor", server.flavor.name)
             msg_pair("Image", server.image.name)
-            msg_pair("Public IP Address", ip_addr(server, 'public'))
-            msg_pair("Private IP Address", ip_addr(server, 'private'))
+            msg_pair("Public IP Address", ip_address(server, 'public'))
+            msg_pair("Private IP Address", ip_address(server, 'private'))
 
             puts "\n"
             confirm("Do you really want to delete this server")
