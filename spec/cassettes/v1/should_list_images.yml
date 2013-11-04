@@ -1,14 +1,14 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/images/detail.json
     body:
-      encoding: UTF-8
-      string: ! '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"_RAX_USERNAME_","apiKey":"_RAX_PASSWORD_"}}}'
+      encoding: US-ASCII
+      string: ''
     headers:
       User-Agent:
-      - fog/1.10.1
+      - fog/1.16.0
       Content-Type:
       - application/json
       Accept:
@@ -19,72 +19,31 @@ http_interactions:
       code: 200
       message: 
     headers:
-      Server:
-      - nginx/0.8.55
-      Date:
-      - Wed, 26 Jun 2013 16:49:04 GMT
-      Content-Type:
-      - application/json
-      Connection:
-      - keep-alive
-      vary:
-      - Accept, Accept-Encoding, X-Auth-Token
-      VIA:
-      - 1.0 Repose (Repose/2.3.5)
-      Content-Length:
-      - '4975'
-      Front-End-Https:
-      - 'on'
-    body:
-      encoding: US-ASCII
-      string: ! '{"access":{"token":{"id":"8a68ee867be84f98967a9250cab8ba7a","expires":"2013-06-27T08:48:53.037-05:00","tenant":{"id":"000000","name":"000000"}},"serviceCatalog":[{"name":"cloudFiles","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"object-store"},{"name":"cloudFilesCDN","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"rax:object-cdn"},{"name":"cloudBlockStorage","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/000000"}],"type":"volume"},{"name":"cloudDatabases","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:database"},{"name":"cloudLoadBalancers","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:load-balancer"},{"name":"cloudServersOpenStack","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionId":"2"}],"type":"compute"},{"name":"cloudBackup","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/backup.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:backup"},{"name":"cloudDNS","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:dns"},{"name":"cloudMonitoring","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:monitor"},{"name":"cloudServers","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/servers.api.rackspacecloud.com\/v1.0\/000000","versionInfo":"https:\/\/servers.api.rackspacecloud.com\/v1.0","versionList":"https:\/\/servers.api.rackspacecloud.com\/","versionId":"1.0"}],"type":"compute"}],"user":{"id":"296063","roles":[{"tenantId":"_CDN-TENANT-NAME_","id":"5","description":"A
-        Role that allows a user access to keystone Service methods","name":"object-store:default"},{"tenantId":"000000","id":"6","description":"A
-        Role that allows a user access to keystone Service methods","name":"compute:default"},{"id":"3","description":"User
-        Admin Role.","name":"identity:user-admin"}],"name":"_RAX_USERNAME_","RAX-AUTH:defaultRegion":"DFW"}}}'
-    http_version: 
-  recorded_at: Wed, 26 Jun 2013 16:49:04 GMT
-- request:
-    method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/000000/images/detail.json?ignore_awful_caching1372265344
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.10.1
-      Content-Type:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Server:
-      - Apache-Coyote/1.1
-      vary:
-      - Accept, Accept-Encoding, X-Auth-Token
-      Last-Modified:
-      - Wed, 26 Jun 2013 16:18:51 GMT
-      X-PURGE-KEY:
-      - /000000/images
       Cache-Control:
       - s-maxage=1800
       Content-Type:
       - application/json
+      Via:
+      - 1.1 Repose (Repose/2.8.0.2), 1.1 varnish
+      Last-Modified:
+      - Mon, 09 Jul 2012 17:15:23 GMT
+      x-purge-key:
+      - /000000/images
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
       Content-Length:
-      - '2710'
+      - '2547'
       Date:
-      - Wed, 26 Jun 2013 16:49:04 GMT
+      - Tue, 22 Oct 2013 20:16:35 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
       - '0'
-      Via:
-      - 1.1 varnish
       Connection:
       - keep-alive
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"images":[{"id":118,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"CentOS
         6.0"},{"id":104,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"Debian
         6 (Squeeze)"},{"id":125,"status":"ACTIVE","updated":"2012-05-03T07:21:06-05:00","name":"Ubuntu
@@ -110,7 +69,123 @@ http_interactions:
         12.3"},{"id":126,"status":"ACTIVE","updated":"2012-05-29T17:11:45-05:00","name":"Fedora
         17"},{"id":121,"status":"ACTIVE","updated":"2012-05-04T10:51:28-05:00","name":"CentOS
         5.8"},{"id":89,"status":"ACTIVE","updated":"2011-10-04T08:39:34-05:00","name":"Windows
-        Server 2008 R2 x64 + SQL Server 2008 R2 Web"},{"progress":100,"id":37532512,"status":"ACTIVE","created":"2013-06-26T11:15:29-05:00","updated":"2013-06-26T11:18:51-05:00","name":"snapshot","serverId":21546848}]}'
+        Server 2008 R2 x64 + SQL Server 2008 R2 Web"}]}'
     http_version: 
-  recorded_at: Wed, 26 Jun 2013 16:49:04 GMT
+  recorded_at: Tue, 22 Oct 2013 20:16:35 GMT
+- request:
+    method: post
+    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: ! '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"_RAX_USERNAME_","apiKey":"_RAX_PASSWORD_"}}}'
+    headers:
+      User-Agent:
+      - fog/1.16.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      Date:
+      - Tue, 22 Oct 2013 20:17:04 GMT
+      Content-Type:
+      - application/json
+      Connection:
+      - keep-alive
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      Content-Length:
+      - '6671'
+      Front-End-Https:
+      - 'on'
+    body:
+      encoding: UTF-8
+      string: ! '{"access":{"token":{"id":"token_0","expires":"2013-10-23T01:42:28.703-05:00","tenant":{"id":"000000","name":"000000"},"RAX-AUTH:authenticatedBy":["APIKEY"]},"serviceCatalog":[{"name":"cloudFiles","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"object-store"},{"name":"cloudFilesCDN","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn5.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"rax:object-cdn"},{"name":"cloudDatabases","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.databases.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:database"},{"name":"cloudBlockStorage","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.blockstorage.api.rackspacecloud.com\/v1\/000000"}],"type":"volume"},{"name":"cloudServersOpenStack","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/iad.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/iad.servers.api.rackspacecloud.com\/","versionId":"2"}],"type":"compute"},{"name":"cloudLoadBalancers","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:load-balancer"},{"name":"autoscale","endpoints":[{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.autoscale.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:autoscale"},{"name":"cloudDNS","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:dns"},{"name":"cloudServers","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/servers.api.rackspacecloud.com\/v1.0\/000000","versionInfo":"https:\/\/servers.api.rackspacecloud.com\/v1.0","versionList":"https:\/\/servers.api.rackspacecloud.com\/","versionId":"1.0"}],"type":"compute"},{"name":"cloudBackup","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/backup.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:backup"},{"name":"cloudMonitoring","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:monitor"}],"user":{"id":"358651","roles":[{"id":"10000150","description":"Checkmate
+        Access role","name":"checkmate"},{"tenantId":"_CDN-TENANT-NAME_","id":"5","description":"A
+        Role that allows a user access to keystone Service methods","name":"object-store:default"},{"tenantId":"000000","id":"6","description":"A
+        Role that allows a user access to keystone Service methods","name":"compute:default"},{"id":"3","description":"User
+        Admin Role.","name":"identity:user-admin"}],"name":"_RAX_USERNAME_","RAX-AUTH:defaultRegion":"ORD"}}}'
+    http_version: 
+  recorded_at: Tue, 22 Oct 2013 20:17:04 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/images/detail.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.16.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 203
+      message: 
+    headers:
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      Via:
+      - 1.1 Repose (Repose/2.8.0.2), 1.1 varnish
+      Last-Modified:
+      - Mon, 09 Jul 2012 17:15:23 GMT
+      x-purge-key:
+      - /000000/images
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      Content-Length:
+      - '2547'
+      Date:
+      - Tue, 22 Oct 2013 20:17:04 GMT
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Age:
+      - '29'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: ! '{"images":[{"id":118,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"CentOS
+        6.0"},{"id":104,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"Debian
+        6 (Squeeze)"},{"id":125,"status":"ACTIVE","updated":"2012-05-03T07:21:06-05:00","name":"Ubuntu
+        12.04 LTS"},{"id":107,"status":"ACTIVE","updated":"2012-04-24T10:48:08-05:00","name":"FreeBSD
+        9.0"},{"id":24,"status":"ACTIVE","updated":"2010-01-26T12:07:04-06:00","name":"Windows
+        Server 2008 SP2 x64"},{"id":109,"status":"ACTIVE","updated":"2011-11-03T06:28:56-05:00","name":"openSUSE
+        12"},{"id":127,"status":"ACTIVE","updated":"2012-07-09T12:15:23-05:00","name":"CentOS
+        6.3"},{"id":85,"status":"ACTIVE","updated":"2010-01-26T12:07:17-06:00","name":"Windows
+        Server 2008 R2 x64"},{"id":110,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"Red
+        Hat Enterprise Linux 5.5"},{"id":114,"status":"ACTIVE","updated":"2011-08-17T05:11:30-05:00","name":"CentOS
+        5.6"},{"id":112,"status":"ACTIVE","updated":"2011-04-21T10:24:01-05:00","name":"Ubuntu
+        10.04 LTS"},{"id":56,"status":"ACTIVE","updated":"2010-09-17T07:12:56-05:00","name":"Windows
+        Server 2008 SP2 x86 + SQL Server 2008 R2 Standard"},{"id":122,"status":"ACTIVE","updated":"2012-02-06T04:34:21-06:00","name":"CentOS
+        6.2"},{"id":100,"status":"ACTIVE","updated":"2011-09-12T09:09:23-05:00","name":"Arch
+        2012.08"},{"id":31,"status":"ACTIVE","updated":"2010-01-26T12:07:44-06:00","name":"Windows
+        Server 2008 SP2 x86"},{"id":91,"status":"ACTIVE","updated":"2012-04-24T16:44:01-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2012 Standard"},{"id":111,"status":"ACTIVE","updated":"2011-09-12T10:53:12-05:00","name":"Red
+        Hat Enterprise Linux 6"},{"id":92,"status":"ACTIVE","updated":"2012-04-24T16:44:01-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2012 Web"},{"id":57,"status":"ACTIVE","updated":"2010-09-17T07:16:25-05:00","name":"Windows
+        Server 2008 SP2 x64 + SQL Server 2008 R2 Standard"},{"id":120,"status":"ACTIVE","updated":"2012-01-03T04:39:05-06:00","name":"Fedora
+        16"},{"id":86,"status":"ACTIVE","updated":"2010-09-17T07:19:20-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2008 R2 Standard"},{"id":108,"status":"ACTIVE","updated":"2011-11-01T08:32:30-05:00","name":"Gentoo
+        12.3"},{"id":126,"status":"ACTIVE","updated":"2012-05-29T17:11:45-05:00","name":"Fedora
+        17"},{"id":121,"status":"ACTIVE","updated":"2012-05-04T10:51:28-05:00","name":"CentOS
+        5.8"},{"id":89,"status":"ACTIVE","updated":"2011-10-04T08:39:34-05:00","name":"Windows
+        Server 2008 R2 x64 + SQL Server 2008 R2 Web"}]}'
+    http_version: 
+  recorded_at: Tue, 22 Oct 2013 20:17:04 GMT
 recorded_with: VCR 2.5.0
