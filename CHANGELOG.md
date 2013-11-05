@@ -1,5 +1,9 @@
-## v0.8.1
+## v0.8.2
 * KNIFE-335 Wait for RackConnect and/or Service Level automation before bootstrapping
+* KNIFE-366 Allow arbitrary bootstrap networks
+* KNIFE-399 update knife rackspace to support string based flavor ids
+* Fixing issue with bootstrapping Windows server
+* Fog 1.16 updates
 
 ## v0.8.0
 * KNIFE-68 enable ability to modify ssh port number
