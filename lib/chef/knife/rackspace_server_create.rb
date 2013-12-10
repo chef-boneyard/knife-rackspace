@@ -203,6 +203,12 @@ class Chef
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k },
         :default => "AUTO"
 
+      option :ssh_keypair,
+        :long => "--ssh-keypair KEYPAIR_NAME",
+        :description => "Name of existing nova SSH keypair. Public key will be injected into the instance.",
+        :proc => Proc.new { |v| Chef::Config[:knife][:rackspace_ssh_keypair] = v },
+        :default => nil
+
 
       def load_winrm_deps
         require 'winrm'
@@ -324,7 +330,8 @@ class Chef
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
           :disk_config => Chef::Config[:knife][:rackspace_disk_config],
-          :personality => files
+          :personality => files,
+          :keypair => Chef::Config[:knife][:rackspace_ssh_keypair]
         )
 
         if version_one?
@@ -341,6 +348,7 @@ class Chef
         msg_pair("Metadata", server.metadata.all)
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
+        msg_pair("SSH Key", Chef::Config[:knife][:rackspace_ssh_keypair])
 
         # wait for it to be ready to do stuff
         begin
