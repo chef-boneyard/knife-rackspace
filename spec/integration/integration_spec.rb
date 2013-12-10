@@ -30,15 +30,24 @@ ID  Name           Architecture  RAM    Disk
 8   30GB server    64-bit        30720  1200 GB
 """,
         :v2 => """
-ID  Name                     VCPUs  RAM    Disk
-2   512MB Standard Instance  1      512    20 GB
-3   1GB Standard Instance    1      1024   40 GB
-4   2GB Standard Instance    2      2048   80 GB
-5   4GB Standard Instance    2      4096   160 GB
-6   8GB Standard Instance    4      8192   320 GB
-7   15GB Standard Instance   6      15360  620 GB
-8   30GB Standard Instance   8      30720  1200 GB
-  """}
+ID                Name                     VCPUs  RAM     Disk
+2                 512MB Standard Instance  1      512     20 GB
+3                 1GB Standard Instance    1      1024    40 GB
+4                 2GB Standard Instance    2      2048    80 GB
+5                 4GB Standard Instance    2      4096    160 GB
+6                 8GB Standard Instance    4      8192    320 GB
+7                 15GB Standard Instance   6      15360   620 GB
+8                 30GB Standard Instance   8      30720   1200 GB
+performance1-1    1 GB Performance         1      1024    20 GB
+performance1-2    2 GB Performance         2      2048    40 GB
+performance1-4    4 GB Performance         4      4096    40 GB
+performance1-8    8 GB Performance         8      8192    40 GB
+performance2-120  120 GB Performance       32     122880  40 GB
+performance2-15   15 GB Performance        4      15360   40 GB
+performance2-30   30 GB Performance        8      30720   40 GB
+performance2-60   60 GB Performance        16     61440   40 GB
+performance2-90   90 GB Performance        24     92160   40 GB
+"""} 
       stdout = ANSI.unansi stdout
       stdout.should match_output(expected_output[api])
     end
