@@ -1,807 +1,6 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/detail
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.16.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Date:
-      - Tue, 22 Oct 2013 20:17:08 GMT
-      Content-Length:
-      - '2427'
-      Content-Type:
-      - application/json
-      X-Compute-Request-Id: _COMPUTE-REQUEST-ID_
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: UTF-8
-      string: ! '{"flavors": [{"name": "512MB Standard Instance", "links": [{"href":
-        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2", "rel": "self"},
-        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2", "rel":
-        "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 2.0, "OS-FLV-EXT-DATA:ephemeral":
-        0, "disk": 20, "id": "2"}, {"name": "1GB Standard Instance", "links": [{"href":
-        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3", "rel": "self"},
-        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3", "rel":
-        "bookmark"}], "ram": 1024, "vcpus": 1, "swap": 1024, "rxtx_factor": 3.0, "OS-FLV-EXT-DATA:ephemeral":
-        0, "disk": 40, "id": "3"}, {"name": "2GB Standard Instance", "links": [{"href":
-        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4", "rel": "self"},
-        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4", "rel":
-        "bookmark"}], "ram": 2048, "vcpus": 2, "swap": 2048, "rxtx_factor": 6.0, "OS-FLV-EXT-DATA:ephemeral":
-        0, "disk": 80, "id": "4"}, {"name": "4GB Standard Instance", "links": [{"href":
-        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5", "rel": "self"},
-        {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5", "rel":
-        "bookmark"}], "ram": 4096, "vcpus": 2, "swap": 2048, "rxtx_factor": 10.0,
-        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 160, "id": "5"}, {"name": "8GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
-        "rel": "bookmark"}], "ram": 8192, "vcpus": 4, "swap": 2048, "rxtx_factor":
-        15.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 320, "id": "6"}, {"name": "15GB
-        Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
-        "rel": "bookmark"}], "ram": 15360, "vcpus": 6, "swap": 2048, "rxtx_factor":
-        20.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 620, "id": "7"}, {"name": "30GB
-        Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
-        "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": 2048, "rxtx_factor":
-        30.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1200, "id": "8"}]}'
-    http_version: 
-  recorded_at: Tue, 22 Oct 2013 20:17:08 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '4187'
-      Date:
-      - Tue, 10 Dec 2013 19:04:40 GMT
-      x-compute-request-id:
-      - req-be3a86ea-cc0e-4a1e-95c8-dafd8a89dc16
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavors": [{"id": "2", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2",
-        "rel": "bookmark"}], "name": "512MB Standard Instance"}, {"id": "3", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
-        "rel": "bookmark"}], "name": "1GB Standard Instance"}, {"id": "4", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
-        "rel": "bookmark"}], "name": "2GB Standard Instance"}, {"id": "5", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
-        "rel": "bookmark"}], "name": "4GB Standard Instance"}, {"id": "6", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
-        "rel": "bookmark"}], "name": "8GB Standard Instance"}, {"id": "7", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
-        "rel": "bookmark"}], "name": "15GB Standard Instance"}, {"id": "8", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
-        "rel": "bookmark"}], "name": "30GB Standard Instance"}, {"id": "performance1-1",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-1",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-1",
-        "rel": "bookmark"}], "name": "1 GB Performance"}, {"id": "performance1-2",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-2",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-2",
-        "rel": "bookmark"}], "name": "2 GB Performance"}, {"id": "performance1-4",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-4",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-4",
-        "rel": "bookmark"}], "name": "4 GB Performance"}, {"id": "performance1-8",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-8",
-        "rel": "bookmark"}], "name": "8 GB Performance"}, {"id": "performance2-120",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-120",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-120",
-        "rel": "bookmark"}], "name": "120 GB Performance"}, {"id": "performance2-15",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-15",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-15",
-        "rel": "bookmark"}], "name": "15 GB Performance"}, {"id": "performance2-30",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-30",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-30",
-        "rel": "bookmark"}], "name": "30 GB Performance"}, {"id": "performance2-60",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-60",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-60",
-        "rel": "bookmark"}], "name": "60 GB Performance"}, {"id": "performance2-90",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-90",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-90",
-        "rel": "bookmark"}], "name": "90 GB Performance"}]}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:40 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '466'
-      Date:
-      - Tue, 10 Dec 2013 19:04:41 GMT
-      x-compute-request-id:
-      - req-42d6a937-ed3a-4cac-b7f4-67d9e3056566
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "512MB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2",
-        "rel": "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 80.0,
-        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 20, "id": "2"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:41 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '467'
-      Date:
-      - Tue, 10 Dec 2013 19:04:41 GMT
-      x-compute-request-id:
-      - req-b877224b-8bec-4347-bc6e-b29df74d1c08
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "1GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
-        "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": 1024, "rxtx_factor":
-        120.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 40, "id": "3"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:41 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '467'
-      Date:
-      - Tue, 10 Dec 2013 19:04:42 GMT
-      x-compute-request-id:
-      - req-372b91fd-a741-4126-aa61-cf19557baea1
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "2GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
-        "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": 2048, "rxtx_factor":
-        240.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 80, "id": "4"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:42 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '468'
-      Date:
-      - Tue, 10 Dec 2013 19:04:42 GMT
-      x-compute-request-id:
-      - req-cdde870e-4772-44ca-a88e-a36f86117a0f
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "4GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
-        "rel": "bookmark"}], "ram": 4096, "vcpus": 2, "swap": 2048, "rxtx_factor":
-        400.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 160, "id": "5"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:42 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '468'
-      Date:
-      - Tue, 10 Dec 2013 19:04:44 GMT
-      x-compute-request-id:
-      - req-114d735e-adc4-4c4c-8cf6-345ed0df1a88
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "8GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
-        "rel": "bookmark"}], "ram": 8192, "vcpus": 4, "swap": 2048, "rxtx_factor":
-        600.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 320, "id": "6"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:44 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '470'
-      Date:
-      - Tue, 10 Dec 2013 19:04:44 GMT
-      x-compute-request-id:
-      - req-cefa8fb6-04b3-4cff-82b1-b8eb42fcbcfc
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "15GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
-        "rel": "bookmark"}], "ram": 15360, "vcpus": 6, "swap": 2048, "rxtx_factor":
-        800.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 620, "id": "7"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:44 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '472'
-      Date:
-      - Tue, 10 Dec 2013 19:04:44 GMT
-      x-compute-request-id:
-      - req-6ec6d449-5144-44fd-aba5-c5e5acd338d8
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "30GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
-        "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": 2048, "rxtx_factor":
-        1200.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1200, "id": "8"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:04:44 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '4187'
-      Date:
-      - Tue, 10 Dec 2013 19:05:54 GMT
-      x-compute-request-id:
-      - req-5ffbbc23-a241-4b8d-b66f-ddf56f73d446
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavors": [{"id": "2", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2",
-        "rel": "bookmark"}], "name": "512MB Standard Instance"}, {"id": "3", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
-        "rel": "bookmark"}], "name": "1GB Standard Instance"}, {"id": "4", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
-        "rel": "bookmark"}], "name": "2GB Standard Instance"}, {"id": "5", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
-        "rel": "bookmark"}], "name": "4GB Standard Instance"}, {"id": "6", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
-        "rel": "bookmark"}], "name": "8GB Standard Instance"}, {"id": "7", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
-        "rel": "bookmark"}], "name": "15GB Standard Instance"}, {"id": "8", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
-        "rel": "bookmark"}], "name": "30GB Standard Instance"}, {"id": "performance1-1",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-1",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-1",
-        "rel": "bookmark"}], "name": "1 GB Performance"}, {"id": "performance1-2",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-2",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-2",
-        "rel": "bookmark"}], "name": "2 GB Performance"}, {"id": "performance1-4",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-4",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-4",
-        "rel": "bookmark"}], "name": "4 GB Performance"}, {"id": "performance1-8",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-8",
-        "rel": "bookmark"}], "name": "8 GB Performance"}, {"id": "performance2-120",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-120",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-120",
-        "rel": "bookmark"}], "name": "120 GB Performance"}, {"id": "performance2-15",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-15",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-15",
-        "rel": "bookmark"}], "name": "15 GB Performance"}, {"id": "performance2-30",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-30",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-30",
-        "rel": "bookmark"}], "name": "30 GB Performance"}, {"id": "performance2-60",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-60",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-60",
-        "rel": "bookmark"}], "name": "60 GB Performance"}, {"id": "performance2-90",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-90",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-90",
-        "rel": "bookmark"}], "name": "90 GB Performance"}]}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:54 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '466'
-      Date:
-      - Tue, 10 Dec 2013 19:05:54 GMT
-      x-compute-request-id:
-      - req-20e92ddb-e64e-4f5e-87af-c50a54f95230
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "512MB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2",
-        "rel": "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 80.0,
-        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 20, "id": "2"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:55 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '467'
-      Date:
-      - Tue, 10 Dec 2013 19:05:55 GMT
-      x-compute-request-id:
-      - req-b399f116-4374-4989-8d3c-53cf7ed68a38
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "1GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
-        "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": 1024, "rxtx_factor":
-        120.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 40, "id": "3"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:55 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '467'
-      Date:
-      - Tue, 10 Dec 2013 19:05:55 GMT
-      x-compute-request-id:
-      - req-10bab734-d5b7-4e3d-b634-dac07e8a9dfc
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "2GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
-        "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": 2048, "rxtx_factor":
-        240.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 80, "id": "4"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:55 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '468'
-      Date:
-      - Tue, 10 Dec 2013 19:05:56 GMT
-      x-compute-request-id:
-      - req-12eb08c1-1ecc-476b-8724-986236554e08
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "4GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
-        "rel": "bookmark"}], "ram": 4096, "vcpus": 2, "swap": 2048, "rxtx_factor":
-        400.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 160, "id": "5"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:56 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '468'
-      Date:
-      - Tue, 10 Dec 2013 19:05:56 GMT
-      x-compute-request-id:
-      - req-ce6cceec-b93b-4d23-851b-7196642fbb0f
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "8GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
-        "rel": "bookmark"}], "ram": 8192, "vcpus": 4, "swap": 2048, "rxtx_factor":
-        600.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 320, "id": "6"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:56 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '470'
-      Date:
-      - Tue, 10 Dec 2013 19:05:56 GMT
-      x-compute-request-id:
-      - req-be4bb4f7-c0d5-4796-81fe-99a96c5fd120
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "15GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
-        "rel": "bookmark"}], "ram": 15360, "vcpus": 6, "swap": 2048, "rxtx_factor":
-        800.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 620, "id": "7"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:05:56 GMT
-- request:
-    method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.15.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 200
-      message: 
-    headers:
-      Content-Type:
-      - application/json
-      Via:
-      - 1.1 Repose (Repose/2.12)
-      Content-Length:
-      - '472'
-      Date:
-      - Tue, 10 Dec 2013 19:05:59 GMT
-      x-compute-request-id:
-      - req-4061aed1-9126-4ee0-8639-ddd280fa62a9
-      Server:
-      - Jetty(8.0.y.z-SNAPSHOT)
-    body:
-      encoding: US-ASCII
-      string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
-        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "30GB Standard
-        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
-        "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
-        "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": 2048, "rxtx_factor":
-        1200.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1200, "id": "8"}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:06:00 GMT
-- request:
     method: post
     uri: https://identity.api.rackspacecloud.com/v2.0/tokens
     body:
@@ -809,7 +8,7 @@ http_interactions:
       string: ! '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"_RAX_USERNAME_","apiKey":"_RAX_PASSWORD_"}}}'
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -823,15 +22,13 @@ http_interactions:
       Server:
       - nginx/0.8.55
       Date:
-      - Tue, 10 Dec 2013 19:07:56 GMT
+      - Tue, 10 Dec 2013 21:54:55 GMT
       Content-Type:
       - application/json
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      X-NewRelic-App-Data:
-      - PxQGUF9aDwETVlhSBQgFVUYdFGQHBDcQUQxLA1tMXV1dORYyVBNFDgFCa04sBkpAVR1BMUdDXggDEWFWAEYiEkAOUQFZTF1dXUcVUR9RH1JKDwJVV1cUAgBdTUADVVIAVwUOAgEHUQcHBwlbGmU=
       vary:
       - Accept, Accept-Encoding, X-Auth-Token
       VIA:
@@ -839,23 +36,23 @@ http_interactions:
       Front-End-Https:
       - 'on'
     body:
-      encoding: US-ASCII
-      string: ! '{"access":{"token":{"id":"05fac16f5e9a4f3a93440b2a5c442a92","expires":"2013-12-11T06:35:39.594Z","tenant":{"id":"000000","name":"000000"},"RAX-AUTH:authenticatedBy":["APIKEY"]},"serviceCatalog":[{"name":"cloudFiles","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"object-store"},{"name":"cloudFilesCDN","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn5.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn6.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"rax:object-cdn"},{"name":"cloudBlockStorage","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.blockstorage.api.rackspacecloud.com\/v1\/000000"}],"type":"volume"},{"name":"cloudDatabases","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.databases.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:database"},{"name":"cloudLoadBalancers","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:load-balancer"},{"name":"cloudServersOpenStack","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/iad.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/iad.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/hkg.servers.api.rackspacecloud.com\/","versionId":"2"}],"type":"compute"},{"name":"cloudQueues","endpoints":[{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-iad.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-ord.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-dfw.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-syd.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-hkg.queues.api.rackspacecloud.com\/v1\/000000"}],"type":"rax:queues"},{"name":"autoscale","endpoints":[{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.autoscale.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:autoscale"},{"name":"cloudOrchestration","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.orchestration.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.orchestration.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.orchestration.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.orchestration.api.rackspacecloud.com\/v1\/000000"}],"type":"orchestration"},{"name":"cloudBackup","endpoints":[{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.backup.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:backup"},{"name":"cloudImages","endpoints":[{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.images.api.rackspacecloud.com\/v2\/000000"}],"type":"image"},{"name":"cloudDNS","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:dns"},{"name":"cloudMonitoring","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:monitor"},{"name":"cloudServers","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/servers.api.rackspacecloud.com\/v1.0\/000000","versionInfo":"https:\/\/servers.api.rackspacecloud.com\/v1.0","versionList":"https:\/\/servers.api.rackspacecloud.com\/","versionId":"1.0"}],"type":"compute"}],"user":{"id":"296063","roles":[{"id":"10000150","description":"Checkmate
-        Access role","name":"checkmate"},{"tenantId":"_CDN-TENANT-NAME_","id":"5","description":"A
+      encoding: UTF-8
+      string: ! '{"access":{"token":{"id":"00000000000000000000000000000000","expires":"2013-12-11T19:41:55.127Z","tenant":{"id":"000000","name":"000000"},"RAX-AUTH:authenticatedBy":["APIKEY"]},"serviceCatalog":[{"name":"cloudFiles","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"object-store"},{"name":"cloudFilesCDN","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn5.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn6.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"rax:object-cdn"},{"name":"cloudDatabases","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.databases.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:database"},{"name":"cloudBlockStorage","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.blockstorage.api.rackspacecloud.com\/v1\/000000"}],"type":"volume"},{"name":"cloudServersOpenStack","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/iad.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/iad.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/hkg.servers.api.rackspacecloud.com\/","versionId":"2"}],"type":"compute"},{"name":"cloudLoadBalancers","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:load-balancer"},{"name":"autoscale","endpoints":[{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.autoscale.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:autoscale"},{"name":"cloudQueues","endpoints":[{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-hkg.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-iad.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-dfw.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-syd.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-ord.queues.api.rackspacecloud.com\/v1\/000000"}],"type":"rax:queues"},{"name":"cloudBackup","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.backup.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:backup"},{"name":"cloudDNS","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:dns"},{"name":"cloudServers","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/servers.api.rackspacecloud.com\/v1.0\/000000","versionInfo":"https:\/\/servers.api.rackspacecloud.com\/v1.0","versionList":"https:\/\/servers.api.rackspacecloud.com\/","versionId":"1.0"}],"type":"compute"},{"name":"cloudMonitoring","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:monitor"}],"user":{"id":"358651","roles":[{"tenantId":"_CDN-TENANT-NAME_","id":"5","description":"A
         Role that allows a user access to keystone Service methods","name":"object-store:default"},{"tenantId":"000000","id":"6","description":"A
         Role that allows a user access to keystone Service methods","name":"compute:default"},{"id":"3","description":"User
-        Admin Role.","name":"identity:user-admin"}],"name":"_RAX_USERNAME_","RAX-AUTH:defaultRegion":"DFW"}}}'
+        Admin Role.","name":"identity:user-admin"},{"id":"10000150","description":"Checkmate
+        Access role","name":"checkmate"}],"name":"_RAX_USERNAME_","RAX-AUTH:defaultRegion":"ORD"}}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:07:56 GMT
+  recorded_at: Tue, 10 Dec 2013 21:54:55 GMT
 - request:
     method: get
-    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors
+    uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/detail
     body:
       encoding: US-ASCII
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -871,65 +68,107 @@ http_interactions:
       Via:
       - 1.1 Repose (Repose/2.12)
       Content-Length:
-      - '4187'
+      - '8117'
       Date:
-      - Tue, 10 Dec 2013 19:07:57 GMT
+      - Tue, 10 Dec 2013 21:54:57 GMT
       x-compute-request-id:
-      - req-a1330030-18a1-4a11-a4ae-8fc15664cbb9
+      - req-440bf81e-e59d-4bc7-8563-b5731336c31a
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
-      string: ! '{"flavors": [{"id": "2", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
+      encoding: UTF-8
+      string: ! '{"flavors": [{"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
+        "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "512MB Standard
+        Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/2",
-        "rel": "bookmark"}], "name": "512MB Standard Instance"}, {"id": "3", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
+        "rel": "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 80.0,
+        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 20, "id": "2"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"class": "standard1", "disk_io_index": "2", "number_of_data_disks": "0"},
+        "name": "1GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/3",
-        "rel": "bookmark"}], "name": "1GB Standard Instance"}, {"id": "4", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
+        "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": 1024, "rxtx_factor":
+        120.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 40, "id": "3"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"class": "standard1", "disk_io_index": "2", "number_of_data_disks": "0"},
+        "name": "2GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/4",
-        "rel": "bookmark"}], "name": "2GB Standard Instance"}, {"id": "5", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
+        "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": 2048, "rxtx_factor":
+        240.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 80, "id": "4"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"class": "standard1", "disk_io_index": "2", "number_of_data_disks": "0"},
+        "name": "4GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/5",
-        "rel": "bookmark"}], "name": "4GB Standard Instance"}, {"id": "6", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
+        "rel": "bookmark"}], "ram": 4096, "vcpus": 2, "swap": 2048, "rxtx_factor":
+        400.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 160, "id": "5"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"class": "standard1", "disk_io_index": "2", "number_of_data_disks": "0"},
+        "name": "8GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/6",
-        "rel": "bookmark"}], "name": "8GB Standard Instance"}, {"id": "7", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
+        "rel": "bookmark"}], "ram": 8192, "vcpus": 4, "swap": 2048, "rxtx_factor":
+        600.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 320, "id": "6"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"class": "standard1", "disk_io_index": "2", "number_of_data_disks": "0"},
+        "name": "15GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/7",
-        "rel": "bookmark"}], "name": "15GB Standard Instance"}, {"id": "8", "links":
-        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
+        "rel": "bookmark"}], "ram": 15360, "vcpus": 6, "swap": 2048, "rxtx_factor":
+        800.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 620, "id": "7"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"class": "standard1", "disk_io_index": "2", "number_of_data_disks": "0"},
+        "name": "30GB Standard Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/8",
-        "rel": "bookmark"}], "name": "30GB Standard Instance"}, {"id": "performance1-1",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-1",
+        "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": 2048, "rxtx_factor":
+        1200.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1200, "id": "8"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"resize_policy_class": "performance_flavor", "class": "performance1", "disk_io_index":
+        "40", "number_of_data_disks": "0"}, "name": "1 GB Performance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-1",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-1",
-        "rel": "bookmark"}], "name": "1 GB Performance"}, {"id": "performance1-2",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-2",
+        "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": "", "rxtx_factor": 200.0,
+        "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 20, "id": "performance1-1"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"resize_policy_class": "performance_flavor", "class": "performance1", "disk_io_index":
+        "40", "number_of_data_disks": "1"}, "name": "2 GB Performance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-2",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-2",
-        "rel": "bookmark"}], "name": "2 GB Performance"}, {"id": "performance1-4",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-4",
+        "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": "", "rxtx_factor": 400.0,
+        "OS-FLV-EXT-DATA:ephemeral": 20, "disk": 40, "id": "performance1-2"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"resize_policy_class": "performance_flavor", "class": "performance1", "disk_io_index":
+        "40", "number_of_data_disks": "1"}, "name": "4 GB Performance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-4",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-4",
-        "rel": "bookmark"}], "name": "4 GB Performance"}, {"id": "performance1-8",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-8",
+        "rel": "bookmark"}], "ram": 4096, "vcpus": 4, "swap": "", "rxtx_factor": 800.0,
+        "OS-FLV-EXT-DATA:ephemeral": 40, "disk": 40, "id": "performance1-4"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"resize_policy_class": "performance_flavor", "class": "performance1", "disk_io_index":
+        "40", "number_of_data_disks": "1"}, "name": "8 GB Performance", "links": [{"href":
+        "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-8",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance1-8",
-        "rel": "bookmark"}], "name": "8 GB Performance"}, {"id": "performance2-120",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-120",
+        "rel": "bookmark"}], "ram": 8192, "vcpus": 8, "swap": "", "rxtx_factor": 1600.0,
+        "OS-FLV-EXT-DATA:ephemeral": 80, "disk": 40, "id": "performance1-8"}, {"OS-FLV-WITH-EXT-SPECS:extra_specs":
+        {"resize_policy_class": "performance_flavor", "class": "performance2", "disk_io_index":
+        "80", "number_of_data_disks": "4"}, "name": "120 GB Performance", "links":
+        [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-120",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-120",
-        "rel": "bookmark"}], "name": "120 GB Performance"}, {"id": "performance2-15",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-15",
+        "rel": "bookmark"}], "ram": 122880, "vcpus": 32, "swap": "", "rxtx_factor":
+        10000.0, "OS-FLV-EXT-DATA:ephemeral": 1200, "disk": 40, "id": "performance2-120"},
+        {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class": "performance_flavor",
+        "class": "performance2", "disk_io_index": "40", "number_of_data_disks": "1"},
+        "name": "15 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-15",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-15",
-        "rel": "bookmark"}], "name": "15 GB Performance"}, {"id": "performance2-30",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-30",
+        "rel": "bookmark"}], "ram": 15360, "vcpus": 4, "swap": "", "rxtx_factor":
+        1250.0, "OS-FLV-EXT-DATA:ephemeral": 150, "disk": 40, "id": "performance2-15"},
+        {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class": "performance_flavor",
+        "class": "performance2", "disk_io_index": "40", "number_of_data_disks": "1"},
+        "name": "30 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-30",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-30",
-        "rel": "bookmark"}], "name": "30 GB Performance"}, {"id": "performance2-60",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-60",
+        "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": "", "rxtx_factor":
+        2500.0, "OS-FLV-EXT-DATA:ephemeral": 300, "disk": 40, "id": "performance2-30"},
+        {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class": "performance_flavor",
+        "class": "performance2", "disk_io_index": "60", "number_of_data_disks": "2"},
+        "name": "60 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-60",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-60",
-        "rel": "bookmark"}], "name": "60 GB Performance"}, {"id": "performance2-90",
-        "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-90",
+        "rel": "bookmark"}], "ram": 61440, "vcpus": 16, "swap": "", "rxtx_factor":
+        5000.0, "OS-FLV-EXT-DATA:ephemeral": 600, "disk": 40, "id": "performance2-60"},
+        {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class": "performance_flavor",
+        "class": "performance2", "disk_io_index": "70", "number_of_data_disks": "3"},
+        "name": "90 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-90",
         "rel": "self"}, {"href": "https://dfw.servers.api.rackspacecloud.com/000000/flavors/performance2-90",
-        "rel": "bookmark"}], "name": "90 GB Performance"}]}'
+        "rel": "bookmark"}], "ram": 92160, "vcpus": 24, "swap": "", "rxtx_factor":
+        7500.0, "OS-FLV-EXT-DATA:ephemeral": 900, "disk": 40, "id": "performance2-90"}]}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:07:57 GMT
+  recorded_at: Tue, 10 Dec 2013 21:54:58 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2
@@ -938,7 +177,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -956,13 +195,13 @@ http_interactions:
       Content-Length:
       - '466'
       Date:
-      - Tue, 10 Dec 2013 19:07:59 GMT
+      - Tue, 10 Dec 2013 21:55:01 GMT
       x-compute-request-id:
-      - req-977ee305-1c7e-427a-bc87-e58e0dc4ebb4
+      - req-e82c43e7-adae-4dde-8c77-30be0c04ee83
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "512MB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/2",
@@ -970,7 +209,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 512, "vcpus": 1, "swap": 512, "rxtx_factor": 80.0,
         "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 20, "id": "2"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:07:59 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:01 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3
@@ -979,7 +218,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -997,13 +236,13 @@ http_interactions:
       Content-Length:
       - '467'
       Date:
-      - Tue, 10 Dec 2013 19:08:01 GMT
+      - Tue, 10 Dec 2013 21:55:04 GMT
       x-compute-request-id:
-      - req-77f6b02c-b2f9-4d91-ad07-70df6b83bc8f
+      - req-ce5f321e-95e6-40ec-bbd7-77dd1d6e18c4
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "1GB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/3",
@@ -1011,7 +250,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": 1024, "rxtx_factor":
         120.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 40, "id": "3"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:01 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:04 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4
@@ -1020,7 +259,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1038,13 +277,13 @@ http_interactions:
       Content-Length:
       - '467'
       Date:
-      - Tue, 10 Dec 2013 19:08:03 GMT
+      - Tue, 10 Dec 2013 21:55:07 GMT
       x-compute-request-id:
-      - req-87324c57-622a-4940-beaf-e101ff0fa763
+      - req-6e9637b6-d14f-4351-8018-e1de32d962db
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "2GB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/4",
@@ -1052,7 +291,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": 2048, "rxtx_factor":
         240.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 80, "id": "4"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:03 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:07 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5
@@ -1061,7 +300,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1079,13 +318,13 @@ http_interactions:
       Content-Length:
       - '468'
       Date:
-      - Tue, 10 Dec 2013 19:08:05 GMT
+      - Tue, 10 Dec 2013 21:55:09 GMT
       x-compute-request-id:
-      - req-04d2420c-7897-49c2-9f68-7eff662f8903
+      - req-3c1876db-1334-454f-ab0c-c8ae9bc214dd
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "4GB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/5",
@@ -1093,7 +332,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 4096, "vcpus": 2, "swap": 2048, "rxtx_factor":
         400.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 160, "id": "5"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:05 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:09 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6
@@ -1102,7 +341,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1120,13 +359,13 @@ http_interactions:
       Content-Length:
       - '468'
       Date:
-      - Tue, 10 Dec 2013 19:08:06 GMT
+      - Tue, 10 Dec 2013 21:55:09 GMT
       x-compute-request-id:
-      - req-e7309db3-596b-42c1-8cbc-279166ac0a64
+      - req-497663bc-eea4-4a8f-948c-c1c38f4c8e48
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "8GB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/6",
@@ -1134,7 +373,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 8192, "vcpus": 4, "swap": 2048, "rxtx_factor":
         600.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 320, "id": "6"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:06 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:10 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7
@@ -1143,7 +382,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1161,13 +400,13 @@ http_interactions:
       Content-Length:
       - '470'
       Date:
-      - Tue, 10 Dec 2013 19:08:06 GMT
+      - Tue, 10 Dec 2013 21:55:12 GMT
       x-compute-request-id:
-      - req-6af2d2e4-0cdb-4ef6-b66a-53e435d72c6a
+      - req-a05d301f-8f14-41e7-b34c-3877cb2ab361
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "15GB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/7",
@@ -1175,7 +414,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 15360, "vcpus": 6, "swap": 2048, "rxtx_factor":
         800.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 620, "id": "7"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:06 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:12 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8
@@ -1184,7 +423,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1202,13 +441,13 @@ http_interactions:
       Content-Length:
       - '472'
       Date:
-      - Tue, 10 Dec 2013 19:08:06 GMT
+      - Tue, 10 Dec 2013 21:55:15 GMT
       x-compute-request-id:
-      - req-74352f13-67ed-4acf-856c-b9c9c231bcf3
+      - req-3b9df1e6-79f0-49d4-bce6-342c7c266c7c
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"class": "standard1",
         "disk_io_index": "2", "number_of_data_disks": "0"}, "name": "30GB Standard
         Instance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/8",
@@ -1216,7 +455,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": 2048, "rxtx_factor":
         1200.0, "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 1200, "id": "8"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:06 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:15 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-1
@@ -1225,7 +464,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1243,13 +482,13 @@ http_interactions:
       Content-Length:
       - '548'
       Date:
-      - Tue, 10 Dec 2013 19:08:08 GMT
+      - Tue, 10 Dec 2013 21:55:18 GMT
       x-compute-request-id:
-      - req-999a702a-0c38-42b8-a652-abb516358ca7
+      - req-b7815df8-f548-4157-9fe1-550b267928e8
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance1", "disk_io_index": "40", "number_of_data_disks":
         "0"}, "name": "1 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-1",
@@ -1257,7 +496,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 1024, "vcpus": 1, "swap": "", "rxtx_factor": 200.0,
         "OS-FLV-EXT-DATA:ephemeral": 0, "disk": 20, "id": "performance1-1"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:08 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:18 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-2
@@ -1266,7 +505,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1284,13 +523,13 @@ http_interactions:
       Content-Length:
       - '549'
       Date:
-      - Tue, 10 Dec 2013 19:08:10 GMT
+      - Tue, 10 Dec 2013 21:55:18 GMT
       x-compute-request-id:
-      - req-10770725-76f8-45fc-a543-f20c04a30ca4
+      - req-630e29f1-2115-4782-b0da-c0ad8afac60d
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance1", "disk_io_index": "40", "number_of_data_disks":
         "1"}, "name": "2 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-2",
@@ -1298,7 +537,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 2048, "vcpus": 2, "swap": "", "rxtx_factor": 400.0,
         "OS-FLV-EXT-DATA:ephemeral": 20, "disk": 40, "id": "performance1-2"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:10 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:18 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-4
@@ -1307,7 +546,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1325,13 +564,13 @@ http_interactions:
       Content-Length:
       - '549'
       Date:
-      - Tue, 10 Dec 2013 19:08:12 GMT
+      - Tue, 10 Dec 2013 21:55:19 GMT
       x-compute-request-id:
-      - req-c3901aef-750f-45ec-b7e7-b4b4ae17e5dc
+      - req-190d5b93-ddb7-4207-ae8f-e32106e43f84
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance1", "disk_io_index": "40", "number_of_data_disks":
         "1"}, "name": "4 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-4",
@@ -1339,7 +578,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 4096, "vcpus": 4, "swap": "", "rxtx_factor": 800.0,
         "OS-FLV-EXT-DATA:ephemeral": 40, "disk": 40, "id": "performance1-4"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:12 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:19 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-8
@@ -1348,7 +587,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1366,13 +605,13 @@ http_interactions:
       Content-Length:
       - '550'
       Date:
-      - Tue, 10 Dec 2013 19:08:12 GMT
+      - Tue, 10 Dec 2013 21:55:19 GMT
       x-compute-request-id:
-      - req-a08b1cf9-2e22-46bb-9a92-32c3c0d1e7a3
+      - req-11f0b1ca-6b24-45a1-8f8c-7fb4830b0f2c
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance1", "disk_io_index": "40", "number_of_data_disks":
         "1"}, "name": "8 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance1-8",
@@ -1380,7 +619,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 8192, "vcpus": 8, "swap": "", "rxtx_factor": 1600.0,
         "OS-FLV-EXT-DATA:ephemeral": 80, "disk": 40, "id": "performance1-8"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:12 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:19 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-120
@@ -1389,7 +628,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1407,13 +646,13 @@ http_interactions:
       Content-Length:
       - '564'
       Date:
-      - Tue, 10 Dec 2013 19:08:12 GMT
+      - Tue, 10 Dec 2013 21:55:20 GMT
       x-compute-request-id:
-      - req-cd209f90-0aba-4006-84b9-9c81a129202b
+      - req-d1fc7e08-d3bf-4097-9e79-5975eac2ddda
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance2", "disk_io_index": "80", "number_of_data_disks":
         "4"}, "name": "120 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-120",
@@ -1421,7 +660,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 122880, "vcpus": 32, "swap": "", "rxtx_factor":
         10000.0, "OS-FLV-EXT-DATA:ephemeral": 1200, "disk": 40, "id": "performance2-120"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:12 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:20 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-15
@@ -1430,7 +669,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1448,13 +687,13 @@ http_interactions:
       Content-Length:
       - '556'
       Date:
-      - Tue, 10 Dec 2013 19:08:12 GMT
+      - Tue, 10 Dec 2013 21:55:20 GMT
       x-compute-request-id:
-      - req-921625a9-17f7-4873-9d32-7bfc79e9743a
+      - req-7a351f07-9e96-48bd-b837-0189b08c5d3d
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance2", "disk_io_index": "40", "number_of_data_disks":
         "1"}, "name": "15 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-15",
@@ -1462,7 +701,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 15360, "vcpus": 4, "swap": "", "rxtx_factor":
         1250.0, "OS-FLV-EXT-DATA:ephemeral": 150, "disk": 40, "id": "performance2-15"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:12 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:21 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-30
@@ -1471,7 +710,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1489,13 +728,13 @@ http_interactions:
       Content-Length:
       - '556'
       Date:
-      - Tue, 10 Dec 2013 19:08:13 GMT
+      - Tue, 10 Dec 2013 21:55:21 GMT
       x-compute-request-id:
-      - req-7962323d-a840-448d-90b3-3945942427b9
+      - req-0e237ad8-e799-48cc-9033-e005808c05db
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance2", "disk_io_index": "40", "number_of_data_disks":
         "1"}, "name": "30 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-30",
@@ -1503,7 +742,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 30720, "vcpus": 8, "swap": "", "rxtx_factor":
         2500.0, "OS-FLV-EXT-DATA:ephemeral": 300, "disk": 40, "id": "performance2-30"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:13 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:21 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-60
@@ -1512,7 +751,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1530,13 +769,13 @@ http_interactions:
       Content-Length:
       - '557'
       Date:
-      - Tue, 10 Dec 2013 19:08:13 GMT
+      - Tue, 10 Dec 2013 21:55:22 GMT
       x-compute-request-id:
-      - req-54e90819-e2d8-4a11-a60f-90cfb292a5fb
+      - req-484181d5-1d4f-451a-af1d-a883e96b70d0
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance2", "disk_io_index": "60", "number_of_data_disks":
         "2"}, "name": "60 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-60",
@@ -1544,7 +783,7 @@ http_interactions:
         "rel": "bookmark"}], "ram": 61440, "vcpus": 16, "swap": "", "rxtx_factor":
         5000.0, "OS-FLV-EXT-DATA:ephemeral": 600, "disk": 40, "id": "performance2-60"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:13 GMT
+  recorded_at: Tue, 10 Dec 2013 21:55:22 GMT
 - request:
     method: get
     uri: https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-90
@@ -1553,7 +792,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.15.0
+      - fog/1.18.0
       Content-Type:
       - application/json
       Accept:
@@ -1571,13 +810,13 @@ http_interactions:
       Content-Length:
       - '557'
       Date:
-      - Tue, 10 Dec 2013 19:08:13 GMT
+      - Tue, 10 Dec 2013 21:55:22 GMT
       x-compute-request-id:
-      - req-3b78e113-cba6-4a11-8650-255fb5a79651
+      - req-315b9ddb-2d70-4d2d-982c-d6955a2f1530
       Server:
       - Jetty(8.0.y.z-SNAPSHOT)
     body:
-      encoding: US-ASCII
+      encoding: UTF-8
       string: ! '{"flavor": {"OS-FLV-WITH-EXT-SPECS:extra_specs": {"resize_policy_class":
         "performance_flavor", "class": "performance2", "disk_io_index": "70", "number_of_data_disks":
         "3"}, "name": "90 GB Performance", "links": [{"href": "https://dfw.servers.api.rackspacecloud.com/v2/000000/flavors/performance2-90",
@@ -1585,5 +824,5 @@ http_interactions:
         "rel": "bookmark"}], "ram": 92160, "vcpus": 24, "swap": "", "rxtx_factor":
         7500.0, "OS-FLV-EXT-DATA:ephemeral": 900, "disk": 40, "id": "performance2-90"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 19:08:13 GMT
-recorded_with: VCR 2.5.0
+  recorded_at: Tue, 10 Dec 2013 21:55:22 GMT
+recorded_with: VCR 2.8.0
