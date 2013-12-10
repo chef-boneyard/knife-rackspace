@@ -1,3 +1,6 @@
+## v0.8.4
+* KNIFE-408 TypeError: wrong argument type Symbol (expected Module)
+
 ## v0.8.2
 * KNIFE-335 Wait for RackConnect and/or Service Level automation before bootstrapping
 * KNIFE-366 Allow arbitrary bootstrap networks
