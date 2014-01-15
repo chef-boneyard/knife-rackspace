@@ -86,7 +86,7 @@ class Chef
         Chef::Log.debug("rackspace_auth_url #{auth_endpoint} (using)")
         Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
         Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
-        
+
         if version_one?
           Chef::Log.debug("rackspace v1")
           region_warning_for_v1
@@ -104,7 +104,7 @@ class Chef
           end
         end
       end
-      
+
       def region_warning_for_v1
         if Chef::Config[:knife][:rackspace_region] || config[:rackspace_region]
           Chef::Log.warn("Ignoring the rackspace_region parameter as it is only supported for Next Gen Cloud Servers (v2)")
@@ -171,7 +171,7 @@ class Chef
           @public_dns_name ||= begin
             Resolv.getname(public_ip_address)
           rescue
-            "#{public_ip_address.gsub('.','-')}.static.cloud-ips.com"
+            "#{public_ip_address}.rs-cloud.xip.io"
           end
         end
       end
