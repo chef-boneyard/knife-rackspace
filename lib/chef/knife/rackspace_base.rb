@@ -62,7 +62,7 @@ class Chef
           option :rackspace_region,
             :long => "--rackspace-region REGION",
             :description => "Your rackspace region",
-            :required => true,
+            :default => "dfw",
             :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
           option :file,
