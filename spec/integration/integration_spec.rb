@@ -8,6 +8,7 @@ require 'chef/knife/rackspace_server_create'
   describe api do
     before(:each) do
       Chef::Config[:knife][:rackspace_version] = api.to_s #v2 by default
+      Chef::Config[:knife][:rackspace_region] = :iad
 
       Chef::Knife::Bootstrap.any_instance.stub(:run)
       Chef::Knife::RackspaceServerCreate.any_instance.stub(:tcp_test_ssh).with(anything).and_return(true)
