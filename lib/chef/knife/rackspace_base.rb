@@ -62,7 +62,6 @@ class Chef
           option :rackspace_region,
             :long => "--rackspace-region REGION",
             :description => "Your rackspace region",
-            :required => true,
             :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
           option :file,
@@ -112,6 +111,11 @@ class Chef
       end
 
       def connection_params(options={})
+        unless locate_config_value(:rackspace_region)
+          ui.error "Please specify region via the command line using the --rackpace-region switch oradd a knife[:rackspace_region] = REGION to your knife file."
+          exit 1
+        end
+
         hash = options.merge({
           :provider => 'Rackspace',
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
