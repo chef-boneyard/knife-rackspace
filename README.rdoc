@@ -92,6 +92,8 @@ http://docs.openstack.org/essex/openstack-compute/starter/content/Launch_and_man
 
 You may specify a custom network using the <tt>--network [LABEL_OR_ID]</tt> option. You can also remove the default internal ServiceNet and PublicNet networks by specifying the <tt>--no-default-networks</tt> switch. To use a network other than PublicNet for the bootstrap connection, specify the <tt>--bootstrap-network LABEL</tt> option.
 
+Note: If you are using one of the `performanceX-X` machines, you need to put `-f` or `--flavor` in quotes.
+
 == knife rackspace server delete
 
 Deletes an existing server in the currently configured Rackspace Cloud account by the server/instance id. You can find the instance id by entering <tt>knife rackspace server list</tt>. Please note - this does not delete the associated node and client objects from the Chef server unless you pass the <tt>-P</tt> or <tt>--purge</tt> command option. Using the <tt>--purge</tt> option with v2 nodes will attempt to delete the node and client by the name of the node.
