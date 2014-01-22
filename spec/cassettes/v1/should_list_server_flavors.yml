@@ -1,14 +1,14 @@
 ---
 http_interactions:
 - request:
-    method: post
-    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/detail.json
     body:
-      encoding: UTF-8
-      string: ! '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"_RAX_USERNAME_","apiKey":"_RAX_PASSWORD_"}}}'
+      encoding: US-ASCII
+      string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -17,52 +17,6 @@ http_interactions:
   response:
     status:
       code: 200
-      message: 
-    headers:
-      Server:
-      - nginx/0.8.55
-      Date:
-      - Tue, 10 Dec 2013 21:54:35 GMT
-      Content-Type:
-      - application/json
-      Transfer-Encoding:
-      - chunked
-      Connection:
-      - keep-alive
-      X-NewRelic-App-Data:
-      - PxQGUF9aDwETVlhSBQgFVUYdFGQHBDcQUQxLA1tMXV1dORYyVBNFDgFCa04sBkpAVR1BMUdDXggDEWFWAEYiEkAOUQFZTF1dXUcVUR9RH1NKDw9QXlAOAhxVUVUbEwAAUghXAgcABQcJVgkBWRpp
-      vary:
-      - Accept, Accept-Encoding, X-Auth-Token
-      VIA:
-      - 1.0 Repose (Repose/2.3.5)
-      Front-End-Https:
-      - 'on'
-    body:
-      encoding: UTF-8
-      string: ! '{"access":{"token":{"id":"00000000000000000000000000000000","expires":"2013-12-11T19:41:55.127Z","tenant":{"id":"000000","name":"000000"},"RAX-AUTH:authenticatedBy":["APIKEY"]},"serviceCatalog":[{"name":"cloudFiles","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"object-store"},{"name":"cloudFilesCDN","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn5.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn6.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"rax:object-cdn"},{"name":"cloudDatabases","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.databases.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:database"},{"name":"cloudBlockStorage","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.blockstorage.api.rackspacecloud.com\/v1\/000000"}],"type":"volume"},{"name":"cloudServersOpenStack","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/iad.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/iad.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/hkg.servers.api.rackspacecloud.com\/","versionId":"2"}],"type":"compute"},{"name":"cloudLoadBalancers","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:load-balancer"},{"name":"autoscale","endpoints":[{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.autoscale.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:autoscale"},{"name":"cloudQueues","endpoints":[{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-hkg.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-iad.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-dfw.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-syd.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-ord.queues.api.rackspacecloud.com\/v1\/000000"}],"type":"rax:queues"},{"name":"cloudBackup","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.backup.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:backup"},{"name":"cloudDNS","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:dns"},{"name":"cloudServers","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/servers.api.rackspacecloud.com\/v1.0\/000000","versionInfo":"https:\/\/servers.api.rackspacecloud.com\/v1.0","versionList":"https:\/\/servers.api.rackspacecloud.com\/","versionId":"1.0"}],"type":"compute"},{"name":"cloudMonitoring","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:monitor"}],"user":{"id":"358651","roles":[{"id":"10000150","description":"Checkmate
-        Access role","name":"checkmate"},{"tenantId":"_CDN-TENANT-NAME_","id":"5","description":"A
-        Role that allows a user access to keystone Service methods","name":"object-store:default"},{"tenantId":"000000","id":"6","description":"A
-        Role that allows a user access to keystone Service methods","name":"compute:default"},{"id":"3","description":"User
-        Admin Role.","name":"identity:user-admin"}],"name":"_RAX_USERNAME_","RAX-AUTH:defaultRegion":"ORD"}}}'
-    http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:36 GMT
-- request:
-    method: get
-    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/detail.json
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      User-Agent:
-      - fog/1.18.0
-      Content-Type:
-      - application/json
-      Accept:
-      - application/json
-      X-Auth-Token: _ONE-TIME-TOKEN_
-  response:
-    status:
-      code: 203
       message: 
     headers:
       Content-Type:
@@ -82,21 +36,21 @@ http_interactions:
       Content-Length:
       - '422'
       Date:
-      - Tue, 10 Dec 2013 21:54:36 GMT
+      - Fri, 17 Jan 2014 17:22:03 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '147'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavors":[{"id":1,"ram":256,"disk":10,"name":"256 server"},{"id":2,"ram":512,"disk":20,"name":"512
         server"},{"id":3,"ram":1024,"disk":40,"name":"1GB server"},{"id":4,"ram":2048,"disk":80,"name":"2GB
         server"},{"id":5,"ram":4096,"disk":160,"name":"4GB server"},{"id":6,"ram":8192,"disk":320,"name":"8GB
         server"},{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"},{"id":8,"ram":30720,"disk":1200,"name":"30GB
         server"}]}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:36 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:03 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/1.json
@@ -105,7 +59,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -113,7 +67,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 203
+      code: 200
       message: 
     headers:
       Content-Type:
@@ -133,17 +87,17 @@ http_interactions:
       Content-Length:
       - '59'
       Date:
-      - Tue, 10 Dec 2013 21:54:37 GMT
+      - Fri, 17 Jan 2014 17:22:04 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '1236'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":1,"ram":256,"disk":10,"name":"256 server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:37 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:04 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/2.json
@@ -152,7 +106,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -180,17 +134,17 @@ http_interactions:
       Content-Length:
       - '59'
       Date:
-      - Tue, 10 Dec 2013 21:54:44 GMT
+      - Fri, 17 Jan 2014 17:22:06 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
       - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":2,"ram":512,"disk":20,"name":"512 server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:44 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:06 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/3.json
@@ -199,7 +153,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -207,7 +161,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 203
+      code: 200
       message: 
     headers:
       Content-Type:
@@ -227,17 +181,17 @@ http_interactions:
       Content-Length:
       - '60'
       Date:
-      - Tue, 10 Dec 2013 21:54:44 GMT
+      - Fri, 17 Jan 2014 17:22:06 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '152'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":3,"ram":1024,"disk":40,"name":"1GB server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:44 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:06 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/4.json
@@ -246,7 +200,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -254,7 +208,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 203
+      code: 200
       message: 
     headers:
       Content-Type:
@@ -274,17 +228,17 @@ http_interactions:
       Content-Length:
       - '60'
       Date:
-      - Tue, 10 Dec 2013 21:54:45 GMT
+      - Fri, 17 Jan 2014 17:22:07 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '149'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":4,"ram":2048,"disk":80,"name":"2GB server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:45 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:07 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/5.json
@@ -293,7 +247,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -301,7 +255,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 203
+      code: 200
       message: 
     headers:
       Content-Type:
@@ -321,17 +275,17 @@ http_interactions:
       Content-Length:
       - '61'
       Date:
-      - Tue, 10 Dec 2013 21:54:45 GMT
+      - Fri, 17 Jan 2014 17:22:08 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '1055'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":5,"ram":4096,"disk":160,"name":"4GB server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:45 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:08 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/6.json
@@ -340,7 +294,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -348,7 +302,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 203
+      code: 200
       message: 
     headers:
       Content-Type:
@@ -368,17 +322,17 @@ http_interactions:
       Content-Length:
       - '61'
       Date:
-      - Tue, 10 Dec 2013 21:54:46 GMT
+      - Fri, 17 Jan 2014 17:22:09 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '1054'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":6,"ram":8192,"disk":320,"name":"8GB server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:46 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:09 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/7.json
@@ -387,7 +341,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -415,17 +369,17 @@ http_interactions:
       Content-Length:
       - '65'
       Date:
-      - Tue, 10 Dec 2013 21:54:49 GMT
+      - Fri, 17 Jan 2014 17:22:09 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
       - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:49 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:09 GMT
 - request:
     method: get
     uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/8.json
@@ -434,7 +388,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - fog/1.18.0
+      - fog/1.15.0
       Content-Type:
       - application/json
       Accept:
@@ -442,7 +396,7 @@ http_interactions:
       X-Auth-Token: _ONE-TIME-TOKEN_
   response:
     status:
-      code: 203
+      code: 200
       message: 
     headers:
       Content-Type:
@@ -462,15 +416,486 @@ http_interactions:
       Content-Length:
       - '64'
       Date:
-      - Tue, 10 Dec 2013 21:54:50 GMT
+      - Fri, 17 Jan 2014 17:22:10 GMT
       X-Varnish: _VARNISH-REQUEST-ID_
       Age:
-      - '1055'
+      - '0'
       Connection:
       - keep-alive
     body:
-      encoding: UTF-8
+      encoding: US-ASCII
       string: ! '{"flavor":{"id":8,"ram":30720,"disk":1200,"name":"30GB server"}}'
     http_version: 
-  recorded_at: Tue, 10 Dec 2013 21:54:50 GMT
+  recorded_at: Fri, 17 Jan 2014 17:22:10 GMT
+- request:
+    method: post
+    uri: https://identity.api.rackspacecloud.com/v2.0/tokens
+    body:
+      encoding: UTF-8
+      string: ! '{"auth":{"RAX-KSKEY:apiKeyCredentials":{"username":"_RAX_USERNAME_","apiKey":"_RAX_PASSWORD_"}}}'
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - nginx/0.8.55
+      Date:
+      - Fri, 17 Jan 2014 19:13:18 GMT
+      Content-Type:
+      - application/json
+      Transfer-Encoding:
+      - ''
+      Connection:
+      - close
+      vary:
+      - Accept, Accept-Encoding, X-Auth-Token
+      VIA:
+      - 1.0 Repose (Repose/2.3.5)
+      Front-End-Https:
+      - 'on'
+    body:
+      encoding: US-ASCII
+      string: ! '{"access":{"token":{"id":"000000","expires":"2014-01-18T14:51:11.824Z","tenant":{"id":"000000","name":"000000"},"RAX-AUTH:authenticatedBy":["APIKEY"]},"serviceCatalog":[{"name":"cloudFiles","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.dfw1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.ord1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.syd2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.iad3.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_","internalURL":"https:\/\/snet-storage101.hkg1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"object-store"},{"name":"cloudFilesCDN","endpoints":[{"region":"DFW","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn1.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"ORD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn2.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"SYD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn4.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"IAD","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn5.clouddrive.com\/v1\/_CDN-TENANT-NAME_"},{"region":"HKG","tenantId":"_CDN-TENANT-NAME_","publicURL":"https:\/\/cdn6.clouddrive.com\/v1\/_CDN-TENANT-NAME_"}],"type":"rax:object-cdn"},{"name":"autoscale","endpoints":[{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.autoscale.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.autoscale.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:autoscale"},{"name":"cloudBlockStorage","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.blockstorage.api.rackspacecloud.com\/v1\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.blockstorage.api.rackspacecloud.com\/v1\/000000"}],"type":"volume"},{"name":"cloudDatabases","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.databases.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.databases.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:database"},{"name":"cloudLoadBalancers","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.loadbalancers.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:load-balancer"},{"name":"cloudServersOpenStack","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/syd.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/syd.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/ord.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/ord.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/dfw.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/dfw.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/iad.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/iad.servers.api.rackspacecloud.com\/","versionId":"2"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2\/000000","versionInfo":"https:\/\/hkg.servers.api.rackspacecloud.com\/v2","versionList":"https:\/\/hkg.servers.api.rackspacecloud.com\/","versionId":"2"}],"type":"compute"},{"name":"cloudQueues","endpoints":[{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-ord.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-syd.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-hkg.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-dfw.queues.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.queues.api.rackspacecloud.com\/v1\/000000","internalURL":"https:\/\/snet-iad.queues.api.rackspacecloud.com\/v1\/000000"}],"type":"rax:queues"},{"name":"cloudOrchestration","endpoints":[{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.orchestration.api.rackspacecloud.com\/v1\/000000"},{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.orchestration.api.rackspacecloud.com\/v1\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.orchestration.api.rackspacecloud.com\/v1\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.orchestration.api.rackspacecloud.com\/v1\/000000"}],"type":"orchestration"},{"name":"cloudBackup","endpoints":[{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"DFW","tenantId":"000000","publicURL":"https:\/\/dfw.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"ORD","tenantId":"000000","publicURL":"https:\/\/ord.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"SYD","tenantId":"000000","publicURL":"https:\/\/syd.backup.api.rackspacecloud.com\/v1.0\/000000"},{"region":"HKG","tenantId":"000000","publicURL":"https:\/\/hkg.backup.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:backup"},{"name":"cloudImages","endpoints":[{"region":"IAD","tenantId":"000000","publicURL":"https:\/\/iad.images.api.rackspacecloud.com\/v2\/000000"}],"type":"image"},{"name":"cloudDNS","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/dns.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:dns"},{"name":"cloudMonitoring","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/monitoring.api.rackspacecloud.com\/v1.0\/000000"}],"type":"rax:monitor"},{"name":"cloudServers","endpoints":[{"tenantId":"000000","publicURL":"https:\/\/servers.api.rackspacecloud.com\/v1.0\/000000","versionInfo":"https:\/\/servers.api.rackspacecloud.com\/v1.0","versionList":"https:\/\/servers.api.rackspacecloud.com\/","versionId":"1.0"}],"type":"compute"}],"user":{"id":"296063","roles":[{"id":"10000150","description":"Checkmate
+        Access role","name":"checkmate"},{"tenantId":"_CDN-TENANT-NAME_","id":"5","description":"A
+        Role that allows a user access to keystone Service methods","name":"object-store:default"},{"tenantId":"000000","id":"6","description":"A
+        Role that allows a user access to keystone Service methods","name":"compute:default"},{"id":"3","description":"User
+        Admin Role.","name":"identity:user-admin"}],"name":"_RAX_USERNAME_","RAX-AUTH:defaultRegion":"DFW"}}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:18 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/detail.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:19 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Tue, 06 Dec 2011 17:31:55 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '422'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavors":[{"id":1,"ram":256,"disk":10,"name":"256 server"},{"id":2,"ram":512,"disk":20,"name":"512
+        server"},{"id":3,"ram":1024,"disk":40,"name":"1GB server"},{"id":4,"ram":2048,"disk":80,"name":"2GB
+        server"},{"id":5,"ram":4096,"disk":160,"name":"4GB server"},{"id":6,"ram":8192,"disk":320,"name":"8GB
+        server"},{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"},{"id":8,"ram":30720,"disk":1200,"name":"30GB
+        server"}]}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:19 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/1.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:19 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Wed, 19 Sep 2007 18:24:59 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '59'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":1,"ram":256,"disk":10,"name":"256 server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:19 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/2.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:20 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Wed, 19 Sep 2007 18:25:10 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '59'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":2,"ram":512,"disk":20,"name":"512 server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:20 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/3.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:21 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Fri, 21 Sep 2007 23:11:39 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '60'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":3,"ram":1024,"disk":40,"name":"1GB server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:21 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/4.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:21 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Wed, 19 Sep 2007 18:25:33 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '60'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":4,"ram":2048,"disk":80,"name":"2GB server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:21 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/5.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:22 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Tue, 18 Mar 2008 17:54:15 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '61'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":5,"ram":4096,"disk":160,"name":"4GB server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:22 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/6.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:22 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Mon, 28 Jan 2008 13:35:30 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '61'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":6,"ram":8192,"disk":320,"name":"8GB server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:22 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/7.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:23 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Fri, 01 Apr 2011 00:02:01 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '65'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":7,"ram":15872,"disk":620,"name":"15.5GB server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:23 GMT
+- request:
+    method: get
+    uri: https://servers.api.rackspacecloud.com/v1.0/000000/flavors/8.json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - fog/1.19.0
+      Content-Type:
+      - application/json
+      Accept:
+      - application/json
+      X-Auth-Token: _ONE-TIME-TOKEN_
+  response:
+    status:
+      code: 200
+      message: 
+    headers:
+      Server:
+      - Jetty(8.0.y.z-SNAPSHOT)
+      X-Varnish: _VARNISH-REQUEST-ID_
+      Vary:
+      - Accept-Encoding, Accept, Accept-Encoding, X-Auth-Token
+      Cache-Control:
+      - s-maxage=1800
+      Content-Type:
+      - application/json
+      x-purge-key:
+      - /flavors
+      Date:
+      - Fri, 17 Jan 2014 19:13:23 GMT
+      Via:
+      - 1.1 Repose (Repose/2.11.0), 1.1 varnish
+      Connection:
+      - close
+      Last-Modified:
+      - Tue, 06 Dec 2011 17:31:55 GMT
+      Age:
+      - '0'
+      Content-Length:
+      - '64'
+    body:
+      encoding: US-ASCII
+      string: ! '{"flavor":{"id":8,"ram":30720,"disk":1200,"name":"30GB server"}}'
+    http_version: 
+  recorded_at: Fri, 17 Jan 2014 19:13:23 GMT
 recorded_with: VCR 2.8.0
