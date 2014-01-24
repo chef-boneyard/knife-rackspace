@@ -1,3 +1,10 @@
+## v0.9.0
+* KNIFE-398 support secret/secret_file in knife.rb
+* KNIFE-420 Add --ssh-keypair for using ssh keys already registered with nova.
+* KNIFE-437 remove default region and make region required
+* replace static.cloud-ips with xip (cloud-ips was deprecated https://community.rackspace.com/general/f/34/t/623)
+* updated Fog dependency to 1.16
+
 ## v0.8.4
 * KNIFE-408 TypeError: wrong argument type Symbol (expected Module)
 
