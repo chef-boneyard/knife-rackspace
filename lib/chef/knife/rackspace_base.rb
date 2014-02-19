@@ -175,7 +175,7 @@ class Chef
           @public_dns_name ||= begin
             Resolv.getname(public_ip_address)
           rescue
-            "#{public_ip_address}.rs-cloud.xip.io"
+            "#{public_ip_address}.xip.io"
           end
         end
       end
