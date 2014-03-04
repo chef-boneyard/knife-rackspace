@@ -203,6 +203,12 @@ class Chef
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k },
         :default => "AUTO"
 
+      option :rackspace_config_drive,
+        :long => "--rackspace_config_drive CONFIGDRIVE",
+        :description => "Creates a config drive device in /dev/disk/by-label/config-2 if set to TRUE",
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_config_drive] = k },
+        :default => "false"
+
       option :ssh_keypair,
         :long => "--ssh-keypair KEYPAIR_NAME",
         :description => "Name of existing nova SSH keypair. Public key will be injected into the instance.",
@@ -330,6 +336,7 @@ class Chef
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
           :disk_config => Chef::Config[:knife][:rackspace_disk_config],
+          :config_drive => locate_config_value(:rackspace_config_drive) || false,
           :personality => files,
           :keypair => Chef::Config[:knife][:rackspace_ssh_keypair]
         )
