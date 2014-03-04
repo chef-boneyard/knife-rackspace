@@ -45,8 +45,6 @@ class Chef
           ]
         end
         connection.flavors.sort_by(&:id).each do |flavor|
-
-          flavor = connection.flavors.get(flavor.id)
           bits = flavor.respond_to?(:bits) ? "#{flavor.bits.to_s}-bit" : ""
 
           flavor_list << flavor.id.to_s
