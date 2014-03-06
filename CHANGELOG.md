@@ -1,3 +1,9 @@
+## v0.9.1
+* KNIFE-460 Remove extraneous flavor reloads
+* KNIFE-459 Add support for config-drive
+* KNIFE-440 fix two minor typos in the ui.error message
+* use {public_ip_address}.xip.io instead of {public_ip_address}.rs-cloud.xip.io
+
 ## v0.9.0
 * KNIFE-398 support secret/secret_file in knife.rb
 * KNIFE-420 Add --ssh-keypair for using ssh keys already registered with nova.
