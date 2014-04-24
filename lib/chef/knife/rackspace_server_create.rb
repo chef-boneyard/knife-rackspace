@@ -215,6 +215,10 @@ class Chef
         :proc => Proc.new { |v| Chef::Config[:knife][:rackspace_ssh_keypair] = v },
         :default => nil
 
+      option :secret_file,
+        :long => "--secret-file SECRET_FILE",
+        :description => "A file containing the secret key to use to encrypt data bag item values",
+        :proc => Proc.new { |sf| Chef::Config[:knife][:secret_file] = sf }
 
       def load_winrm_deps
         require 'winrm'
@@ -466,7 +470,7 @@ class Chef
         bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
         bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
         bootstrap.config[:secret] = locate_config_value(:secret)
-        bootstrap.config[:secret_file] = locate_config_value(:secret_file)
+        bootstrap.config[:secret_file] = locate_config_value(:secret_file)  || {}
 
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
