@@ -107,7 +107,7 @@ class Chef
         :description => "The version of Chef to install",
         :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_version] = v }
 
-      option :distro,
+        option :distro,
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
         :description => "Bootstrap a distro using a template; default is 'chef-full'",
@@ -208,6 +208,11 @@ class Chef
         :description => "Creates a config drive device in /dev/disk/by-label/config-2 if set to TRUE",
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_config_drive] = k },
         :default => "false"
+
+      option :rackspace_user_data,
+        :long => "--rackspace_user_data USERDATA",
+        :description => "User data contained in openstack/latest/user_data on config drive",
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_user_data] = k }
 
       option :ssh_keypair,
         :long => "--ssh-keypair KEYPAIR_NAME",
@@ -336,6 +341,7 @@ class Chef
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
           :disk_config => Chef::Config[:knife][:rackspace_disk_config],
+          :user_data => Chef::Config[:knife][:rackspace_user_data],
           :config_drive => locate_config_value(:rackspace_config_drive) || false,
           :personality => files,
           :keypair => Chef::Config[:knife][:rackspace_ssh_keypair]
@@ -353,6 +359,8 @@ class Chef
         msg_pair("Flavor", server.flavor.name)
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata.all)
+        msg_pair("ConfigDrive", server.config_drive)
+        msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
         msg_pair("SSH Key", Chef::Config[:knife][:rackspace_ssh_keypair])
