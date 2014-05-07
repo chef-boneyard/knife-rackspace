@@ -492,7 +492,7 @@ class Chef
         bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
         bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
         bootstrap.config[:secret] = locate_config_value(:secret)
-        bootstrap.config[:secret_file] = locate_config_value(:secret_file)  || {}
+        bootstrap.config[:secret_file] = locate_config_value(:secret_file)  || ""
 
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
