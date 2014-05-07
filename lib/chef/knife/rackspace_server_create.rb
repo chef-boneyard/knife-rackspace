@@ -209,9 +209,9 @@ class Chef
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_config_drive] = k },
         :default => "false"
 
-      option :rackspace_user_data,
-        :long => "--rackspace_user_data USERDATA",
-        :description => "User data contained in openstack/latest/user_data on config drive",
+      option :rackspace_user_data_file,
+        :long => "--rackspace_user_data_file USERDATA",
+        :description => "User data file will be placed in the openstack/latest/user_data directory on the config drive",
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_user_data] = k }
 
       option :ssh_keypair,
@@ -341,7 +341,7 @@ class Chef
           :flavor_id => locate_config_value(:flavor),
           :metadata => Chef::Config[:knife][:rackspace_metadata],
           :disk_config => Chef::Config[:knife][:rackspace_disk_config],
-          :user_data => Chef::Config[:knife][:rackspace_user_data],
+          :user_data => user_data,
           :config_drive => locate_config_value(:rackspace_config_drive) || false,
           :personality => files,
           :keypair => Chef::Config[:knife][:rackspace_ssh_keypair]
@@ -442,6 +442,20 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
+      end
+      
+      def user_data
+        file = Chef::Config[:knife][:rackspace_user_data]
+        return unless file
+        
+        begin
+          filename = File.expand_path(file)
+          content = File.read(filename)
+        rescue Errno::ENOENT => e
+          ui.error "Unable to read source file - #{filename}"
+          exit 1
+        end
+        content
       end
 
       def bootstrap_for_node(server, bootstrap_ip_address)
