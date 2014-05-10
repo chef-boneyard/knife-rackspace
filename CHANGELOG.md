@@ -1,3 +1,7 @@
+## v0.9.2
+* KNIFE-480 Add support for user-data
+* --secret-file support for bootstrap
+
 ## v0.9.1
 * KNIFE-460 Remove extraneous flavor reloads
 * KNIFE-459 Add support for config-drive
