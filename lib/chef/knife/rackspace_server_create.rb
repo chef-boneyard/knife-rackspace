@@ -188,8 +188,8 @@ class Chef
 
       option :server_create_timeout,
         :long => "--server-create-timeout timeout",
-        :description => "How long to wait until the server is ready; default is 600 seconds",
-        :default => 600,
+        :description => "How long to wait until the server is ready; default is 1200 seconds",
+        :default => 1200,
         :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeout] = v}
 
       option :bootstrap_proxy,
