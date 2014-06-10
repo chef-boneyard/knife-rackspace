@@ -190,7 +190,7 @@ class Chef
         :long => "--server-create-timeout timeout",
         :description => "How long to wait until the server is ready; default is 600 seconds",
         :default => 600,
-        :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeouts] = v}
+        :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeout] = v}
 
       option :bootstrap_proxy,
         :long => "--bootstrap-proxy PROXY_URL",
@@ -371,7 +371,7 @@ class Chef
 
         # wait for it to be ready to do stuff
         begin
-          server.wait_for(1200) { 
+          server.wait_for(Integer(locate_config_value(:server_create_timeout))) { 
             print "."; 
             Chef::Log.debug("#{progress}%")
             if rackconnect_wait and rackspace_servicelevel_wait
@@ -401,9 +401,6 @@ class Chef
         end
 
         print "\n#{ui.color("Waiting server", :magenta)}"
-
-        server.wait_for(Integer(locate_config_value(:server_create_timeout))) { print "."; ready? }
-        # wait for it to be ready to do stuff
 
         puts("\n")
 
