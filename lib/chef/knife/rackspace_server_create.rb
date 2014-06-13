@@ -173,6 +173,11 @@ class Chef
         :boolean => true,
         :default => true
 
+      option :ssh_wait_timeout,
+        :long => "--ssh-wait-timeout TIMEOUT",
+        :description => "The ssh wait timeout, before attempting ssh",
+        :default => "0"
+
       option :default_networks,
         :long => "--[no-]default-networks",
         :description => "Include public and service networks, enabled by default",
@@ -240,6 +245,8 @@ class Chef
       end
 
       def tcp_test_ssh(hostname)
+        sleep [:ssh_wait_timeout]
+
         # if this feature is disabled, just return true to skip it
         return true if not config[:tcp_test_ssh]
 
