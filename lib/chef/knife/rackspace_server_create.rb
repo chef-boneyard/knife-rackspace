@@ -167,6 +167,12 @@ class Chef
         :boolean => true,
         :default => true
 
+      option :tcp_test_ssh,
+        :long => "--[no-]tcp-test-ssh",
+        :description => "Check that SSH is available using a TCP check directly on port 22, enabled by default",
+        :boolean => true,
+        :default => true
+
       option :default_networks,
         :long => "--[no-]default-networks",
         :description => "Include public and service networks, enabled by default",
@@ -234,6 +240,9 @@ class Chef
       end
 
       def tcp_test_ssh(hostname)
+        # if this feature is disabled, just return true to skip it
+        return true if not config[:tcp_test_ssh]
+
         ssh_port = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
         tcp_socket = TCPSocket.new(hostname, ssh_port)
         readable = IO.select([tcp_socket], nil, nil, 5)
