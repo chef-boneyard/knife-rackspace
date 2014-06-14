@@ -1,3 +1,6 @@
+## v0.9.3
+* KNIFE-497 Create server command does not honor timeout parameter
+
 ## v0.9.2
 * KNIFE-480 Add support for user-data
 * --secret-file support for bootstrap
