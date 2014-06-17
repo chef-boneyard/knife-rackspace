@@ -245,7 +245,7 @@ class Chef
       end
 
       def tcp_test_ssh(hostname)
-        sleep config[:ssh_wait_timeout]
+        sleep config[:ssh_wait_timeout].to_i
 
         # if this feature is disabled, just return true to skip it
         return true if not config[:tcp_test_ssh]
