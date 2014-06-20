@@ -364,7 +364,7 @@ class Chef
           :user_data => user_data,
           :config_drive => locate_config_value(:rackspace_config_drive) || false,
           :personality => files,
-          :keypair => Chef::Config[:knife][:rackspace_ssh_keypair]
+          :key_name => Chef::Config[:knife][:rackspace_ssh_keypair]
         )
 
         if version_one?
