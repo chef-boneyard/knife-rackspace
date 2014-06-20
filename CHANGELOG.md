@@ -1,3 +1,8 @@
+## v0.10.0
+* KNIFE-498 knife rackspace uses direct TCP connection on port 22 to verify SSHD
+* Update Windows bootstrapping instructions in the README
+* Fix warning for deprecated :keypair for :key_name
+
 ## v0.9.3
 * KNIFE-497 Create server command does not honor timeout parameter
 
