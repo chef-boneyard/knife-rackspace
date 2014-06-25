@@ -250,7 +250,7 @@ class Chef
         # if this feature is disabled, just return true to skip it
         return true if not config[:tcp_test_ssh]
 
-        ssh_port = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
+        ssh_port = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
         tcp_socket = TCPSocket.new(hostname, ssh_port)
         readable = IO.select([tcp_socket], nil, nil, 5)
         if readable
@@ -480,7 +480,7 @@ class Chef
         bootstrap.name_args = [bootstrap_ip_address]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:ssh_password] = server.password
-        bootstrap.config[:ssh_port] = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
+        bootstrap.config[:ssh_port] = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:host_key_verify] = config[:host_key_verify]
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
