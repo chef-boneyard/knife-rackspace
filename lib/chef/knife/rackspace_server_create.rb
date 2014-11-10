@@ -235,7 +235,31 @@ class Chef
         :long => "--secret-file SECRET_FILE",
         :description => "A file containing the secret key to use to encrypt data bag item values",
         :proc => Proc.new { |sf| Chef::Config[:knife][:secret_file] = sf }
+      
+      option :volume_name,
+        :long => "--volume-name NAME",
+        :description => "Create a Cloud Block Storage device with the specified name",
+        :proc => Proc.new { |name| Chef::Config[:knife][:volume_name] = name },
+        :default => nil
 
+      option :volume_size,
+        :long => "--volume-size SIZE",
+        :description => "Amount of storage (in GB, 100-1000) to allocate for the Cloud Block Storage device (defaults to 100)",
+        :proc => Proc.new { |size| Chef::Config[:knife][:volume_size] = size },
+        :default => 100
+
+      option :volume_type,
+        :long => "--volume-type {SSD|SATA}",
+        :description => "Type of volume for the Cloud Block Storage device (defaults to SATA)",
+        :proc => Proc.new { |voltype| Chef::Config[:knife][:volume_type] = voltype },
+        :default => 'SATA'
+
+      option :device_name,
+        :long => "--device-name NAME",
+        :description => "Name of device for attached Cloug Block Storage volume (Valid device names are `/dev/xvd[a-p]`, default is /dev/xvdb)",
+        :proc => Proc.new { |name| Chef::Config[:knife][:device_name] = name },
+        :default => '/dev/xvdb'
+      
       def load_winrm_deps
         require 'winrm'
         require 'em-winrm'
@@ -250,7 +274,7 @@ class Chef
         # if this feature is disabled, just return true to skip it
         return true if not config[:tcp_test_ssh]
 
-        ssh_port = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
+        ssh_port = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
         tcp_socket = TCPSocket.new(hostname, ssh_port)
         readable = IO.select([tcp_socket], nil, nil, 5)
         if readable
@@ -384,7 +408,9 @@ class Chef
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
         msg_pair("SSH Key", Chef::Config[:knife][:rackspace_ssh_keypair])
-
+        
+        
+          
         # wait for it to be ready to do stuff
         begin
           server.wait_for(Integer(locate_config_value(:server_create_timeout))) { 
@@ -426,6 +452,23 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
+        if Chef::Config[:knife][:volume_name]
+          Chef::Log.debug("Setting up block storage")
+          Chef::Log.debug("Volume size: #{Chef::Config[:knife][:volume_size]}")
+          Chef::Log.debug("Volume name: #{Chef::Config[:knife][:volume_name]}")
+          Chef::Log.debug("Volume type: #{Chef::Config[:knife][:volume_type]}")
+          Chef::Log.debug("Device name: #{Chef::Config[:knife][:device_name]}")
+          volume_size = (Chef::Config[:knife][:volume_size] || 100).to_i
+          volume_name = Chef::Config[:knife][:volume_name]
+          volume_type_name = Chef::Config[:knife][:volume_type] || 'SATA'
+          new_volume = block_storage_connection.volumes.create(:size => volume_size, :display_name => volume_name, :volume_type => volume_type_name)
+          print "\n#{ui.color("Waiting storage", :magenta)}"
+        
+          new_volume.wait_for(Integer(locate_config_value(:server_create_timeout))) { print "."; ready? }
+        
+          server.attach_volume new_volume.id, (Chef::Config[:knife][:device_name] || '/dev/xvdb')
+        end
+
         bootstrap_ip_address = ip_address(server, config[:bootstrap_network])
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
@@ -435,11 +478,11 @@ class Chef
 
       if locate_config_value(:bootstrap_protocol) == 'winrm'
         print "\n#{ui.color("Waiting for winrm", :magenta)}"
-        print(".") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
+        print("\nattempting connection to #{bootstrap_ip_address}") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
         bootstrap_for_windows_node(server, bootstrap_ip_address).run
       else
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
-        print(".") until tcp_test_ssh(bootstrap_ip_address) {
+        print("\n...waiting for  #{bootstrap_ip_address}") until tcp_test_ssh(bootstrap_ip_address) {
           sleep @initial_sleep_delay ||= 10
           puts("done")
         }
@@ -480,7 +523,7 @@ class Chef
         bootstrap.name_args = [bootstrap_ip_address]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:ssh_password] = server.password
-        bootstrap.config[:ssh_port] = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
+        bootstrap.config[:ssh_port] = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:host_key_verify] = config[:host_key_verify]
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
