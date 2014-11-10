@@ -94,6 +94,8 @@ You may specify a custom network using the <tt>--network [LABEL_OR_ID]</tt> opti
 
 Note: If you are using one of the `performanceX-X` machines, you need to put `-f` or `--flavor` in quotes.
 
+You may create a Cloud Block Storage device by using the <tt>--volume-name NAME</tt> option. The device will default to a 100GB SATA device named /dev/xvdb. You can use the <tt>--volume-size</tt>, <tt>--volume-type</tt>, and <tt>--device-name</tt> options to modify these defaults. If no volume name is supplied, then no device will be created.
+
 === Windows
 
 Windows Servers require special treatment with the knife-rackspace gem.
@@ -135,6 +137,10 @@ Creates a new cloud network. Both the label and the CIDR are required parameters
 == knife rackspace network delete
 
 Deletes one or more specified networks by id. The network must be detached from all hosts before it is deleted.
+
+knife rackspace volume_type list
+
+Outputs a list of volume types available to the currently configured Rackspace Cloud account. A volume type identifies the type of storage created by the block storage API.
 
 = LICENSE:
 

@@ -109,7 +109,32 @@ class Chef
           Chef::Log.warn("Ignoring the rackspace_region parameter as it is only supported for Next Gen Cloud Servers (v2)")
         end
       end
-
+      
+      def block_storage_connection
+        Chef::Log.debug("setting up block storage connection")
+        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]} (config)")
+        Chef::Log.debug("version #{config[:rackspace_version]} (cli)")
+        Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
+        Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
+        Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
+        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{auth_endpoint} (using)")
+        Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
+        Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
+      
+        if version_one?
+          Chef::Log.debug("rackspace v1")
+          block_storage_warning_for_v1
+          @block_storage_connection = nil
+        else
+          Chef::Log.debug("rackspace v2")
+          @block_storage_connection ||= begin
+            connection = Fog::Rackspace::BlockStorage.new(block_storage_connection_params())
+          end
+        end
+      end
+      
       def connection_params(options={})
         unless locate_config_value(:rackspace_region)
           ui.error "Please specify region via the command line using the --rackspace-region switch or add a knife[:rackspace_region] = REGION to your knife file."
@@ -136,7 +161,28 @@ class Chef
 
         hash
       end
-
+      
+      def block_storage_connection_params(options={})
+        hash = options.merge({
+          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
+          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
+          :rackspace_auth_url => auth_endpoint,
+          :rackspace_region => locate_config_value(:rackspace_region)
+        })
+      
+        hash[:connection_options] ||= {}
+        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
+        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
+        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
+          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+        end
+        Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
+        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
+        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
+      
+        hash
+      end
+      
       def auth_endpoint
         url = locate_config_value(:rackspace_auth_url)
         return url if url
