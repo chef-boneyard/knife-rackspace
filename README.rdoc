@@ -138,7 +138,7 @@ Creates a new cloud network. Both the label and the CIDR are required parameters
 
 Deletes one or more specified networks by id. The network must be detached from all hosts before it is deleted.
 
-knife rackspace volume_type list
+== knife rackspace volume_type list
 
 Outputs a list of volume types available to the currently configured Rackspace Cloud account. A volume type identifies the type of storage created by the block storage API.
 
