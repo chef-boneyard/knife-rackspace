@@ -225,10 +225,10 @@ class Chef
         :description => "User data file will be placed in the openstack/latest/user_data directory on the config drive",
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_user_data] = k }
 
-      option :rackspace_block_device,
-        :long => "--rackspace_block_device DEVNAME=CLBID:TYPE:SIZE:DO_NOT_DELETE",
+      option :rackspace_block_device_map,
+        :long => "--block-device-map DEVNAME=CLBID:TYPE:SIZE:DO_NOT_DELETE",
         :description => "Block device specified by <device_name>=<clbid>:<type>:<size>:<do_not_delete>",
-        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_block_device] = k }
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_block_device_map] = k }
 
       option :ssh_keypair,
         :long => "--ssh-keypair KEYPAIR_NAME",
@@ -346,7 +346,7 @@ class Chef
         config[:bootstrap_network] = 'private' if config[:private_network]
 
         unless Chef::Config[:knife][:image]
-          unless Chef::Config[:knife][:rackspace_block_device]
+          unless Chef::Config[:knife][:rackspace_block_device_map]
             ui.error("You have not provided a valid image value or block device.  Please note the short option for image recently changed from '-i' to '-I'.")
             exit 1
           end
@@ -363,7 +363,7 @@ class Chef
         rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
 
 
-        if Chef::Config[:knife][:rackspace_block_device]
+        if Chef::Config[:knife][:rackspace_block_device_map]
           server = connection.servers.new(
             :name => node_name,
             :image_id => "", # set image_id to an empty string
@@ -401,10 +401,14 @@ class Chef
         msg_pair("Host ID", server.host_id)
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
-        msg_pair("Image", server.image.name)
+        unless Chef::Config[:knife][:rackspace_block_device_map]
+          msg_pair("Image", server.image.name)
+        end
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
-        msg_pair("BlockDeviceMap", Chef::Config[:knife][:rackspace_block_device])
+        unless Chef::Config[:knife][:image] 
+          msg_pair("BlockDeviceMap", Chef::Config[:knife][:rackspace_block_device_map])
+        end
         msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
@@ -586,7 +590,7 @@ class Chef
     end
 
     def get_block_device_mapping
-      blk_str = Chef::Config[:knife][:rackspace_block_device]
+      blk_str = Chef::Config[:knife][:rackspace_block_device_map]
       # parse the string and return a Array with hash element
       device_name, clb_str = blk_str.split('=')
       clb_array = clb_str.split(':')
