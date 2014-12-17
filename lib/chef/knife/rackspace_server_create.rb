@@ -407,7 +407,7 @@ class Chef
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
         unless Chef::Config[:knife][:image] 
-          msg_pair("BlockDeviceMap", Chef::Config[:knife][:rackspace_block_device_map])
+          msg_pair("Cloud Block Storage ID", get_block_device_mapping[0]["volume_id"])
         end
         msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
@@ -480,7 +480,12 @@ class Chef
         msg_pair("Host ID", server.host_id)
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
-        msg_pair("Image", server.image.name)
+        unless Chef::Config[:knife][:rackspace_block_device_map]
+          msg_pair("Image", server.image.name)
+        end
+        unless Chef::Config[:knife][:image]
+          msg_pair("Cloud Block Storage ID", get_block_device_mapping[0]["volume_id"])
+        end
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
         msg_pair("Public IP Address", ip_address(server, 'public'))
@@ -596,9 +601,8 @@ class Chef
       clb_array = clb_str.split(':')
       Array[ Hash[ "device_name" => device_name,
                    "volume_id" => clb_array[0],
-                   # leaving these out because i don't know what their keys are supposed to be
-                   # "source_type" => clb_array[1],
-                   # "volume_size" => clb_array[2],
+                   "volume_type" => clb_array[1],
+                   "volume_size" => clb_array[2],
                    "delete_on_termination" => clb_array[3] ] ]
     end
   end
