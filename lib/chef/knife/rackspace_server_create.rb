@@ -225,6 +225,11 @@ class Chef
         :description => "User data file will be placed in the openstack/latest/user_data directory on the config drive",
         :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_user_data] = k }
 
+      option :rackspace_block_device,
+        :long => "--rackspace_block_device DEVNAME=CLBID:TYPE:SIZE:DO_NOT_DELETE",
+        :description => "Block device specified by <device_name>=<clbid>:<type>:<size>:<do_not_delete>",
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_block_device] = k }
+
       option :ssh_keypair,
         :long => "--ssh-keypair KEYPAIR_NAME",
         :description => "Name of existing nova SSH keypair. Public key will be injected into the instance.",
@@ -341,8 +346,10 @@ class Chef
         config[:bootstrap_network] = 'private' if config[:private_network]
 
         unless Chef::Config[:knife][:image]
-          ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
-          exit 1
+          unless Chef::Config[:knife][:rackspace_block_device]
+            ui.error("You have not provided a valid image value or block device.  Please note the short option for image recently changed from '-i' to '-I'.")
+            exit 1
+          end
         end
 
         if locate_config_value(:bootstrap_protocol) == 'winrm'
@@ -355,17 +362,34 @@ class Chef
         rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
         rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
 
-        server = connection.servers.new(
-          :name => node_name,
-          :image_id => Chef::Config[:knife][:image],
-          :flavor_id => locate_config_value(:flavor),
-          :metadata => Chef::Config[:knife][:rackspace_metadata],
-          :disk_config => Chef::Config[:knife][:rackspace_disk_config],
-          :user_data => user_data,
-          :config_drive => locate_config_value(:rackspace_config_drive) || false,
-          :personality => files,
-          :key_name => Chef::Config[:knife][:rackspace_ssh_keypair]
-        )
+
+        if Chef::Config[:knife][:rackspace_block_device]
+          server = connection.servers.new(
+            :name => node_name,
+            :image_id => "", # set image_id to an empty string
+            :flavor_id => locate_config_value(:flavor),
+            :metadata => Chef::Config[:knife][:rackspace_metadata],
+            :disk_config => Chef::Config[:knife][:rackspace_disk_config],
+            :user_data => user_data,
+            :config_drive => locate_config_value(:rackspace_config_drive) || false,
+            :personality => files,
+            :key_name => Chef::Config[:knife][:rackspace_ssh_keypair],
+            :block_device_mapping => get_block_device_mapping,
+            :boot_volume_id => get_block_device_mapping[0]["volume_id"]
+          )
+        else
+          server = connection.servers.new(
+            :name => node_name,
+            :image_id => Chef::Config[:knife][:image],
+            :flavor_id => locate_config_value(:flavor),
+            :metadata => Chef::Config[:knife][:rackspace_metadata],
+            :disk_config => Chef::Config[:knife][:rackspace_disk_config],
+            :user_data => user_data,
+            :config_drive => locate_config_value(:rackspace_config_drive) || false,
+            :personality => files,
+            :key_name => Chef::Config[:knife][:rackspace_ssh_keypair]
+          )
+        end
 
         if version_one?
           server.save
@@ -380,6 +404,7 @@ class Chef
         msg_pair("Image", server.image.name)
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
+        msg_pair("BlockDeviceMap", Chef::Config[:knife][:rackspace_block_device])
         msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
@@ -558,6 +583,19 @@ class Chef
         ui.error("Custom networks are only available in v2 API")
         exit 1
       end
+    end
+
+    def get_block_device_mapping
+      blk_str = Chef::Config[:knife][:rackspace_block_device]
+      # parse the string and return a Array with hash element
+      device_name, clb_str = blk_str.split('=')
+      clb_array = clb_str.split(':')
+      Array[ Hash[ "device_name" => device_name,
+                   "volume_id" => clb_array[0],
+                   # leaving these out because i don't know what their keys are supposed to be
+                   # "source_type" => clb_array[1],
+                   # "volume_size" => clb_array[2],
+                   "delete_on_termination" => clb_array[3] ] ]
     end
   end
 end
