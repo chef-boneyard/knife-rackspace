@@ -1,5 +1,6 @@
 ## v0.10.1
 * Support for new Rackspace instance types and boot from existing Cloud Block Storage volumes #91
+* Fixed issue with deleting server with cloud block storage
 
 ## v0.10.0
 * KNIFE-498 knife rackspace uses direct TCP connection on port 22 to verify SSHD
