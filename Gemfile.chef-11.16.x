@@ -1,9 +1,12 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
+
 
 group :development, :test do
   gem "knife-dsl", :git => 'git://github.com/maxlinc/knife-dsl.git', :branch => 'io_capture_fix'
-  gem 'rake'
+  gem "rake"
 end
 
-# Specify your gem's dependencies in knife-rackspace.gemspec
+gem 'ohai', '~> 7.4.0'
+gem 'chef', '~> 11.16.2'
+
 gemspec

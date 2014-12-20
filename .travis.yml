@@ -1,8 +1,5 @@
 ---
 language: ruby
-rvm:
-- 2.0.0
-- 1.9.3
 env:
   global:
   - secure: ! 'eEsikE/p2yz7/cFvCN/NOoljxBqjzsTWnKC7iZ+fEGGsyhKVJgWn4AasBusZ
@@ -25,3 +22,9 @@ env:
       s2MvBhX0man0zjYPStbL1vcpuS1Ecea3kGzefG0lYhHAzvK7wqqRqhKNFsnd
 
       FPEVgZrcj3/Lc7mlkbigZouDM7BJLQbMGOv/KOS6f3nYzIhkOfE='
+matrix:
+  include:
+    - rvm: 2.0.0
+      gemfile: Gemfile
+    - rvm: 1.9.3
+      gemfile: Gemfile.chef-11.16.x
