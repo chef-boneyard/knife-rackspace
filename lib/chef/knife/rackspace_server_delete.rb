@@ -69,7 +69,7 @@ class Chef
             if server.image
               msg_pair("Image", server.image.name)
             else
-              msg_pair("Image No image supplied booting from block volume")
+              msg_pair("Image", "No image supplied - booted from cloud block storage")
             end
             msg_pair("Public IP Address", ip_address(server, 'public'))
             msg_pair("Private IP Address", ip_address(server, 'private'))
