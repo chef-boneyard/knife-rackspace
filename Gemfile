@@ -1,4 +1,4 @@
-source "http://rubygems.org"
+source "https://rubygems.org"
 
 group :development, :test do
   gem "knife-dsl", :git => 'git://github.com/maxlinc/knife-dsl.git', :branch => 'io_capture_fix'

@@ -27,4 +27,4 @@ matrix:
     - rvm: 2.0.0
       gemfile: Gemfile
     - rvm: 1.9.3
-      gemfile: Gemfile.chef-11.16.4  
+      gemfile: Gemfile.chef-11.16.2
