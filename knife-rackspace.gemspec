@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.add_dependency "knife-windows"
-  s.add_dependency "fog", '>= 1.22'
+  s.add_dependency "fog", '>= 1.24'
   s.add_dependency "chef", ">= 0.10.10"
   s.require_paths = ["lib"]
 
