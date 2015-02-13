@@ -54,6 +54,12 @@ class Chef
         :description => "The image of the server",
         :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
 
+      option :boot_volume_id,
+        :short => "-B BOOT_VOLUME_ID",
+        :long => "--boot-volume-id UUID",
+        :description => "The image CBS UUID to use as the server's boot device",
+        :proc => Proc.new { |i| Chef::Config[:knife][:boot_volume_id] = i.to_s }
+
       option :server_name,
         :short => "-S NAME",
         :long => "--server-name NAME",
@@ -337,47 +343,73 @@ class Chef
       def run
         $stdout.sync = true
 
+        server_create_options = {
+          :metadata => Chef::Config[:knife][:rackspace_metadata],
+          :disk_config => Chef::Config[:knife][:rackspace_disk_config],
+          :user_data => user_data,
+          :config_drive => locate_config_value(:rackspace_config_drive) || false,
+          :personality => files,
+          :key_name => Chef::Config[:knife][:rackspace_ssh_keypair],
+          :name => get_node_name(config[:chef_node_name] || config[:server_name]),
+          :networks => get_networks(Chef::Config[:knife][:rackspace_networks]),
+        }
+
         # Maybe deprecate this option at some point
         config[:bootstrap_network] = 'private' if config[:private_network]
 
-        unless Chef::Config[:knife][:image]
-          ui.error("You have not provided a valid image value.  Please note the short option for this value recently changed from '-i' to '-I'.")
+        flavor_id = locate_config_value(:flavor)
+        flavor = connection.flavors.get(flavor_id)
+        if !flavor
+          ui.error("Invalid Flavor ID: #{flavor_id}")
           exit 1
+        else
+          server_create_options[:flavor_id] = flavor.id
+        end
+
+        # This is somewhat a hack, but Rackspace's API returns '0' for flavors
+        # that must be backed by a CBS volume.
+        #
+        # In the case we are trying to create one of these flavors, we should
+        # swap out the image_id argument with the boot_image_id argument.
+        if flavor.disk == 0
+          server_create_options[:image_id] = ''
+          server_create_options[:boot_volume_id] = Chef::Config[:knife][:boot_volume_id]
+          server_create_options[:boot_image_id] = Chef::Config[:knife][:image]
+
+          if server_create_options[:boot_image_id] && server_create_options[:boot_volume_id]
+            ui.error('Please specify exactly one of --boot-volume-id (-B) and --image (-I)')
+            exit 1
+          end
+        else
+          server_create_options[:image_id] = Chef::Config[:knife][:image]
+
+          if !server_create_options[:image_id]
+            ui.error('Please specify an Image ID for the server with --image (-I)')
+            exit 1
+          end
         end
 
         if locate_config_value(:bootstrap_protocol) == 'winrm'
           load_winrm_deps
         end
 
-        node_name = get_node_name(config[:chef_node_name] || config[:server_name])
-        networks = get_networks(Chef::Config[:knife][:rackspace_networks])
-
-        rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
-        rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
-
-        server = connection.servers.new(
-          :name => node_name,
-          :image_id => Chef::Config[:knife][:image],
-          :flavor_id => locate_config_value(:flavor),
-          :metadata => Chef::Config[:knife][:rackspace_metadata],
-          :disk_config => Chef::Config[:knife][:rackspace_disk_config],
-          :user_data => user_data,
-          :config_drive => locate_config_value(:rackspace_config_drive) || false,
-          :personality => files,
-          :key_name => Chef::Config[:knife][:rackspace_ssh_keypair]
-        )
+        server = connection.servers.new(server_create_options)
 
         if version_one?
           server.save
         else
-          server.save(:networks => networks)
+          server.save(:networks => server_create_options[:networks])
         end
+
+        rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
+        rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
 
         msg_pair("Instance ID", server.id)
         msg_pair("Host ID", server.host_id)
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
-        msg_pair("Image", server.image.name)
+        msg_pair("Image", server.image.name) if server.image
+        msg_pair("Boot Image ID", server.boot_image_id) if server.boot_image_id
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
         msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
@@ -412,7 +444,7 @@ class Chef
           Chef::Application.fatal! 'Server didn\'t finish on time'
         end
         msg_pair("Metadata", server.metadata)
-        if(networks && Chef::Config[:knife][:rackspace_networks])
+        if server_create_options[:networks] && Chef::Config[:knife][:rackspace_networks]
           msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
         end
 
