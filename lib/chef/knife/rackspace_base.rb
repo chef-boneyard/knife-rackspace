@@ -135,53 +135,42 @@ class Chef
         end
       end
 
-      def connection_params(options={})
-        unless locate_config_value(:rackspace_region)
-          ui.error "Please specify region via the command line using the --rackspace-region switch or add a knife[:rackspace_region] = REGION to your knife file."
-          exit 1
-        end
-
-        hash = options.merge({
-          :provider => 'Rackspace',
+      def common_connection_params(options={})
+        options.merge({
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
           :rackspace_auth_url => auth_endpoint,
           :rackspace_region => locate_config_value(:rackspace_region)
-        })
+        }).tap do |params|
+          params[:connection_options] ||= {}
+          Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
+          Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
+          if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
+            params[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+          end
+          Chef::Log.debug("using proxy #{params[:connection_options][:proxy] || "<none>"} (config)")
+          Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
+          params[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
 
-        hash[:connection_options] ||= {}
-        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
-        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
-        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
-          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+          yield params if block_given?
         end
-        Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
-        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
-        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
-
-        hash
       end
+
+      def connection_params(options={})
+        common_connection_params(options) do |params|
+          unless locate_config_value(:rackspace_region)
+            ui.error "Please specify region via the command line using the --rackspace-region switch or add a knife[:rackspace_region] = REGION to your knife file."
+            exit 1
+          end
+          params[:provider] = 'Rackspace'
+        end
+      end
+      private :connection_params
 
       def block_storage_connection_params(options={})
-        hash = options.merge({
-          :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
-          :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
-          :rackspace_auth_url => auth_endpoint,
-          :rackspace_region => locate_config_value(:rackspace_region)
-        })
-
-        hash[:connection_options] ||= {}
-        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
-        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
-        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
-          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
-        end
-        Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
-        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
-        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
-
-        hash
+        common_connection_params
       end
+      private :block_storage_connection_params
 
       def auth_endpoint
         url = locate_config_value(:rackspace_auth_url)
