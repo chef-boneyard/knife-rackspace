@@ -28,6 +28,7 @@ describe Chef::Knife::RackspaceServerCreate do
       allow(Chef::Knife::UI).to receive(:new).and_return(ui)
       allow(Fog::Compute).to receive(:new).and_return(fog_compute_connection)
       Chef::Config[:knife][:server_create_timeout] = 1200
+      Chef::Config[:knife][:rackspace_region] = :dfw
       allow(fog_compute_connection).to receive_message_chain('networks.all').and_return([])
     end
 
@@ -39,16 +40,121 @@ describe Chef::Knife::RackspaceServerCreate do
       expect{ creator.run }.to raise_error(SystemExit)
     end
 
-    it 'creates a new server instance and tries to save it' do
-      Chef::Config[:knife][:image] = image.name
+    context 'when all required params are specified' do
+      before do
+        Chef::Config[:knife][:image] = image.name
+      end
 
-      expect(fog_compute_connection).to receive(:servers).and_return(servers)
-      expect(servers).to receive(:new).and_return(server)
-      expect(server).to receive(:save)
+      it 'creates a new server instance and tries to save it' do
+        expect(fog_compute_connection).to receive(:servers).and_return(servers)
+        expect(servers).to receive(:new).and_return(server)
+        expect(server).to receive(:save)
 
-      creator.run
+        creator.run
+      end
+
+      context 'when chef node name is configured' do
+        it 'sets server name to chef node name' do
+          node_name = 'test_chef_node_name'
+          creator.config[:chef_node_name] = node_name
+
+          expect(servers).to receive(:new)
+            .with(hash_including(name: node_name))
+            .and_return(server)
+
+          creator.run
+        end
+      end
+
+      context 'when chef node name is not configured' do
+        it 'sets server name to configured server name' do
+          node_name = 'test_server_name'
+          creator.config[:chef_node_name] = nil
+          creator.config[:server_name] = node_name
+
+          expect(servers).to receive(:new)
+            .with(hash_including(name: node_name))
+            .and_return(server)
+
+          creator.run
+        end
+      end
+
+      it 'sets image id to the configured image' do
+        expect(servers).to receive(:new)
+          .with(hash_including(image_id: image.name))
+          .and_return(server)
+
+        creator.run
+      end
+
+      it 'sets flavor id to the configured flavor' do
+        Chef::Config[:knife][:flavor] = flavor.name
+
+        expect(servers).to receive(:new)
+          .with(hash_including(flavor_id: flavor.name))
+          .and_return(server)
+
+        creator.run
+      end
+
+      it 'sets metadata to the configured rackspace metadata' do
+        Chef::Config[:knife][:rackspace_metadata] = metadata
+
+        expect(servers).to receive(:new)
+          .with(hash_including(metadata: metadata))
+          .and_return(server)
+
+        creator.run
+      end
+
+      it 'sets disk config to the configured rackspace disk config' do
+        disk_config = 'test disk config'
+
+        Chef::Config[:knife][:rackspace_disk_config] = disk_config
+
+        expect(servers).to receive(:new)
+          .with(hash_including(disk_config: disk_config))
+          .and_return(server)
+
+        creator.run
+      end
+
+      context 'when a rackspace user data parameter is specified' do
+        it 'sets the user data to the contents of the specified file' do
+          # pending "Need to find a way to run this test without leaving file cruft around."
+          # Maybe write to /tmp
+          # use begin/ensure to clean up afterwards, or an after do block
+          # need to do the same for personality/files
+        end
+      end
+
+      it 'sets config drive to the configured rackspace config drive' do
+        config_drive = 'test config drive'
+
+        Chef::Config[:knife][:rackspace_config_drive] = config_drive
+
+        expect(servers).to receive(:new)
+          .with(hash_including(config_drive: config_drive))
+          .and_return(server)
+
+        creator.run
+      end
+
+      it 'sets key name to the configured rackspace ssh keypair' do
+        ssh_keypair = 'test ssh keypair'
+
+        Chef::Config[:knife][:rackspace_ssh_keypair] = ssh_keypair
+
+        expect(servers).to receive(:new)
+          .with(hash_including(key_name: ssh_keypair))
+          .and_return(server)
+
+        creator.run
+      end
+
+
     end
-
   end
 
 end
