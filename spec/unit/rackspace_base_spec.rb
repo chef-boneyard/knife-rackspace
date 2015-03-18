@@ -36,6 +36,22 @@ describe Chef::Knife::RackspaceBase do
     end
   end
 
+  describe '#connection' do
+    let(:ui) { double(Chef::Knife::UI) }
+
+    before do
+      allow(Chef::Knife::UI).to receive(:new).and_return(ui)
+    end
+
+    it 'raises a ui error and exits unless rackspace region has been set' do
+      expect(ui).to receive(:error).with(/Please specify region/)
+
+      Chef::Config[:knife][:rackspace_region] = nil
+
+      expect{ tester.connection }.to raise_error(SystemExit)
+    end
+  end
+
   describe '#block_storage_connection' do
     let(:fog_connection) { double(Fog::Rackspace::BlockStorage) }
 
@@ -45,4 +61,5 @@ describe Chef::Knife::RackspaceBase do
       expect(tester.block_storage_connection).to eq(fog_connection)
     end
   end
+
 end
