@@ -36,63 +36,15 @@ describe Chef::Knife::RackspaceBase do
     end
   end
 
-  describe '#connection' do
-    let(:ui) { double(Chef::Knife::UI) }
-    let(:fog_connection) { double(Fog::Compute) }
-
-    before do
-      allow(Chef::Knife::UI).to receive(:new).and_return(ui)
-      allow(Fog::Compute).to receive(:new).and_return(fog_connection)
-      Chef::Config[:knife][:rackspace_region] = :ord
-    end
-
-    it 'raises a ui error and exits unless rackspace region has been set' do
-      expect(ui).to receive(:error).with(/Please specify region/)
-
-      Chef::Config[:knife][:rackspace_region] = nil
-
-      expect{ tester.connection }.to raise_error(SystemExit)
-    end
-
-    context 'when rackspace api is version one' do
-      it 'returns a fog connection initialized with a version 1 option' do
-        Chef::Config[:knife][:rackspace_version] = 'v1'
-
-        expect(Fog::Compute).to receive(:new)
-          .with(hash_including(version: 'v1'))
-          .and_return(fog_connection)
-
-        expect(tester.connection).to eq(fog_connection)
-      end
-    end
-
-    context 'when rackspace api is version two' do
-      it 'returns a fog connection initialized with a version 2 option' do
-        Chef::Config[:knife][:rackspace_version] = 'v2'
-
-        expect(Fog::Compute).to receive(:new)
-          .with(hash_including(version: 'v2'))
-          .and_return(fog_connection)
-
-        expect(tester.connection).to eq(fog_connection)
-      end
-    end
-
-    it 'sets provider option to "Rackspace"' do
-      expect(Fog::Compute).to receive(:new)
-        .with(hash_including(provider: 'Rackspace'))
-
-      tester.connection
-    end
-
+  RSpec.shared_examples "a common fog connection" do
     it 'sets rackspace api key option to currently configured api key' do
       api_key = 'test_key'
       Chef::Config[:knife][:rackspace_api_key] = api_key
 
-      expect(Fog::Compute).to receive(:new)
+      expect(fog_class).to receive(:new)
         .with(hash_including(rackspace_api_key: api_key))
 
-      tester.connection
+      create_connection
     end
 
     context 'when chef is configured with rackspace username' do
@@ -100,10 +52,10 @@ describe Chef::Knife::RackspaceBase do
         username = 'test_username'
         Chef::Config[:knife][:rackspace_username] = username
 
-        expect(Fog::Compute).to receive(:new)
+        expect(fog_class).to receive(:new)
           .with(hash_including(rackspace_username: username))
 
-        tester.connection
+        create_connection
       end
     end
 
@@ -113,10 +65,10 @@ describe Chef::Knife::RackspaceBase do
         Chef::Config[:knife][:rackspace_username] = nil
         Chef::Config[:knife][:rackspace_api_username] = api_username
 
-        expect(Fog::Compute).to receive(:new)
+        expect(fog_class).to receive(:new)
           .with(hash_including(rackspace_username: api_username))
 
-        tester.connection
+        create_connection
       end
     end
 
@@ -124,20 +76,20 @@ describe Chef::Knife::RackspaceBase do
       test_url = "http://test-url.com"
       Chef::Config[:knife][:rackspace_auth_url] = test_url
 
-      expect(Fog::Compute).to receive(:new)
+      expect(fog_class).to receive(:new)
         .with(hash_including(rackspace_auth_url: test_url))
 
-      tester.connection
+      create_connection
     end
 
     it 'sets rackspace region option to configured rackspace region' do
       test_region = :lon
       Chef::Config[:knife][:rackspace_region] = test_region
 
-      expect(Fog::Compute).to receive(:new)
+      expect(fog_class).to receive(:new)
         .with(hash_including(rackspace_region: test_region))
 
-      tester.connection
+      create_connection
     end
 
     context 'when chef config has an https proxy' do
@@ -145,10 +97,10 @@ describe Chef::Knife::RackspaceBase do
         https_proxy = 'test_https_proxy'
         Chef::Config[:https_proxy] = https_proxy
 
-        expect(Fog::Compute).to receive(:new)
+        expect(fog_class).to receive(:new)
           .with(hash_including(connection_options: hash_including({proxy: https_proxy})))
 
-        tester.connection
+        create_connection
       end
     end
 
@@ -158,10 +110,10 @@ describe Chef::Knife::RackspaceBase do
         Chef::Config[:https_proxy] = nil
         Chef::Config[:http_proxy] = http_proxy
 
-        expect(Fog::Compute).to receive(:new)
+        expect(fog_class).to receive(:new)
           .with(hash_including(connection_options: hash_including({proxy: http_proxy})))
 
-        tester.connection
+        create_connection
       end
     end
 
@@ -172,10 +124,10 @@ describe Chef::Knife::RackspaceBase do
         Chef::Config[:https_proxy] = https_proxy
         Chef::Config[:http_proxy] = http_proxy
 
-        expect(Fog::Compute).to receive(:new)
+        expect(fog_class).to receive(:new)
           .with(hash_including(connection_options: hash_including({proxy: https_proxy})))
 
-        tester.connection
+        create_connection
       end
     end
 
@@ -183,23 +135,93 @@ describe Chef::Knife::RackspaceBase do
       ssl_verify_peer = 'test_verify_peer'
       Chef::Config[:knife][:ssl_verify_peer] = ssl_verify_peer
 
-      expect(Fog::Compute).to receive(:new)
+      expect(fog_class).to receive(:new)
         .with(hash_including(connection_options: hash_including({ssl_verify_peer: ssl_verify_peer})))
 
+      create_connection
+    end
+  end
+
+  describe '#connection' do
+    let(:ui) { double(Chef::Knife::UI) }
+    let(:fog_connection) { double(fog_class) }
+
+    def create_connection
       tester.connection
+    end
+
+    def fog_class
+      Fog::Compute
+    end
+
+    before do
+      allow(Chef::Knife::UI).to receive(:new).and_return(ui)
+      allow(fog_class).to receive(:new).and_return(fog_connection)
+      Chef::Config[:knife][:rackspace_region] = :ord
+    end
+
+    it_behaves_like "a common fog connection"
+
+    it 'raises a ui error and exits unless rackspace region has been set' do
+      expect(ui).to receive(:error).with(/Please specify region/)
+
+      Chef::Config[:knife][:rackspace_region] = nil
+
+      expect{ create_connection }.to raise_error(SystemExit)
+    end
+
+    context 'when rackspace api is version one' do
+      it 'returns a fog connection initialized with a version 1 option' do
+        Chef::Config[:knife][:rackspace_version] = 'v1'
+
+        expect(fog_class).to receive(:new)
+          .with(hash_including(version: 'v1'))
+          .and_return(fog_connection)
+
+        expect(create_connection).to eq(fog_connection)
+      end
+    end
+
+    context 'when rackspace api is version two' do
+      it 'returns a fog connection initialized with a version 2 option' do
+        Chef::Config[:knife][:rackspace_version] = 'v2'
+
+        expect(fog_class).to receive(:new)
+          .with(hash_including(version: 'v2'))
+          .and_return(fog_connection)
+
+        expect(create_connection).to eq(fog_connection)
+      end
+    end
+
+    it 'sets provider option to "Rackspace"' do
+      expect(fog_class).to receive(:new)
+        .with(hash_including(provider: 'Rackspace'))
+
+      create_connection
     end
 
   end
 
   describe '#block_storage_connection' do
-    let(:fog_connection) { double(Fog::Rackspace::BlockStorage) }
+    let(:fog_connection) { double(fog_class) }
+
+    def create_connection
+      tester.block_storage_connection
+    end
+
+    def fog_class
+      Fog::Rackspace::BlockStorage
+    end
+
+    it_behaves_like "a common fog connection"
 
     it 'returns a Fog block storage connection initialized with block storage connection params' do
       Chef::Config[:knife][:rackspace_version] = 'v2'
       Chef::Config[:knife][:rackspace_region] = :ord
-      expect(Fog::Rackspace::BlockStorage).to receive(:new).and_return(fog_connection)
+      expect(fog_class).to receive(:new).and_return(fog_connection)
 
-      expect(tester.block_storage_connection).to eq(fog_connection)
+      expect(create_connection).to eq(fog_connection)
     end
   end
 
