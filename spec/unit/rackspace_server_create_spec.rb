@@ -19,14 +19,19 @@ describe Chef::Knife::RackspaceServerCreate do
   let(:servers) { double('servers resource', new: server) }
   let(:fog_compute_connection) { double(Fog::Compute, servers: servers) }
 
+  let(:bootstrap_resource) { double(Chef::Knife::Bootstrap, run: true, config: {},
+                                      :name_args= => true) }
+
   describe '#run' do
     before do
-      allow_any_instance_of(Chef::Knife::Bootstrap).to receive(:run)
+
       allow_any_instance_of(Chef::Knife::RackspaceServerCreate).to receive(:tcp_test_ssh).and_return(true)
 
       allow(ui).to receive(:color) { |label| label }
       allow(Chef::Knife::UI).to receive(:new).and_return(ui)
       allow(Fog::Compute).to receive(:new).and_return(fog_compute_connection)
+      allow(Chef::Knife::Bootstrap).to receive(:new).and_return(bootstrap_resource)
+
       Chef::Config[:knife][:server_create_timeout] = 1200
       Chef::Config[:knife][:rackspace_region] = :dfw
       allow(fog_compute_connection).to receive_message_chain('networks.all').and_return([])
@@ -50,6 +55,15 @@ describe Chef::Knife::RackspaceServerCreate do
         expect(servers).to receive(:new).and_return(server)
         expect(server).to receive(:save)
 
+        creator.run
+      end
+
+      it 'bootstraps the created server instance' do
+        expect(Chef::Knife::Bootstrap).to receive(:new).and_return(bootstrap_resource)
+        expect(bootstrap_resource).to receive(:run)
+
+        #TODO: The Bootstrap configuration logic is complex enough that it deserves to
+        #      be extracted to its own class.
         creator.run
       end
 
@@ -153,6 +167,85 @@ describe Chef::Knife::RackspaceServerCreate do
         creator.run
       end
 
+      context 'when a volume name is specified' do
+        let(:volume_name) { 'test volume name' }
+        let(:volume) { double('volume', id: rand(1000), wait_for: true) }
+
+        let(:volumes) { double('volumes resource', create: volume) }
+        let(:fog_block_storage_connection) { double(Fog::Rackspace::BlockStorage, volumes: volumes) }
+
+        before do
+          Chef::Config[:knife][:volume_name] = volume_name
+
+          allow(Fog::Rackspace::BlockStorage).to receive(:new)
+            .and_return(fog_block_storage_connection)
+          allow(server).to receive(:attach_volume)
+        end
+
+        context 'when a volume size is specified' do
+          it 'creates a volume with the specified size' do
+            size = 200
+            Chef::Config[:knife][:volume_size] = size.to_s
+
+            expect(volumes).to receive(:create)
+              .with(hash_including(size: size))
+
+            creator.run
+          end
+        end
+
+        context 'when no volume size is specified' do
+          it 'creates a 100GB volume' do
+            expect(volumes).to receive(:create)
+              .with(hash_including(size: 100))
+
+            creator.run
+          end
+        end
+
+        context 'when a volume type is specified' do
+          it 'creates a volume with the specified type' do
+            Chef::Config[:knife][:volume_type] = 'SSD'
+
+            expect(volumes).to receive(:create)
+              .with(hash_including(volume_type: 'SSD'))
+
+            creator.run
+          end
+        end
+
+        context 'when no volume type is specified' do
+          it 'creates a SATA volume' do
+            expect(volumes).to receive(:create)
+              .with(hash_including(volume_type: 'SATA'))
+
+            creator.run
+          end
+        end
+
+        context 'when a device name is specified' do
+          it 'attaches the volume to the specified device name' do
+            device_name = '/dev/xbdc'
+
+            Chef::Config[:knife][:device_name] = device_name
+
+            expect(server).to receive(:attach_volume)
+              .with(volume.id, device_name)
+
+            creator.run
+          end
+        end
+
+        context 'when no device name is specified' do
+          it 'attaches the bolume to /dev/xvdb' do
+            expect(server).to receive(:attach_volume)
+              .with(volume.id, '/dev/xvdb')
+
+            creator.run
+          end
+        end
+
+      end
 
     end
   end
