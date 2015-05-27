@@ -110,32 +110,67 @@ class Chef
         end
       end
 
-      def connection_params(options={})
-        unless locate_config_value(:rackspace_region)
-          ui.error "Please specify region via the command line using the --rackspace-region switch or add a knife[:rackspace_region] = REGION to your knife file."
-          exit 1
-        end
+      def block_storage_connection
+        Chef::Log.debug("setting up block storage connection")
+        Chef::Log.debug("version #{Chef::Config[:knife][:rackspace_version]} (config)")
+        Chef::Log.debug("version #{config[:rackspace_version]} (cli)")
+        Chef::Log.debug("rackspace_api_key #{Chef::Config[:knife][:rackspace_api_key]}")
+        Chef::Log.debug("rackspace_username #{Chef::Config[:knife][:rackspace_username]}")
+        Chef::Log.debug("rackspace_api_username #{Chef::Config[:knife][:rackspace_api_username]}")
+        Chef::Log.debug("rackspace_auth_url #{Chef::Config[:knife][:rackspace_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{config[:rackspace_api_auth_url]}")
+        Chef::Log.debug("rackspace_auth_url #{auth_endpoint} (using)")
+        Chef::Log.debug("rackspace_region #{Chef::Config[:knife][:rackspace_region]}")
+        Chef::Log.debug("rackspace_region #{config[:rackspace_region]}")
 
-        hash = options.merge({
-          :provider => 'Rackspace',
+        if version_one?
+          Chef::Log.debug("rackspace v1")
+          block_storage_warning_for_v1
+          @block_storage_connection = nil
+        else
+          Chef::Log.debug("rackspace v2")
+          @block_storage_connection ||= begin
+            connection = Fog::Rackspace::BlockStorage.new(block_storage_connection_params())
+          end
+        end
+      end
+
+      def common_connection_params(options={})
+        options.merge({
           :rackspace_api_key => Chef::Config[:knife][:rackspace_api_key],
           :rackspace_username => (Chef::Config[:knife][:rackspace_username] || Chef::Config[:knife][:rackspace_api_username]),
           :rackspace_auth_url => auth_endpoint,
           :rackspace_region => locate_config_value(:rackspace_region)
-        })
+        }).tap do |params|
+          params[:connection_options] ||= {}
+          Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
+          Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
+          if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
+            params[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+          end
+          Chef::Log.debug("using proxy #{params[:connection_options][:proxy] || "<none>"} (config)")
+          Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
+          params[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
 
-        hash[:connection_options] ||= {}
-        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
-        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
-        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
-          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+          yield params if block_given?
         end
-        Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
-        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
-        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
-
-        hash
       end
+
+      def connection_params(options={})
+        common_connection_params(options) do |params|
+          unless locate_config_value(:rackspace_region)
+            ui.error "Please specify region via the command line using the --rackspace-region switch or add a knife[:rackspace_region] = REGION to your knife file."
+            exit 1
+          end
+          params[:provider] = 'Rackspace'
+        end
+      end
+      private :connection_params
+
+      def block_storage_connection_params(options={})
+        common_connection_params
+      end
+      private :block_storage_connection_params
 
       def auth_endpoint
         url = locate_config_value(:rackspace_auth_url)
@@ -149,7 +184,7 @@ class Chef
       end
 
       def msg_pair(label, value, color=:cyan)
-        if value && !value.to_s.empty?
+        if value && !value.to_s.empty? && !testing?
           puts "#{ui.color(label, color)}: #{value}"
         end
       end
@@ -192,7 +227,7 @@ class Chef
       end
 
       def v1_public_ip(server)
-          server.public_ip_address == nil ? "" : server.public_ip_address
+        server.public_ip_address == nil ? "" : server.public_ip_address
       end
 
       def v1_private_ip(server)
@@ -201,6 +236,7 @@ class Chef
 
       def v2_ip_address(server, network)
         network_ips = server.addresses[network]
+
         extract_ipv4_address(network_ips) if network_ips
       end
 
@@ -212,6 +248,17 @@ class Chef
         address = ip_addresses.select { |ip| ip["version"] == 4 }.first
         address ? address["addr"] : ""
       end
+
+      def testing?
+        defined?(TESTING) && TESTING
+      end
+      private :testing?
+
+      def stdout(value)
+        puts value unless testing?
+      end
+      private :stdout
+
     end
   end
 end

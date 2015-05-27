@@ -236,6 +236,35 @@ class Chef
         :description => "A file containing the secret key to use to encrypt data bag item values",
         :proc => Proc.new { |sf| Chef::Config[:knife][:secret_file] = sf }
 
+      option :volume_id,
+        :long => "--volume-id UUID",
+        :description => "UUID of a Cloud Block Storage volume to boot the server from",
+        :proc => Proc.new { |vol_id| Chef::Config[:knife][:cbs_volume_id] = vol_id.to_s }
+
+      option :volume_name,
+        :long => "--volume-name NAME",
+        :description => "Create a Cloud Block Storage device with the specified name",
+        :proc => Proc.new { |name| Chef::Config[:knife][:volume_name] = name },
+        :default => nil
+
+      option :volume_size,
+        :long => "--volume-size SIZE",
+        :description => "Amount of storage (in GB, 100-1000) to allocate for the Cloud Block Storage device (defaults to 100)",
+        :proc => Proc.new { |size| Chef::Config[:knife][:volume_size] = size },
+        :default => 100
+
+      option :volume_type,
+        :long => "--volume-type {SSD|SATA}",
+        :description => "Type of volume for the Cloud Block Storage device (defaults to SATA)",
+        :proc => Proc.new { |voltype| Chef::Config[:knife][:volume_type] = voltype },
+        :default => 'SATA'
+
+      option :device_name,
+        :long => "--device-name NAME",
+        :description => "Name of device for attached Cloug Block Storage volume (Valid device names are `/dev/xvd[a-p]`, default is /dev/xvdb)",
+        :proc => Proc.new { |name| Chef::Config[:knife][:device_name] = name },
+        :default => '/dev/xvdb'
+
       def load_winrm_deps
         require 'winrm'
         require 'em-winrm'
@@ -250,7 +279,7 @@ class Chef
         # if this feature is disabled, just return true to skip it
         return true if not config[:tcp_test_ssh]
 
-        ssh_port = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
+        ssh_port = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
         tcp_socket = TCPSocket.new(hostname, ssh_port)
         readable = IO.select([tcp_socket], nil, nil, 5)
         if readable
@@ -338,6 +367,7 @@ class Chef
         $stdout.sync = true
 
         # Maybe deprecate this option at some point
+        config[:bootstrap_network] ||= 'public'
         config[:bootstrap_network] = 'private' if config[:private_network]
 
         unless Chef::Config[:knife][:image]
@@ -355,7 +385,7 @@ class Chef
         rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
         rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
 
-        server = connection.servers.new(
+        server_opts = {
           :name => node_name,
           :image_id => Chef::Config[:knife][:image],
           :flavor_id => locate_config_value(:flavor),
@@ -365,7 +395,22 @@ class Chef
           :config_drive => locate_config_value(:rackspace_config_drive) || false,
           :personality => files,
           :key_name => Chef::Config[:knife][:rackspace_ssh_keypair]
-        )
+        }.tap do |opts|
+          if Chef::Config[:knife][:cbs_volume_id] # boot from specified volume
+            stdout("\n#{ui.color("Boot from existing Cloud Block Storage volume", :magenta)}")
+            msg_pair("CBS Volume ID:", Chef::Config[:knife][:cbs_volume_id])
+            opts[:image_id] = ''
+            opts[:boot_volume_id] = Chef::Config[:knife][:cbs_volume_id]
+          elsif Chef::Config[:knife][:volume_name] && Chef::Config[:knife][:image]  # create a new volume for the specified image with the specified name
+            stdout("\n#{ui.color("Boot from new Block Storage volume", :magenta)}")
+            msg_pair("CBS Source Image:", Chef::Config[:knife][:image])
+            opts[:image_id] = ''
+            opts[:boot_volume_id] = create_cbs_volume.id
+          end
+
+        end
+
+        server = connection.servers.new(server_opts)
 
         if version_one?
           server.save
@@ -377,7 +422,7 @@ class Chef
         msg_pair("Host ID", server.host_id)
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
-        msg_pair("Image", server.image.name)
+        msg_pair("Image", (server.image && server.image.name) || 'None')
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
         msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
@@ -385,10 +430,12 @@ class Chef
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
         msg_pair("SSH Key", Chef::Config[:knife][:rackspace_ssh_keypair])
 
+
+
         # wait for it to be ready to do stuff
         begin
-          server.wait_for(Integer(locate_config_value(:server_create_timeout))) { 
-            print "."; 
+          server.wait_for(Integer(locate_config_value(:server_create_timeout))) {
+            print ".";
             Chef::Log.debug("#{progress}%")
             if rackconnect_wait and rackspace_servicelevel_wait
               Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
@@ -416,15 +463,22 @@ class Chef
           msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
         end
 
-        print "\n#{ui.color("Waiting server", :magenta)}"
+        stdout("\n#{ui.color("Waiting server", :magenta)}")
 
-        puts("\n")
+        stdout("\n")
 
         msg_pair("Public DNS Name", public_dns_name(server))
         msg_pair("Public IP Address", ip_address(server, 'public'))
         msg_pair("Private IP Address", ip_address(server, 'private'))
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
+
+        if Chef::Config[:knife][:volume_name] && !server_opts[:boot_volume_id]
+          Chef::Log.debug("Attaching Cloud Block Storage Volume:")
+          device_name = (Chef::Config[:knife][:device_name] || '/dev/xvdb')
+          Chef::Log.debug("Device name: #{device_name}")
+          server.attach_volume create_cbs_volume.id, device_name
+        end
 
         bootstrap_ip_address = ip_address(server, config[:bootstrap_network])
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
@@ -434,37 +488,37 @@ class Chef
         end
 
       if locate_config_value(:bootstrap_protocol) == 'winrm'
-        print "\n#{ui.color("Waiting for winrm", :magenta)}"
-        print(".") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
+        stdout "\n#{ui.color("Waiting for winrm", :magenta)}"
+        stdout("\nattempting connection to #{bootstrap_ip_address}") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
         bootstrap_for_windows_node(server, bootstrap_ip_address).run
       else
-        print "\n#{ui.color("Waiting for sshd", :magenta)}"
-        print(".") until tcp_test_ssh(bootstrap_ip_address) {
+        stdout "\n#{ui.color("Waiting for sshd", :magenta)}"
+        stdout("\n...waiting for  #{bootstrap_ip_address}") until tcp_test_ssh(bootstrap_ip_address) {
           sleep @initial_sleep_delay ||= 10
-          puts("done")
+          stdout("done")
         }
         bootstrap_for_node(server, bootstrap_ip_address).run
       end
 
-        puts "\n"
+        stdout "\n"
         msg_pair("Instance ID", server.id)
         msg_pair("Host ID", server.host_id)
         msg_pair("Name", server.name)
         msg_pair("Flavor", server.flavor.name)
-        msg_pair("Image", server.image.name)
+        msg_pair("Image", (server.image && server.image.name) || 'None')
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
         msg_pair("Public IP Address", ip_address(server, 'public'))
         msg_pair("Private IP Address", ip_address(server, 'private'))
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
-        msg_pair("Run List", config[:run_list].join(', '))
+        msg_pair("Run List", run_list.join(', '))
       end
-      
+
       def user_data
         file = Chef::Config[:knife][:rackspace_user_data]
         return unless file
-        
+
         begin
           filename = File.expand_path(file)
           content = File.read(filename)
@@ -475,12 +529,33 @@ class Chef
         content
       end
 
+      def create_cbs_volume
+        Chef::Log.debug("Creating new cloud block storage volume")
+        Chef::Log.debug("Volume size: #{Chef::Config[:knife][:volume_size]}")
+        Chef::Log.debug("Volume name: #{Chef::Config[:knife][:volume_name]}")
+        Chef::Log.debug("Volume type: #{Chef::Config[:knife][:volume_type]}")
+        volume_size = (Chef::Config[:knife][:volume_size] || 100).to_i
+        volume_name = Chef::Config[:knife][:volume_name]
+        volume_type_name = Chef::Config[:knife][:volume_type] || 'SATA'
+        volume_opts = {size: volume_size, display_name: volume_name, volume_type: volume_type_name}
+        # if a knife image was specified, we're going to create this volume from that image.
+        # otherwise it will be a bare volume
+        volume_opts[:image_id] = Chef::Config[:knife][:image] if Chef::Config[:knife][:image]
+        new_volume = block_storage_connection.volumes.create(volume_opts)
+        stdout("\n#{ui.color("Waiting for Cloud Block Storage:", :magenta)}")
+
+        new_volume.wait_for(Integer(locate_config_value(:server_create_timeout))) { print "."; ready? }
+        stdout("\n#{ui.color("Cloud Block Storage volume created and available", :magenta)}")
+        msg_pair("Cloud Block Storage Volume Id:", new_volume.id)
+        new_volume
+      end
+
       def bootstrap_for_node(server, bootstrap_ip_address)
         bootstrap = Chef::Knife::Bootstrap.new
         bootstrap.name_args = [bootstrap_ip_address]
         bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
         bootstrap.config[:ssh_password] = server.password
-        bootstrap.config[:ssh_port] = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
+        bootstrap.config[:ssh_port] = Chef::Config[:knife][:ssh_port] || config[:ssh_port]
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:host_key_verify] = config[:host_key_verify]
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
@@ -491,7 +566,7 @@ class Chef
 
       def bootstrap_common_params(bootstrap, server)
         bootstrap.config[:environment] = config[:environment]
-        bootstrap.config[:run_list] = config[:run_list]
+        bootstrap.config[:run_list] = run_list
         if version_one?
           bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.id
         else
@@ -524,6 +599,12 @@ class Chef
       end
 
     end
+
+    def run_list
+      config[:run_list] || []
+    end
+    private :run_list
+
     #v2 servers require a name, random if chef_node_name is empty, empty if v1
     def get_node_name(chef_node_name)
       return chef_node_name unless chef_node_name.nil?
