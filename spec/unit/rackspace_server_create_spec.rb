@@ -225,6 +225,8 @@ describe Chef::Knife::RackspaceServerCreate do
 
         context 'when a device name is specified' do
           it 'attaches the volume to the specified device name' do
+            Chef::Config[:knife][:image] = nil
+
             device_name = '/dev/xbdc'
 
             Chef::Config[:knife][:device_name] = device_name
@@ -238,6 +240,8 @@ describe Chef::Knife::RackspaceServerCreate do
 
         context 'when no device name is specified' do
           it 'attaches the bolume to /dev/xvdb' do
+            Chef::Config[:knife][:image] = nil
+
             expect(server).to receive(:attach_volume)
               .with(volume.id, '/dev/xvdb')
 
