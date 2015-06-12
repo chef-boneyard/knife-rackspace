@@ -236,6 +236,25 @@ class Chef
         :description => "A file containing the secret key to use to encrypt data bag item values",
         :proc => Proc.new { |sf| Chef::Config[:knife][:secret_file] = sf }
 
+      option :bootstrap_vault_file,
+        :long        => '--bootstrap-vault-file VAULT_FILE',
+        :description => 'A JSON file with a list of vault(s) and item(s) to be updated'
+
+      option :bootstrap_vault_json,
+        :long        => '--bootstrap-vault-json VAULT_JSON',
+        :description => 'A JSON string with the vault(s) and item(s) to be updated'
+
+      option :bootstrap_vault_item,
+        :long        => '--bootstrap-vault-item VAULT_ITEM',
+        :description => 'A single vault and item to update as "vault:item"',
+        :proc        => Proc.new { |i|
+          (vault, item) = i.split(/:/)
+          Chef::Config[:knife][:bootstrap_vault_item] ||= {}
+          Chef::Config[:knife][:bootstrap_vault_item][vault] ||= []
+          Chef::Config[:knife][:bootstrap_vault_item][vault].push(item)
+          Chef::Config[:knife][:bootstrap_vault_item]
+        }
+
       def load_winrm_deps
         require 'winrm'
         require 'em-winrm'
@@ -483,6 +502,9 @@ class Chef
         bootstrap.config[:ssh_port] = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
         bootstrap.config[:identity_file] = config[:identity_file]
         bootstrap.config[:host_key_verify] = config[:host_key_verify]
+        bootstrap.config[:bootstrap_vault_file] = config[:bootstrap_vault_file] if config[:bootstrap_vault_file]
+        bootstrap.config[:bootstrap_vault_json] = config[:bootstrap_vault_json] if config[:bootstrap_vault_json]
+        bootstrap.config[:bootstrap_vault_item] = config[:bootstrap_vault_item] if config[:bootstrap_vault_item]
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
         bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
         bootstrap.config[:distro] = locate_config_value(:distro)  || 'chef-full'
