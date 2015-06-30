@@ -192,7 +192,7 @@ class Chef
       end
 
       def v1_public_ip(server)
-          server.public_ip_address == nil ? "" : server.public_ip_address
+        server.public_ip_address == nil ? "" : server.public_ip_address
       end
 
       def v1_private_ip(server)
