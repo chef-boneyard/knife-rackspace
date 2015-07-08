@@ -65,8 +65,8 @@ class Chef
             msg_pair("Instance ID", server.id.to_s)
             msg_pair("Host ID", server.host_id)
             msg_pair("Name", server.name)
-            msg_pair("Flavor", server.flavor.name)
-            msg_pair("Image", server.image.name)
+            msg_pair("Flavor", server.flavor.name)            
+            msg_pair("Image", server.image.name) if server.image
             msg_pair("Public IP Address", ip_address(server, 'public'))
             msg_pair("Private IP Address", ip_address(server, 'private'))
 
