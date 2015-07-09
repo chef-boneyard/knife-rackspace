@@ -387,8 +387,8 @@ class Chef
 
         # wait for it to be ready to do stuff
         begin
-          server.wait_for(Integer(locate_config_value(:server_create_timeout))) { 
-            print "."; 
+          server.wait_for(Integer(locate_config_value(:server_create_timeout))) {
+            print ".";
             Chef::Log.debug("#{progress}%")
             if rackconnect_wait and rackspace_servicelevel_wait
               Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
@@ -461,11 +461,11 @@ class Chef
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
       end
-      
+
       def user_data
         file = Chef::Config[:knife][:rackspace_user_data]
         return unless file
-        
+
         begin
           filename = File.expand_path(file)
           content = File.read(filename)
