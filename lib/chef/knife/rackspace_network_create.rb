@@ -7,7 +7,7 @@ class Chef
       include Knife::RackspaceBase
 
       banner "knife rackspace network create (options)"
-      
+
       option :label,
         :short => "-L LABEL",
         :long => "--label LABEL",
@@ -19,7 +19,7 @@ class Chef
         :long => "--cidr CIDR",
         :description => "CIDR for the network",
         :required => true
-      
+
       def run
         if version_one?
           ui.error "Networks are not supported in v1"

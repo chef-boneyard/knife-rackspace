@@ -7,7 +7,7 @@ class Chef
       include Knife::RackspaceBase
 
       banner "knife rackspace network delete NETWORK_ID [NETWORK_ID] (options)"
-      
+
       def run
         if version_one?
           ui.error "Networks are not supported in v1"
@@ -22,7 +22,7 @@ class Chef
             msg_pair("Network ID", network.id)
             msg_pair("Label", network.label)
             msg_pair("CIDR", network.cidr)
-            
+
             puts "\n"
             confirm("Do you really want to delete this network")
 

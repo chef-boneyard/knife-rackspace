@@ -48,7 +48,7 @@ performance2-15   15 GB Performance        4      15360   40 GB
 performance2-30   30 GB Performance        8      30720   40 GB
 performance2-60   60 GB Performance        16     61440   40 GB
 performance2-90   90 GB Performance        24     92160   40 GB
-"""} 
+"""}
       stdout = ANSI.unansi stdout
       stdout.should match_output(expected_output[api])
     end
