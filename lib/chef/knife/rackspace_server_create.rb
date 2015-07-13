@@ -178,6 +178,16 @@ class Chef
         :description => "The ssh wait timeout, before attempting ssh",
         :default => "0"
 
+      option :retry_ssh_every,
+        :long => "--retry-ssh-every TIMEOUT",
+        :description => "Retry SSH after n seconds (retry each period)",
+        :default => "5"
+
+      option :retry_ssh_limit,
+        :long => "--retry-ssh-limit COUNT",
+        :description => "Retry SSH at most this number of times",
+        :default => "5"
+
       option :default_networks,
         :long => "--[no-]default-networks",
         :description => "Include public and service networks, enabled by default",
@@ -263,36 +273,30 @@ class Chef
         require 'chef/knife/winrm'
       end
 
-      def tcp_test_ssh(hostname)
-        sleep config[:ssh_wait_timeout].to_i
+      def tcp_test_ssh(server, bootstrap_ip)
+        return true unless config[:tcp_test_ssh] != nil
 
-        # if this feature is disabled, just return true to skip it
-        return true if not config[:tcp_test_ssh]
+        limit = config[:knife][:retry_ssh_limit]
+        count = 0
 
-        ssh_port = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
-        tcp_socket = TCPSocket.new(hostname, ssh_port)
-        readable = IO.select([tcp_socket], nil, nil, 5)
-        if readable
-          Chef::Log.debug("sshd accepting connections on #{hostname}, banner is #{tcp_socket.gets}")
-          yield
-          true
-        else
-          false
+        begin
+          Net::SSH.start(bootstrap_ip, 'root', :password => server.password ) do |ssh|
+            Chef::Log.debug("sshd accepting connections on #{bootstrap_ip}")
+            break
+          end
+        rescue
+          count += 1
+
+          if count <= limit
+            print '.'
+            sleep config[:retry_ssh_every].to_i
+            tcp_test_ssh(server, bootstrap_ip)
+          else
+            ui.error "Unable to SSH into #{bootstrap_ip}"
+            exit 1
+          end
         end
-      rescue Errno::ETIMEDOUT
-        false
-      rescue Errno::EPERM
-        false
-      rescue Errno::ECONNREFUSED
-        sleep 2
-        false
-      rescue Errno::EHOSTUNREACH
-        sleep 2
-        false
-      ensure
-        tcp_socket && tcp_socket.close
       end
-
 
       def parse_file_argument(arg)
         dest, src = arg.split('=')
@@ -446,6 +450,7 @@ class Chef
         msg_pair("Metadata", server.metadata.all)
 
         bootstrap_ip_address = ip_address(server, config[:bootstrap_network])
+
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
           ui.error("No IP address available for bootstrapping.")
@@ -458,10 +463,7 @@ class Chef
         bootstrap_for_windows_node(server, bootstrap_ip_address).run
       else
         print "\n#{ui.color("Waiting for sshd", :magenta)}"
-        print(".") until tcp_test_ssh(bootstrap_ip_address) {
-          sleep @initial_sleep_delay ||= 10
-          puts("done")
-        }
+        tcp_test_ssh(server, bootstrap_ip_address)
         bootstrap_for_node(server, bootstrap_ip_address).run
       end
 
