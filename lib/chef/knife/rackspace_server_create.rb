@@ -276,7 +276,7 @@ class Chef
       def tcp_test_ssh(server, bootstrap_ip)
         return true unless config[:tcp_test_ssh] != nil
 
-        limit = config[:knife][:retry_ssh_limit]
+        limit = Chef::Config[:knife][:retry_ssh_limit].to_i
         count = 0
 
         begin
