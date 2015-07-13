@@ -31,4 +31,3 @@ notifications:
     irc:
       - "chat.freenode.net#openstack-chef"
       - "chat.freenode.net#chef-hacking"
-      - "chat.freenode.net#rackspace"
