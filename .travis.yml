@@ -27,7 +27,3 @@ deploy:
     secure: YeHeF7cuLuN3lHJQNQ4jpgfhaHGuB861cF6dzoyGPzAi/PO3wmTZfDNG27iI3zCe3CPviDSPiK4v14SQA1Xq3UtvSmeE+zcX/PxYsjNp7EQPn8J6fq2DfjmhYU5ECXnojbTkoh2HIM29YXBjxS8VlSTFDHYx0oV6uMZFgrzSLrI=
   on:
     tags: true
-notifications:
-    irc:
-      - "chat.freenode.net#openstack-chef"
-      - "chat.freenode.net#chef-hacking"
