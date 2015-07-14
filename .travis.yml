@@ -21,6 +21,14 @@ env:
       DoDVG0HwFg2a7Fj72tlxb8KJto+cBEh7J9YQZ35hK2cmeTsBAcZ4oSOUeAFg
       s2MvBhX0man0zjYPStbL1vcpuS1Ecea3kGzefG0lYhHAzvK7wqqRqhKNFsnd
       FPEVgZrcj3/Lc7mlkbigZouDM7BJLQbMGOv/KOS6f3nYzIhkOfE=
+  - secure: |-
+      SB4aoB5BCqqSFMpxJvN031tikc7VzXGX6PaOIngu5h3M9k3Qmkuvel8oQISb
+      fhcbsmuA0EKlaCvjQsgXFoUvUE6UnPCc7h2816fEAEz7FrRF1Q1mnbZ2V/kG
+      PtPYcPl4ZH4VxwAD+6kTtbl1aCTP8nKXTFXlKlrPAawpS7ef0B8=
+  - secure: |-
+      J01xNjFaqlwzin59fpvgKkp49p5VI128cFvM3pxvlErPLnjWE9kJ4NKzzznv
+      tVc12zVat/twxepvjSzg88b0q4Ks6P0Ovy0LeQCFUkva/jiBQuGukByR3joU
+      xuAFiCssBoaZEEKlN69n/zhihFxG/0z8Tn4h9pgAkSAyAq8UZJ0=
 deploy:
   provider: rubygems
   api_key:
