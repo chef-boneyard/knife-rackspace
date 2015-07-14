@@ -1,5 +1,7 @@
 = Knife Rackspace
 
+{<img src="https://travis-ci.org/chef/knife-rackspace.svg?branch=master" alt="Build Status" />}[https://travis-ci.org/chef/knife-rackspace]
+
 = DESCRIPTION:
 
 This is the official Opscode Knife plugin for Rackspace Cloud Servers. This plugin gives knife the ability to create, bootstrap, and manage servers on all the regions for Rackspace Cloud Servers.
@@ -138,10 +140,13 @@ Deletes one or more specified networks by id. The network must be detached from 
 
 = LICENSE:
 
-Author:: Adam Jacob (<adam@opscode.com>)
-Author:: Seth Chisamore (<schisamo@opscode.com>)
-Author:: Matt Ray (<matt@opscode.com>)
+Author:: Adam Jacob (<adam@chef.io>)
+Author:: Seth Chisamore (<schisamo@chef.io>)
+Author:: Matt Ray (<matt@chef.io>)
+Author:: JJ Asghar (<jj@chef.io>)
+Author:: Rackspace Developers
 Copyright:: Copyright (c) 2009-2012 Opscode, Inc.
+Copyright:: Copyright (c) 2013-2015 Chef Software, Inc.
 License:: Apache License, Version 2.0
 
 Licensed under the Apache License, Version 2.0 (the "License");
