@@ -1,27 +1,25 @@
-require 'integration_spec_helper'
-require 'fog'
-require 'knife/dsl'
-require 'chef/knife/rackspace_server_create'
-# include Chef::Knife::DSL
-
-api = :v2
-
-describe api do
-  before(:each) do
-    Chef::Config[:knife][:rackspace_version] = api.to_s #v2 by default
-    Chef::Config[:knife][:rackspace_region] = :iad
-
-    Chef::Knife::Bootstrap.any_instance.stub(:run)
-    Chef::Knife::RackspaceServerCreate.any_instance.stub(:tcp_test_ssh).with(anything).and_return(true)
-  end
-
-#   it 'should list server flavors', :vcr do
-#     skip "Will hit this during refactoring"
+# require 'integration_spec_helper'
+# require 'fog'
+# require 'knife/dsl'
+# require 'chef/knife/rackspace_server_create'
+# # include Chef::Knife::DSL
 #
-#     stdout, stderr, status = knife_capture('rackspace flavor list')
+# [:v1, :v2].each do |api|
+#   describe api do
+#     before(:each) do
+#       Chef::Config[:knife][:rackspace_version] = api.to_s #v2 by default
+#       Chef::Config[:knife][:rackspace_region] = :iad
 #
-#     expected_output = {
-#       :v1 => """
+#       Chef::Knife::Bootstrap.any_instance.stub(:run)
+#       Chef::Knife::RackspaceServerCreate.any_instance.stub(:tcp_test_ssh).with(anything).and_return(true)
+#     end
+#
+#     it 'should list server flavors', :vcr do
+#       stdout, stderr, status = knife_capture('rackspace flavor list')
+#       status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
+#
+#       expected_output = {
+#         :v1 => """
 # ID  Name           Architecture  RAM    Disk
 # 1   256 server     64-bit        256    10 GB
 # 2   512 server     64-bit        512    20 GB
@@ -32,7 +30,7 @@ describe api do
 # 7   15.5GB server  64-bit        15872  620 GB
 # 8   30GB server    64-bit        30720  1200 GB
 # """,
-#       :v2 => """
+#         :v2 => """
 # ID                Name                     VCPUs  RAM     Disk
 # 2                 512MB Standard Instance  1      512     20 GB
 # 3                 1GB Standard Instance    1      1024    40 GB
@@ -51,52 +49,52 @@ describe api do
 # performance2-60   60 GB Performance        16     61440   40 GB
 # performance2-90   90 GB Performance        24     92160   40 GB
 # """}
-#     stdout = ANSI.unansi stdout
-#     stdout.should match_output(expected_output[api])
+#       stdout = ANSI.unansi stdout
+#       stdout.should match_output(expected_output[api])
+#     end
+#
+#     it 'should list images', :vcr do
+#       sample_image = {
+#         :v1 => 'Ubuntu 12.04 LTS',
+#         :v2 => 'Ubuntu 12.04 LTS (Precise Pangolin)'
+#       }
+#
+#       stdout, stderr, status = knife_capture('rackspace image list')
+#       status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
+#       stdout = clean_output(stdout)
+#       stdout.should match /^ID\s*Name\s*$/
+#       stdout.should include sample_image[api]
+#     end
+#
+#     it 'should manage servers', :vcr do
+#       pending "The test works, but I'm in the process of cleaning up sensitive data in the cassettes"
+#
+#       image = {
+#         :v1 => '112',
+#         :v2 => 'e4dbdba7-b2a4-4ee5-8e8f-4595b6d694ce'
+#       }
+#       flavor = 2
+#       server_list.should_not include 'test-node'
+#
+#       args = %W{rackspace server create -I #{image[api]} -f #{flavor} -N test-node -S test-server}
+#       stdout, stderr, status = knife_capture(args)
+#       status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
+#       instance_data = capture_instance_data(stdout, {
+#         :name => 'Name',
+#         :instance_id => 'Instance ID',
+#         :public_ip => 'Public IP Address',
+#         :private_ip => 'Private IP Address'
+#       })
+#
+#       # Wanted to assert active state, but got build during test
+#       server_list.should match /#{instance_data[:instance_id]}\s*#{instance_data[:name]}\s*#{instance_data[:public_ip]}\s*#{instance_data[:private_ip]}\s*#{flavor}\s*#{image}/
+#
+#       args = %W{rackspace server delete #{instance_data[:instance_id]} -y}
+#       stdout, stderr, status = knife_capture(args)
+#       status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
+#
+#       # Need to deal with deleting vs deleted states before we can check this
+#       # server_list.should_not match /#{instance_data[:instance_id]}\s*#{instance_data[:name]}\s*#{instance_data[:public_ip]}\s*#{instance_data[:private_ip]}\s*#{flavor}\s*#{image}/
+#     end
 #   end
-
-  it 'should list images', :vcr do
-    sample_image = {
-      :v1 => 'Ubuntu 12.04 LTS',
-      :v2 => 'Ubuntu 12.04 LTS (Precise Pangolin)'
-    }
-
-    stdout, stderr, status = knife_capture('rackspace image list')
-    status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
-    stdout = clean_output(stdout)
-    stdout.should match /^ID\s*Name\s*$/
-    stdout.should include sample_image[api]
-  end
-
-  # it 'should manage servers', :vcr do
-  #   skip "The test works, but I'm in the process of cleaning up sensitive data in the cassettes"
-  #
-  #   image = {
-  #     :v1 => '112',
-  #     :v2 => 'e09ad6af-114d-40f7-8f70-652b61d1bbbc'
-  #   }
-  #
-  #   flavor = 2
-  #   server_list.should_not include 'test-node'
-  #
-  #   args = %W{rackspace server create -I #{image[api]} -f #{flavor} -N test-node -S test-server}
-  #   stdout, stderr, status = knife_capture(args)
-  #   status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
-  #   instance_data = capture_instance_data(stdout, {
-  #     :name => 'Name',
-  #     :instance_id => 'Instance ID',
-  #     :public_ip => 'Public IP Address',
-  #     :private_ip => 'Private IP Address'
-  #   })
-  #
-  #   # Wanted to assert active state, but got build during test
-  #   server_list.should match /#{instance_data[:instance_id]}\s*#{instance_data[:name]}\s*#{instance_data[:public_ip]}\s*#{instance_data[:private_ip]}\s*#{flavor}\s*#{image}/
-  #
-  #   args = %W{rackspace server delete #{instance_data[:instance_id]} -y}
-  #   stdout, stderr, status = knife_capture(args)
-  #   status.should be(0), "Non-zero exit code.\n#{stdout}\n#{stderr}"
-  #
-  #   # Need to deal with deleting vs deleted states before we can check this
-  #   # server_list.should_not match /#{instance_data[:instance_id]}\s*#{instance_data[:name]}\s*#{instance_data[:public_ip]}\s*#{instance_data[:private_ip]}\s*#{flavor}\s*#{image}/
-  # end
-end
+# end
