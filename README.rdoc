@@ -138,6 +138,69 @@ Creates a new cloud network. Both the label and the CIDR are required parameters
 
 Deletes one or more specified networks by id. The network must be detached from all hosts before it is deleted.
 
+
+== Knife & Rackspace Rackconnect
+
+Rackspace Rackconnect allows the creation of a hybrid setup where you can have Cloud servers which are connected to bare metal hardware like Firewalls and Load balancers. You can read more about this product at http://www.rackspace.com/cloud/hybrid/rackconnect/
+
+Under the hood, this changes the behaviour of how the cloud servers are configured and how IP addresses are assigned to them. So when using knife-rackspace with a 'Rack connected' cloud account you need use some additional parameters. See the sections below for more information regarding the two versions of Rack Connect.
+
+Note: If you account is leveraging private cloud networks for Rackconnnect then you are using Rackconnect v3. You can also find your version of Rackconnect by checking with your support team
+
+
+=== Knife and Rackconnect version 2
+
+    knife rackspace server create  \
+    --server-name <name of the server> \
+    --image <Rackspace image id> \
+    --flavor <Rackspace flavor id> \
+    -r 'role[base]' \
+    --rackconnect-wait
+
+Note: If the server is also part of Rackspace Managed Operations service level you will need to add the <tt>--rackspace-servicelevel-wait</tt> option.
+
+    knife rackspace server create  \
+    --server-name <name of the server> \
+    --image <Rackspace image id> \
+    --flavor <Rackspace flavor id> \
+    -r 'role[base]' \
+    --rackconnect-wait \
+    --rackspace-servicelevel-wait
+
+<tt>--rackconnect-wait</tt> does the following :-
+
+* Rackconnect version 2 changes the networking on the cloud server and forces all trafic to route via the dedicated firewall or load balancer. It also then assigns the cloud server a new public IP address. The status of this automation provided by updates to the cloud server metadata. This option makes Knife wait for the Rackconnect automation to complete by checking the metadata.
+ 
+* Once the status is updated, it triggers the bootstrap process.
+
+
+<tt>--rackspace-servicelevel-wait</tt> does the following :-
+
+* For Cloud servers in the Managed operations service level, Rackspace installs additional agents and software which enables them to provide support. This automation. like the Rackconnect one, updates the cloud server metadata of its status. Likewise, using this option, makes knife wait till the automation is complete before triggering the bootstrap process. 
+
+
+
+=== Knife and Rackconnect version 3
+
+In case of version 3, there is a different command line option. 
+
+    knife rackspace server create \
+    --server-name <name of the server> \
+    --image <Rackspace image id> \
+    --flavor <Rackspace flavor id> \
+    -r 'role[base]' \
+    --rackconnect-v3-network-id <cloud network id>
+
+
+<tt>--rackconnect-v3-network-id</tt> does the following :-
+* Create the server with the corresponding cloud network. The network id the id of an existing cloud network.
+* Knife will then issue addtional API calls to the Rackconnect API to assign a new public IP to the cloud server. The new IP is also stored in the Cloud Server Metadata under accessv4IP. 
+* Knife then waits for the IP to be provisioned before triggering the bootstrap process.
+
+Functionally, this operates the same way as version 2. However, behind the scenes, Rackconnect v3 is signifcantly different in implementation. You can learn about the differences here :
+http://www.rackspace.com/knowledge_center/article/comparing-rackconnect-v30-and-rackconnect-v20
+
+
 = LICENSE:
 
 Author:: Adam Jacob (<adam@chef.io>)
