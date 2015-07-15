@@ -54,6 +54,11 @@ This plugin also has support for authenticating against an alternate API Auth UR
 
     knife[:rackspace_auth_url] = "auth.my-custom-endpoint.com"
 
+This plugin has support for Rackspace's [Boot from Volume](http://www.rackspace.com/knowledge_center/article/boot-a-server-from-a-cloud-block-storage-volume) feature:
+
+    knife[:boot_volume_id] = <UUID>
+
+_If you specify a boot from volume id, you should omit the usual image id parameter._
 
 Different regions can be specified by using the `--rackspace-region` switch or using the `knife[:rackspace_region]` in the knife.rb file. Valid regions include :dfw, :ord, :lon, and :syd.
 
@@ -107,7 +112,7 @@ Secondly, you need to make sure that the image you're using has WinRM pre-config
 Thirdly, you must pass two extra parameters to the knife rackspace create command:
 
     --bootstrap-protocol winrm --distro windows-chef-client-msi
-    
+
 If you have troubles, make sure you add the <tt>-VV</tt> switch for extra verbosity. The <tt>--server-create-timeout </tt> switch may also be your friend, as Windows machines take a long time to build compared to Linux ones.
 
 == knife rackspace server delete
