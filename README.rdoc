@@ -154,7 +154,7 @@ Under the hood, this changes the behaviour of how the cloud servers are configur
     -r 'role[base]' \
     --rackconnect-wait
 
-Note: If the server is also part of Rackspace Managed Operations service level you will need to add the <tt>--rackspace-servicelevel-wait</tt> option
+Note: If the server is also part of Rackspace Managed Operations service level you will need to add the <tt>--rackspace-servicelevel-wait</tt> option.
 
     knife rackspace server create  \
     --server-name <name of the server> \
@@ -166,20 +166,20 @@ Note: If the server is also part of Rackspace Managed Operations service level y
 
 <tt>--rackconnect-wait</tt> does the following :-
 
-* Rackconnect version 2 changes the networking on the cloud server and forces all trafic to route via the dedicated firewall or load balancer. It also then assigns the cloud server a new public IP address. The status of this automation is reflected in the metadata on the cloud server. This option makes Knife wait for the Rackconnect automation to complete by checking the Metadata
+* Rackconnect version 2 changes the networking on the cloud server and forces all trafic to route via the dedicated firewall or load balancer. It also then assigns the cloud server a new public IP address. The status of this automation provided by updates to the cloud server metadata. This option makes Knife wait for the Rackconnect automation to complete by checking the metadata.
  
-* Once the status is updated, it triggers the bootstrap process
+* Once the status is updated, it triggers the bootstrap process.
 
 
 <tt>--rackspace-servicelevel-wait</tt> does the following :-
 
-* Under the Managed or Managed operations service level, Rackspace installs additional agents and software which enables them to provide support on the server. This automation like the Rackconnect one, updates the metadata on the cloud server once it has completed. Likewise, using this option makes knife wait till it is complete.
+* For Cloud servers in the Managed operations service level, Rackspace installs additional agents and software which enables them to provide support. This automation. like the Rackconnect one, updates the cloud server metadata of its status. Likewise, using this option, makes knife wait till the automation is complete before triggering the bootstrap process. 
 
 
 
 === Knife and Rackconnect version 3
 
-In case of version 3, there is a different command line option
+In case of version 3, there is a different command line option. 
 
     knife rackspace server create \
     --server-name <name of the server> \
@@ -191,8 +191,8 @@ In case of version 3, there is a different command line option
 
 <tt>--rackconnect-v3-network-id</tt> does the following :-
 * Create the server with the corresponding cloud network. The network id the id of an existing cloud network.
-* Knife will then issue addtional API calls to the Rackconnect API to assign a new public IP to the cloud server
-* Knife then waits for the IP to be provisioned before triggering the bootstrap process
+* Knife will then issue addtional API calls to the Rackconnect API to assign a new public IP to the cloud server. The new IP is also stored in the Cloud Server Metadata under accessv4IP. 
+* Knife then waits for the IP to be provisioned before triggering the bootstrap process.
 
 Functionally, this operates the same way as version 2. However, behind the scenes, Rackconnect v3 is signifcantly different in implementation. You can learn about the differences here :
 http://www.rackspace.com/knowledge_center/article/comparing-rackconnect-v30-and-rackconnect-v20
