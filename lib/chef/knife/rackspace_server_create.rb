@@ -107,7 +107,7 @@ class Chef
         :description => "The version of Chef to install",
         :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_version] = v }
 
-        option :distro,
+      option :distro,
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
         :description => "Bootstrap a distro using a template; default is 'chef-full'",
@@ -146,6 +146,12 @@ class Chef
         :boolean => true,
         :default => false
 
+      option :rackconnect_v3_network_id,
+        :long => '--rackconnect-v3-network-id ID',
+        :description => 'Rackconnect V3 ONLY: Link a new server to an existing network',
+        :proc => lambda { |o| Chef::Config[:knife][:rackconnect_v3_network_id] = o },
+        :default => nil
+
       option :rackspace_servicelevel_wait,
         :long => "--rackspace-servicelevel-wait",
         :description => "Wait until the Rackspace service level automation setup is complete before bootstrapping chef",
@@ -156,9 +162,9 @@ class Chef
         :long => "--hint HINT_NAME[=HINT_FILE]",
         :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
         :proc => Proc.new { |h|
-           Chef::Config[:knife][:hints] ||= {}
-           name, path = h.split("=")
-           Chef::Config[:knife][:hints][name] = path ? JSON.parse(::File.read(path)) : Hash.new
+          Chef::Config[:knife][:hints] ||= {}
+          name, path = h.split("=")
+          Chef::Config[:knife][:hints][name] = path ? JSON.parse(::File.read(path)) : Hash.new
         }
 
       option :host_key_verify,
@@ -329,9 +335,9 @@ class Chef
             :path => dest,
             :contents => encode_file(src)
           }
+        end
+        files
       end
-      files
-    end
 
 
 
@@ -356,7 +362,6 @@ class Chef
         false
       end
 
-
       def run
         $stdout.sync = true
 
@@ -372,22 +377,22 @@ class Chef
           load_winrm_deps
         end
 
-        node_name = get_node_name(config[:chef_node_name] || config[:server_name])
-        networks = get_networks(Chef::Config[:knife][:rackspace_networks])
-
-        rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
+        rackconnect_wait            = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
+        rackconnect3                = Chef::Config[:knife][:rackconnect_v3_network_id] || config[:rackconnect_v3_network_id]
         rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
+        node_name                   = get_node_name(config[:chef_node_name] || config[:server_name])
+        networks                    = get_networks(Chef::Config[:knife][:rackspace_networks], rackconnect3)
 
         server = connection.servers.new(
-          :name => node_name,
-          :image_id => Chef::Config[:knife][:image],
-          :flavor_id => locate_config_value(:flavor),
-          :metadata => Chef::Config[:knife][:rackspace_metadata],
-          :disk_config => Chef::Config[:knife][:rackspace_disk_config],
-          :user_data => user_data,
+          :name         => node_name,
+          :image_id     => Chef::Config[:knife][:image],
+          :flavor_id    => locate_config_value(:flavor),
+          :metadata     => Chef::Config[:knife][:rackspace_metadata],
+          :disk_config  => Chef::Config[:knife][:rackspace_disk_config],
+          :user_data    => user_data,
           :config_drive => locate_config_value(:rackspace_config_drive) || false,
-          :personality => files,
-          :key_name => Chef::Config[:knife][:rackspace_ssh_keypair]
+          :personality  => files,
+          :key_name     => Chef::Config[:knife][:rackspace_ssh_keypair]
         )
 
         if version_one?
@@ -405,6 +410,7 @@ class Chef
         msg_pair("ConfigDrive", server.config_drive)
         msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
+        msg_pair("RackConnect V3", rackconnect3 ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
         msg_pair("SSH Key", Chef::Config[:knife][:rackspace_ssh_keypair])
 
@@ -413,6 +419,7 @@ class Chef
           server.wait_for(Integer(locate_config_value(:server_create_timeout))) {
             print ".";
             Chef::Log.debug("#{progress}%")
+
             if rackconnect_wait and rackspace_servicelevel_wait
               Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
               Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
@@ -434,14 +441,25 @@ class Chef
           msg_pair('rax_service_level_automation', server.metadata.all['rax_service_level_automation'])
           Chef::Application.fatal! 'Server didn\'t finish on time'
         end
+
         msg_pair("Metadata", server.metadata)
-        if(networks && Chef::Config[:knife][:rackspace_networks])
-          msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
-        end
 
         print "\n#{ui.color("Waiting server", :magenta)}"
 
         puts("\n")
+
+        if Chef::Config[:knife][:rackconnect_v3_network_id]
+          print "\n#{ui.color("Setting up RackconnectV3 network and IPs", :magenta)}"
+          setup_rackconnect_network!(server)
+          while server.ipv4_address == ""
+            server.reload
+            sleep 5
+          end
+        end
+
+        if networks && Chef::Config[:knife][:rackspace_networks]
+          msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
+        end
 
         msg_pair("Public DNS Name", public_dns_name(server))
         msg_pair("Public IP Address", ip_address(server, 'public'))
@@ -457,15 +475,15 @@ class Chef
           exit 1
         end
 
-      if locate_config_value(:bootstrap_protocol) == 'winrm'
-        print "\n#{ui.color("Waiting for winrm", :magenta)}"
-        print(".") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
-        bootstrap_for_windows_node(server, bootstrap_ip_address).run
-      else
-        print "\n#{ui.color("Waiting for sshd", :magenta)}"
-        tcp_test_ssh(server, bootstrap_ip_address)
-        bootstrap_for_node(server, bootstrap_ip_address).run
-      end
+        if locate_config_value(:bootstrap_protocol) == 'winrm'
+          print "\n#{ui.color("Waiting for winrm", :magenta)}"
+          print(".") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
+          bootstrap_for_windows_node(server, bootstrap_ip_address).run
+        else
+          print "\n#{ui.color("Waiting for sshd", :magenta)}"
+          tcp_test_ssh(server, bootstrap_ip_address)
+          bootstrap_for_node(server, bootstrap_ip_address).run
+        end
 
         puts "\n"
         msg_pair("Instance ID", server.id)
@@ -481,6 +499,26 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Environment", config[:environment] || '_default')
         msg_pair("Run List", config[:run_list].join(', '))
+      end
+
+      def setup_rackconnect_network!(server)
+        auth_token = connection.authenticate
+        tenant_id  = connection.endpoint_uri.path.split("/").last
+        region     = connection.region
+        uri        = URI("https://#{region}.rackconnect.api.rackspacecloud.com/v3/#{tenant_id}/public_ips")
+
+        Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+          begin
+            req                 = Net::HTTP::Post.new(uri.request_uri)
+            req['X-Auth-Token'] = auth_token
+            req['Content-Type'] = 'application/json'
+            req.body            = JSON.dump("cloud_server" => { "id" => server.id })
+            http.use_ssl        = true
+            http.request req
+          rescue StandardError => e
+            puts "HTTP Request failed (#{e.message})"
+          end
+        end
       end
 
       def user_data
@@ -556,17 +594,21 @@ class Chef
       chef_node_name = "rs-"+rand.to_s.split('.')[1] unless version_one?
     end
 
-    def get_networks(names)
+    def get_networks(names, rackconnect3=false)
       names = Array(names)
+
       if(Chef::Config[:knife][:rackspace_version] == 'v2')
-        if(config[:default_networks])
+        if rackconnect3
+          nets = [Chef::Config[:knife][:rackconnect_v3_network_id]]
+        elsif config[:default_networks]
           nets = [
             '00000000-0000-0000-0000-000000000000',
             '11111111-1111-1111-1111-111111111111'
           ]
         else
-          nets = []
+          nets  = []
         end
+
         available_networks = connection.networks.all
 
         names.each do |name|
