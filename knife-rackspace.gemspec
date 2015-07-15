@@ -5,7 +5,6 @@ require "knife-rackspace/version"
 Gem::Specification.new do |s|
   s.name        = "knife-rackspace"
   s.version     = Knife::Rackspace::VERSION
-  s.version = "#{s.version}-alpha-#{ENV['TRAVIS_BUILD_NUMBER']}" if ENV['TRAVIS']
   s.has_rdoc = true
   s.authors     = ["Adam Jacob","Seth Chisamore", "Matt Ray","Rackspace Developers","JJ Asghar"]
   s.email       = ["adam@chef.io","schisamo@chef.io", "matt@chef.io","jj@chef.io"]
