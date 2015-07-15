@@ -22,8 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "chef", ">= 0.10.10"
   s.require_paths = ["lib"]
 
-  # In Gemfile because I'm using a fork on Github.  Hopefully pull request will be merged and a new gem will be released soon.
-  # s.add_development_dependency "knife-dsl"
+  s.add_development_dependency "knife-dsl"
   s.add_development_dependency "rspec"
   s.add_development_dependency "vcr"
   s.add_development_dependency "ansi"
