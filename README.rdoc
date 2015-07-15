@@ -139,11 +139,14 @@ Creates a new cloud network. Both the label and the CIDR are required parameters
 Deletes one or more specified networks by id. The network must be detached from all hosts before it is deleted.
 
 
-== knife & Rackspace Rackconnect
+== Knife & Rackspace Rackconnect
 
-Rackspace Rackconnect allows the creation of a hybrid setups where you can have Cloud servers which are connected to bare metal hardware like Firewalls and Load balancers. You can read more about this product at http://www.rackspace.com/cloud/hybrid/rackconnect/
+Rackspace Rackconnect allows the creation of a hybrid setup where you can have Cloud servers which are connected to bare metal hardware like Firewalls and Load balancers. You can read more about this product at http://www.rackspace.com/cloud/hybrid/rackconnect/
 
 Under the hood, this changes the behaviour of how the cloud servers are configured and how IP addresses are assigned to them. So when using knife-rackspace with a 'Rack connected' cloud account you need use some additional parameters. See the sections below for more information regarding the two versions of Rack Connect.
+
+Note: If you account is leveraging private cloud networks for Rackconnnect then you are using Rackconnect v3. You can also find your version of Rackconnect by checking with your support team
+
 
 === Knife and Rackconnect version 2
 
