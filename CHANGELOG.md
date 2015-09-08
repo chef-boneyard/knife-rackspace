@@ -1,5 +1,8 @@
+## v0.11.0
+* Add -B (boot volume ID) to `knife rackspace server create` - #91
+
 ## v0.10.1
-* Support new chef-vault bootrap flags (--bootstrap-vault-file, -bootstrap-vault-json, and --bootstrap-vault-item)
+* Support new chef-vault boostrap flags (--bootstrap-vault-file, -bootstrap-vault-json, and --bootstrap-vault-item)
 
 ## v0.10.0
 * KNIFE-498 knife rackspace uses direct TCP connection on port 22 to verify SSHD
