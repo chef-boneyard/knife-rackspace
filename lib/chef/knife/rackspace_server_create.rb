@@ -144,8 +144,8 @@ class Chef
         :short => "-M JSON",
         :long => "--rackspace-metadata JSON",
         :description => "JSON string version of metadata hash to be supplied with the server create call",
-        :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
-        :default => ""
+        :proc => lambda { |m| JSON.parse(m) },
+        :default => {}
 
       option :rackconnect_wait,
         :long => "--rackconnect-wait",
@@ -233,9 +233,8 @@ class Chef
 
       option :rackspace_disk_config,
         :long => "--rackspace-disk-config DISKCONFIG",
-        :description => "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL), default is AUTO",
-        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k },
-        :default => "AUTO"
+        :description => "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL)",
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k }
 
       option :rackspace_config_drive,
         :long => "--rackspace_config_drive CONFIGDRIVE",
