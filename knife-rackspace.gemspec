@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.authors     = ["Adam Jacob","Seth Chisamore", "Matt Ray","Rackspace Developers","JJ Asghar"]
   s.email       = ["adam@chef.io","schisamo@chef.io", "matt@chef.io","jj@chef.io"]
-  s.homepage = "https://docs.chef.io/plugin_knife_rackspace.html"
+  s.homepage = "https://github.com/chef/knife-rackspace"
   s.summary = "Rackspace Support for Chef's Knife Command"
   s.description = s.summary
   s.extra_rdoc_files = ["README.rdoc", "LICENSE" ]
