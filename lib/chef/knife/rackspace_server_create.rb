@@ -106,7 +106,8 @@ class Chef
 
       option :prerelease,
         :long => "--prerelease",
-        :description => "Install the pre-release chef gems"
+        :description => "Install the pre-release chef gems",
+        :default => false
 
       option :bootstrap_version,
         :long => "--bootstrap-version VERSION",
@@ -143,8 +144,8 @@ class Chef
         :short => "-M JSON",
         :long => "--rackspace-metadata JSON",
         :description => "JSON string version of metadata hash to be supplied with the server create call",
-        :proc => Proc.new { |m| Chef::Config[:knife][:rackspace_metadata] = JSON.parse(m) },
-        :default => ""
+        :proc => lambda { |m| JSON.parse(m) },
+        :default => {}
 
       option :rackconnect_wait,
         :long => "--rackconnect-wait",
@@ -232,9 +233,8 @@ class Chef
 
       option :rackspace_disk_config,
         :long => "--rackspace-disk-config DISKCONFIG",
-        :description => "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL), default is AUTO",
-        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k },
-        :default => "AUTO"
+        :description => "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL)",
+        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k }
 
       option :rackspace_config_drive,
         :long => "--rackspace_config_drive CONFIGDRIVE",
@@ -286,9 +286,9 @@ class Chef
       end
 
       def tcp_test_ssh(server, bootstrap_ip)
-        return true unless config[:tcp_test_ssh] != nil
+        return true unless locate_config_value(:tcp_test_ssh) != nil
 
-        limit = Chef::Config[:knife][:retry_ssh_limit].to_i
+        limit = locate_config_value(:retry_ssh_limit).to_i
         count = 0
 
         begin
@@ -301,7 +301,7 @@ class Chef
 
           if count <= limit
             print '.'
-            sleep config[:retry_ssh_every].to_i
+            sleep locate_config_value(:retry_ssh_every).to_i
             tcp_test_ssh(server, bootstrap_ip)
           else
             ui.error "Unable to SSH into #{bootstrap_ip}"
@@ -372,18 +372,18 @@ class Chef
         $stdout.sync = true
 
         server_create_options = {
-          :metadata => Chef::Config[:knife][:rackspace_metadata],
-          :disk_config => Chef::Config[:knife][:rackspace_disk_config],
+          :metadata => locate_config_value(:rackspace_metadata),
+          :disk_config => locate_config_value(:rackspace_disk_config),
           :user_data => user_data,
           :config_drive => locate_config_value(:rackspace_config_drive) || false,
           :personality => files,
-          :key_name => Chef::Config[:knife][:rackspace_ssh_keypair],
+          :key_name => locate_config_value(:rackspace_ssh_keypair),
           :name => get_node_name(config[:chef_node_name] || config[:server_name]),
-          :networks => get_networks(Chef::Config[:knife][:rackspace_networks], Chef::Config[:knife][:rackconnect_v3_network_id]),
+          :networks => get_networks(locate_config_value(:rackspace_networks), locate_config_value(:rackconnect_v3_network_id)),
         }
 
         # Maybe deprecate this option at some point
-        config[:bootstrap_network] = 'private' if config[:private_network]
+        config[:bootstrap_network] = 'private' if locate_config_value(:private_network)
 
         flavor_id = locate_config_value(:flavor)
         flavor = connection.flavors.get(flavor_id)
@@ -401,15 +401,15 @@ class Chef
         # swap out the image_id argument with the boot_image_id argument.
         if flavor.disk == 0
           server_create_options[:image_id] = ''
-          server_create_options[:boot_volume_id] = Chef::Config[:knife][:boot_volume_id]
-          server_create_options[:boot_image_id] = Chef::Config[:knife][:image]
+          server_create_options[:boot_volume_id] = locate_config_value(:boot_volume_id)
+          server_create_options[:boot_image_id] = locate_config_value(:image)
 
           if server_create_options[:boot_image_id] && server_create_options[:boot_volume_id]
             ui.error('Please specify exactly one of --boot-volume-id (-B) and --image (-I)')
             exit 1
           end
         else
-          server_create_options[:image_id] = Chef::Config[:knife][:image]
+          server_create_options[:image_id] = locate_config_value(:image)
 
           if !server_create_options[:image_id]
             ui.error('Please specify an Image ID for the server with --image (-I)')
@@ -429,8 +429,8 @@ class Chef
           server.save(:networks => server_create_options[:networks])
         end
 
-        rackconnect_wait = Chef::Config[:knife][:rackconnect_wait] || config[:rackconnect_wait]
-        rackspace_servicelevel_wait = Chef::Config[:knife][:rackspace_servicelevel_wait] || config[:rackspace_servicelevel_wait]
+        rackconnect_wait = locate_config_value(:rackconnect_wait)
+        rackspace_servicelevel_wait = locate_config_value(:rackspace_servicelevel_wait)
 
         msg_pair("Instance ID", server.id)
         msg_pair("Host ID", server.host_id)
@@ -440,11 +440,11 @@ class Chef
         msg_pair("Boot Image ID", server.boot_image_id) if server.boot_image_id
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
-        msg_pair("UserData", Chef::Config[:knife][:rackspace_user_data])
+        msg_pair("UserData", locate_config_value(:rackspace_user_data))
         msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
-        msg_pair("RackConnect V3", Chef::Config[:knife][:rackconnect_v3_network_id] ? 'yes' : 'no')
+        msg_pair("RackConnect V3", locate_config_value(:rackconnect_v3_network_id) ? 'yes' : 'no')
         msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
-        msg_pair("SSH Key", Chef::Config[:knife][:rackspace_ssh_keypair])
+        msg_pair("SSH Key", locate_config_value(:rackspace_ssh_keypair))
 
         # wait for it to be ready to do stuff
         begin
@@ -480,7 +480,7 @@ class Chef
 
         puts("\n")
 
-        if Chef::Config[:knife][:rackconnect_v3_network_id]
+        if locate_config_value(:rackconnect_v3_network_id)
           print "\n#{ui.color("Setting up RackconnectV3 network and IPs", :magenta)}"
           setup_rackconnect_network!(server)
           while server.ipv4_address == ""
@@ -489,8 +489,8 @@ class Chef
           end
         end
 
-        if server_create_options[:networks] && Chef::Config[:knife][:rackspace_networks]
-          msg_pair("Networks", Chef::Config[:knife][:rackspace_networks].sort.join(', '))
+        if server_create_options[:networks] && locate_config_value(:rackspace_networks)
+          msg_pair("Networks", locate_config_value(:rackspace_networks).sort.join(', '))
         end
 
         msg_pair("Public DNS Name", public_dns_name(server))
@@ -499,7 +499,7 @@ class Chef
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
-        bootstrap_ip_address = ip_address(server, config[:bootstrap_network])
+        bootstrap_ip_address = ip_address(server, locate_config_value(:bootstrap_network))
 
         Chef::Log.debug("Bootstrap IP Address #{bootstrap_ip_address}")
         if bootstrap_ip_address.nil?
@@ -554,7 +554,7 @@ class Chef
       end
 
       def user_data
-        file = Chef::Config[:knife][:rackspace_user_data]
+        file = locate_config_value(:rackspace_user_data)
         return unless file
 
         begin
@@ -570,16 +570,16 @@ class Chef
       def bootstrap_for_node(server, bootstrap_ip_address)
         bootstrap = Chef::Knife::Bootstrap.new
         bootstrap.name_args = [bootstrap_ip_address]
-        bootstrap.config[:ssh_user] = config[:ssh_user] || "root"
+        bootstrap.config[:ssh_user] = locate_config_value(:ssh_user) || "root"
         bootstrap.config[:ssh_password] = server.password
-        bootstrap.config[:ssh_port] = config[:ssh_port] || Chef::Config[:knife][:ssh_port]
-        bootstrap.config[:identity_file] = config[:identity_file]
-        bootstrap.config[:host_key_verify] = config[:host_key_verify]
-        bootstrap.config[:bootstrap_vault_file] = config[:bootstrap_vault_file] if config[:bootstrap_vault_file]
-        bootstrap.config[:bootstrap_vault_json] = config[:bootstrap_vault_json] if config[:bootstrap_vault_json]
-        bootstrap.config[:bootstrap_vault_item] = config[:bootstrap_vault_item] if config[:bootstrap_vault_item]
+        bootstrap.config[:ssh_port] = locate_config_value(:ssh_port)
+        bootstrap.config[:identity_file] = locate_config_value(:identity_file)
+        bootstrap.config[:host_key_verify] = locate_config_value(:host_key_verify)
+        bootstrap.config[:bootstrap_vault_file] = locate_config_value(:bootstrap_vault_file) if locate_config_value(:bootstrap_vault_file)
+        bootstrap.config[:bootstrap_vault_json] = locate_config_value(:bootstrap_vault_json) if locate_config_value(:bootstrap_vault_json)
+        bootstrap.config[:bootstrap_vault_item] = locate_config_value(:bootstrap_vault_item) if locate_config_value(:bootstrap_vault_item)
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
-        bootstrap.config[:use_sudo] = true unless config[:ssh_user] == 'root'
+        bootstrap.config[:use_sudo] = true unless locate_config_value(:ssh_user) == 'root'
         bootstrap.config[:distro] = locate_config_value(:distro)  || 'chef-full'
         bootstrap_common_params(bootstrap, server)
       end
@@ -592,13 +592,14 @@ class Chef
         else
           bootstrap.config[:chef_node_name] = config[:chef_node_name] || server.name
         end
-        bootstrap.config[:prerelease] = config[:prerelease]
+        bootstrap.config[:prerelease] = locate_config_value(:prerelease)
         bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
         bootstrap.config[:template_file] = locate_config_value(:template_file)
-        bootstrap.config[:first_boot_attributes] = config[:first_boot_attributes]
+        bootstrap.config[:first_boot_attributes] = locate_config_value(:first_boot_attributes)
         bootstrap.config[:bootstrap_proxy] = locate_config_value(:bootstrap_proxy)
-        bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
-        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
+#        TODO: Remove dead code. There's no command line parameter for these two.
+#        bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
+#        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
         bootstrap.config[:secret] = locate_config_value(:secret)
         bootstrap.config[:secret_file] = locate_config_value(:secret_file)  || ""
 
@@ -629,16 +630,16 @@ class Chef
     def get_networks(names, rackconnect3=false)
       names = Array(names)
 
-      if(Chef::Config[:knife][:rackspace_version] == 'v2')
-        if rackconnect3
-          nets = [Chef::Config[:knife][:rackconnect_v3_network_id]]
-        elsif config[:default_networks]
-          nets = [
+      if(locate_config_value(:rackspace_version) == 'v2')
+        nets = if rackconnect3
+          [locate_config_value(:rackconnect_v3_network_id)]
+        elsif locate_config_value(:default_networks)
+          [
             '00000000-0000-0000-0000-000000000000',
             '11111111-1111-1111-1111-111111111111'
           ]
         else
-          nets  = []
+          []
         end
 
         available_networks = connection.networks.all
