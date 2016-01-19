@@ -54,6 +54,12 @@ class Chef
         :description => "The image of the server",
         :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
 
+      option :boot_volume_size,
+        :long => "--boot-volume-size GB",
+        :description => "The size of the CBS to use as the server's boot device",
+        :proc => Proc.new { |i| Chef::Config[:knife][:boot_volume_size] = i.to_s },
+        :default => 100
+
       option :boot_volume_id,
         :short => "-B BOOT_VOLUME_ID",
         :long => "--boot-volume-id UUID",
@@ -403,9 +409,10 @@ class Chef
           server_create_options[:image_id] = ''
           server_create_options[:boot_volume_id] = locate_config_value(:boot_volume_id)
           server_create_options[:boot_image_id] = locate_config_value(:image)
+          server_create_options[:boot_volume_size] = locate_config_value(:boot_volume_size)
 
           if server_create_options[:boot_image_id] && server_create_options[:boot_volume_id]
-            ui.error('Please specify exactly one of --boot-volume-id (-B) and --image (-I)')
+            ui.error('Please specify either --boot-volume-id (-B) or --image (-I)')
             exit 1
           end
         else
