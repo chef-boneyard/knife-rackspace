@@ -18,6 +18,6 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.add_dependency "knife-windows"
   s.add_dependency "fog", '>= 1.35'
-  s.add_dependency "chef", ">= 11.0.0"
+  s.add_dependency "chef", ">= 12.0"
   s.require_paths = ["lib"]
 end
