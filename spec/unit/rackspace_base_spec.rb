@@ -1,7 +1,7 @@
-require 'spec_helper'
+require "spec_helper"
 
-require 'chef/knife/rackspace_base'
-require 'chef/knife'
+require "chef/knife/rackspace_base"
+require "chef/knife"
 
 class RackspaceBaseTester < Chef::Knife
   include Chef::Knife::RackspaceBase
@@ -31,7 +31,7 @@ describe "auth_endpoint" do
   it "should pick the UK end point if the region is :lon" do
     tester = RackspaceBaseTester.new
     Chef::Config[:knife][:rackspace_auth_url] = nil
-    Chef::Config[:knife][:rackspace_region] = 'lon'
+    Chef::Config[:knife][:rackspace_region] = "lon"
 
     tester.auth_endpoint.should == ::Fog::Rackspace::UK_AUTH_ENDPOINT
   end

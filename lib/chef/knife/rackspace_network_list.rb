@@ -1,4 +1,4 @@
-require 'chef/knife/rackspace_base'
+require "chef/knife/rackspace_base"
 
 class Chef
   class Knife
@@ -14,9 +14,9 @@ class Chef
           exit 1
         else
           networks_list = [
-            ui.color('Label', :bold),
-            ui.color('CIDR', :bold),
-            ui.color('ID', :bold)
+            ui.color("Label", :bold),
+            ui.color("CIDR", :bold),
+            ui.color("ID", :bold),
           ]
         end
         connection.networks.sort_by(&:id).each do |network|

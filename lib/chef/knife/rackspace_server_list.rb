@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-require 'chef/knife/rackspace_base'
+require "chef/knife/rackspace_base"
 
 class Chef
   class Knife
@@ -30,14 +30,14 @@ class Chef
         $stdout.sync = true
 
         server_list = [
-          ui.color('Instance ID', :bold),
-          ui.color('Name', :bold),
-          ui.color('Flavor', :bold),
-          ui.color('Image', :bold),
-          ui.color('State', :bold)
+          ui.color("Instance ID", :bold),
+          ui.color("Name", :bold),
+          ui.color("Flavor", :bold),
+          ui.color("Image", :bold),
+          ui.color("State", :bold),
         ]
         if version_one?
-          network_list = ['public', 'private']
+          network_list = %w{public private}
         else
           network_list = connection.images.sort_by(&:name).collect { |t| t.label }
         end
@@ -52,9 +52,9 @@ class Chef
           server_list << (server.image_id == nil ? "" : server.image_id.to_s)
           server_list << begin
             case server.state.downcase
-            when 'deleted','suspended'
+            when "deleted", "suspended"
               ui.color(server.state.downcase, :red)
-            when 'build','unknown'
+            when "build", "unknown"
               ui.color(server.state.downcase, :yellow)
             else
               ui.color(server.state.downcase, :green)

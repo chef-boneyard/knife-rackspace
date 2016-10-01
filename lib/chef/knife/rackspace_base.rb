@@ -16,8 +16,8 @@
 # limitations under the License.
 #
 
-require 'chef/knife'
-require 'fog'
+require "chef/knife"
+require "fog"
 
 class Chef
   class Knife
@@ -30,10 +30,10 @@ class Chef
         includer.class_eval do
 
           deps do
-            require 'fog'
-            require 'net/ssh/multi'
-            require 'readline'
-            require 'chef/json_compat'
+            require "fog"
+            require "net/ssh/multi"
+            require "readline"
+            require "chef/json_compat"
           end
 
           option :rackspace_api_key,
@@ -49,8 +49,8 @@ class Chef
             :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
 
           option :rackspace_version,
-            :long => '--rackspace-version VERSION',
-            :description => 'Rackspace Cloud Servers API version',
+            :long => "--rackspace-version VERSION",
+            :description => "Rackspace Cloud Servers API version",
             :default => "v2",
             :proc => Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
 
@@ -65,8 +65,8 @@ class Chef
             :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
           option :file,
-            :long => '--file DESTINATION-PATH=SOURCE-PATH',
-            :description => 'File to inject on node',
+            :long => "--file DESTINATION-PATH=SOURCE-PATH",
+            :description => "File to inject on node",
             :proc => Proc.new {|arg|
               Chef::Config[:knife][:file] ||= []
               Chef::Config[:knife][:file] << arg
@@ -94,14 +94,14 @@ class Chef
           region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => 'v1'
+              :version => "v1",
               }))
           end
         else
           Chef::Log.debug("rackspace v2")
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => 'v2'
+              :version => "v2",
             }))
           end
         end
@@ -113,13 +113,13 @@ class Chef
         end
       end
 
-      def connection_params(options={})
+      def connection_params(options = {})
         unless locate_config_value(:rackspace_region)
           ui.error "Please specify region via the command line using the --rackspace-region switch or add a knife[:rackspace_region] = REGION to your knife file."
           exit 1
         end
 
-        username =  locate_config_value(:rackspace_username) || locate_config_value(:rackspace_api_username)
+        username = locate_config_value(:rackspace_username) || locate_config_value(:rackspace_api_username)
         unless username
           ui.error "Please specify an api username via the command line using the --rackspace-username switch or add a knife[:rackspace_username] = USERNAME to your knife file."
           exit 1
@@ -131,18 +131,18 @@ class Chef
         end
 
         hash = options.merge({
-          :provider => 'Rackspace',
+          :provider => "Rackspace",
           :rackspace_api_key => locate_config_value(:rackspace_api_key),
           :rackspace_username => username,
           :rackspace_auth_url => auth_endpoint,
-          :rackspace_region => locate_config_value(:rackspace_region)
+          :rackspace_region => locate_config_value(:rackspace_region),
         })
 
         hash[:connection_options] ||= {}
         Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
         Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
         if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
-          hash[:connection_options] = {:proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+          hash[:connection_options] = { :proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
         end
         Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
         Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
@@ -154,7 +154,7 @@ class Chef
       def auth_endpoint
         url = locate_config_value(:rackspace_auth_url)
         return url if url
-        (locate_config_value(:rackspace_region) == 'lon') ? ::Fog::Rackspace::UK_AUTH_ENDPOINT : ::Fog::Rackspace::US_AUTH_ENDPOINT
+        (locate_config_value(:rackspace_region) == "lon") ? ::Fog::Rackspace::UK_AUTH_ENDPOINT : ::Fog::Rackspace::US_AUTH_ENDPOINT
       end
 
       def locate_config_value(key)
@@ -162,21 +162,21 @@ class Chef
         Chef::Config[:knife][key] || config[key]
       end
 
-      def msg_pair(label, value, color=:cyan)
+      def msg_pair(label, value, color = :cyan)
         if value && !value.to_s.empty?
           puts "#{ui.color(label, color)}: #{value}"
         end
       end
 
-      def ip_address(server, network='public')
+      def ip_address(server, network = "public")
         if version_one?
           case network
-          when 'public'; v1_public_ip(server)
-          when 'private'; v1_private_ip(server)
+          when "public" then v1_public_ip(server)
+          when "private" then v1_private_ip(server)
           else raise NotImplementedError
           end
         else
-          if network == 'public' && v2_access_ip(server) != ""
+          if network == "public" && v2_access_ip(server) != ""
             v2_access_ip(server)
           else
             v2_ip_address(server, network)
@@ -185,7 +185,7 @@ class Chef
       end
 
       def public_dns_name(server)
-        if public_ip_address = ip_address(server, 'public')
+        if public_ip_address = ip_address(server, "public")
           @public_dns_name ||= begin
             Resolv.getname(public_ip_address)
           rescue
@@ -197,11 +197,11 @@ class Chef
       private
 
       def version_one?
-        rackspace_api_version == 'v1'
+        rackspace_api_version == "v1"
       end
 
       def rackspace_api_version
-        version = locate_config_value(:rackspace_version) || 'v2'
+        version = locate_config_value(:rackspace_version) || "v2"
         version.downcase
       end
 

@@ -17,35 +17,35 @@
 # limitations under the License.
 #
 
-require 'bundler'
+require "bundler"
 Bundler::GemHelper.install_tasks
 
-require 'rspec/core/rake_task'
+require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
-task :default => [:credentials, :spec, 'integration:live']
+task :default => [:credentials, :spec, "integration:live"]
 
 task :credentials do
-  if ENV['TRAVIS_SECURE_ENV_VARS'] == 'false'
+  if ENV["TRAVIS_SECURE_ENV_VARS"] == "false"
     puts "Setting vars"
-    ENV['OS_USERNAME'] = '_RAX_USERNAME_'
-    ENV['OS_PASSWORD'] = '_RAX_PASSWORD_'
-    ENV['RS_TENANT_ID'] = '000000'
-    ENV['RS_CDN_TENANT_NAME'] = '_CDN-TENANT-NAME_'
+    ENV["OS_USERNAME"] = "_RAX_USERNAME_"
+    ENV["OS_PASSWORD"] = "_RAX_PASSWORD_"
+    ENV["RS_TENANT_ID"] = "000000"
+    ENV["RS_CDN_TENANT_NAME"] = "_CDN-TENANT-NAME_"
   end
-  fail "Not all required variables detected" unless ENV['OS_USERNAME'] && ENV['OS_PASSWORD'] && ENV['RS_CDN_TENANT_NAME'] && ENV['RS_TENANT_ID']
+  raise "Not all required variables detected" unless ENV["OS_USERNAME"] && ENV["OS_PASSWORD"] && ENV["RS_CDN_TENANT_NAME"] && ENV["RS_TENANT_ID"]
 end
 
 namespace :integration do
-  desc 'Run the integration tests'
+  desc "Run the integration tests"
   RSpec::Core::RakeTask.new(:test) do |t|
-    t.pattern = 'spec/integration/**'
+    t.pattern = "spec/integration/**"
   end
 
-  desc 'Run the integration tests live (no VCR cassettes)'
+  desc "Run the integration tests live (no VCR cassettes)"
   task :live do
-    unless ENV['TRAVIS'] == 'true' && ENV['TRAVIS_SECURE_ENV_VARS'] == 'false'
-      ENV['INTEGRATION_TESTS'] = 'live'
-      Rake::Task['integration:test'].invoke
+    unless ENV["TRAVIS"] == "true" && ENV["TRAVIS_SECURE_ENV_VARS"] == "false"
+      ENV["INTEGRATION_TESTS"] = "live"
+      Rake::Task["integration:test"].invoke
     end
   end
 end

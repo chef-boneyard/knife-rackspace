@@ -17,9 +17,9 @@
 # limitations under the License.
 #
 
-require 'chef/knife/rackspace_base'
-require 'chef/knife/winrm_base'
-require 'chef/knife'
+require "chef/knife/rackspace_base"
+require "chef/knife/winrm_base"
+require "chef/knife"
 
 class Chef
   class Knife
@@ -28,12 +28,11 @@ class Chef
       include Knife::RackspaceBase
       include Chef::Knife::WinrmBase
 
-
       deps do
-        require 'fog'
-        require 'readline'
-        require 'chef/json_compat'
-        require 'chef/knife/bootstrap'
+        require "fog"
+        require "readline"
+        require "chef/json_compat"
+        require "chef/knife/bootstrap"
         Chef::Knife::Bootstrap.load_deps
       end
 
@@ -79,7 +78,7 @@ class Chef
       option :bootstrap_network,
         :long => "--bootstrap-network LABEL",
         :description => "Use IP address on this network for bootstrap",
-        :default => 'public'
+        :default => "public"
 
       option :private_network,
         :long => "--private-network",
@@ -160,8 +159,8 @@ class Chef
         :default => false
 
       option :rackconnect_v3_network_id,
-        :long => '--rackconnect-v3-network-id ID',
-        :description => 'Rackconnect V3 ONLY: Link a new server to an existing network',
+        :long => "--rackconnect-v3-network-id ID",
+        :description => "Rackconnect V3 ONLY: Link a new server to an existing network",
         :proc => lambda { |o| Chef::Config[:knife][:rackconnect_v3_network_id] = o },
         :default => nil
 
@@ -214,7 +213,7 @@ class Chef
         :default => true
 
       option :network,
-        :long => '--network [LABEL_OR_ID]',
+        :long => "--network [LABEL_OR_ID]",
         :description => "Add private network. Use multiple --network options to specify multiple networks.",
         :proc => Proc.new{ |name|
           Chef::Config[:knife][:rackspace_networks] ||= []
@@ -230,7 +229,7 @@ class Chef
         :long => "--server-create-timeout timeout",
         :description => "How long to wait until the server is ready; default is 1200 seconds",
         :default => 1200,
-        :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeout] = v}
+        :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeout] = v }
 
       option :bootstrap_proxy,
         :long => "--bootstrap-proxy PROXY_URL",
@@ -265,15 +264,15 @@ class Chef
         :proc => Proc.new { |sf| Chef::Config[:knife][:secret_file] = sf }
 
       option :bootstrap_vault_file,
-        :long        => '--bootstrap-vault-file VAULT_FILE',
-        :description => 'A JSON file with a list of vault(s) and item(s) to be updated'
+        :long        => "--bootstrap-vault-file VAULT_FILE",
+        :description => "A JSON file with a list of vault(s) and item(s) to be updated"
 
       option :bootstrap_vault_json,
-        :long        => '--bootstrap-vault-json VAULT_JSON',
-        :description => 'A JSON string with the vault(s) and item(s) to be updated'
+        :long        => "--bootstrap-vault-json VAULT_JSON",
+        :description => "A JSON string with the vault(s) and item(s) to be updated"
 
       option :bootstrap_vault_item,
-        :long        => '--bootstrap-vault-item VAULT_ITEM',
+        :long        => "--bootstrap-vault-item VAULT_ITEM",
         :description => 'A single vault and item to update as "vault:item"',
         :proc        => Proc.new { |i|
           (vault, item) = i.split(/:/)
@@ -284,11 +283,11 @@ class Chef
         }
 
       def load_winrm_deps
-        require 'winrm'
-        require 'em-winrm'
-        require 'chef/knife/bootstrap_windows_winrm'
-        require 'chef/knife/core/windows_bootstrap_context'
-        require 'chef/knife/winrm'
+        require "winrm"
+        require "em-winrm"
+        require "chef/knife/bootstrap_windows_winrm"
+        require "chef/knife/core/windows_bootstrap_context"
+        require "chef/knife/winrm"
       end
 
       def tcp_test_ssh(server, bootstrap_ip)
@@ -298,7 +297,7 @@ class Chef
         count = 0
 
         begin
-          Net::SSH.start(bootstrap_ip, 'root', :password => server.password ) do |ssh|
+          Net::SSH.start(bootstrap_ip, "root", :password => server.password ) do |ssh|
             Chef::Log.debug("sshd accepting connections on #{bootstrap_ip}")
             break
           end
@@ -306,7 +305,7 @@ class Chef
           count += 1
 
           if count <= limit
-            print '.'
+            print "."
             sleep locate_config_value(:retry_ssh_every).to_i
             tcp_test_ssh(server, bootstrap_ip)
           else
@@ -317,7 +316,7 @@ class Chef
       end
 
       def parse_file_argument(arg)
-        dest, src = arg.split('=')
+        dest, src = arg.split("=")
         unless dest && src
           ui.error "Unable to process file arguments #{arg}. The --file option requires both the destination on the remote machine as well as the local source be supplied using the form DESTINATION-PATH=SOURCE-PATH"
           exit 1
@@ -337,7 +336,7 @@ class Chef
       end
 
       def files
-        return {} unless  Chef::Config[:knife][:file]
+        return {} unless Chef::Config[:knife][:file]
 
         files = []
         Chef::Config[:knife][:file].each do |arg|
@@ -345,13 +344,11 @@ class Chef
           Chef::Log.debug("Inject file #{src} into #{dest}")
           files << {
             :path => dest,
-            :contents => encode_file(src)
+            :contents => encode_file(src),
           }
         end
         files
       end
-
-
 
       def tcp_test_winrm(hostname, port)
         TCPSocket.new(hostname, port)
@@ -389,7 +386,7 @@ class Chef
         }
 
         # Maybe deprecate this option at some point
-        config[:bootstrap_network] = 'private' if locate_config_value(:private_network)
+        config[:bootstrap_network] = "private" if locate_config_value(:private_network)
 
         flavor_id = locate_config_value(:flavor)
         flavor = connection.flavors.get(flavor_id)
@@ -406,25 +403,25 @@ class Chef
         # In the case we are trying to create one of these flavors, we should
         # swap out the image_id argument with the boot_image_id argument.
         if flavor.disk == 0
-          server_create_options[:image_id] = ''
+          server_create_options[:image_id] = ""
           server_create_options[:boot_volume_id] = locate_config_value(:boot_volume_id)
           server_create_options[:boot_image_id] = locate_config_value(:image)
           server_create_options[:boot_volume_size] = locate_config_value(:boot_volume_size)
 
           if server_create_options[:boot_image_id] && server_create_options[:boot_volume_id]
-            ui.error('Please specify either --boot-volume-id (-B) or --image (-I)')
+            ui.error("Please specify either --boot-volume-id (-B) or --image (-I)")
             exit 1
           end
         else
           server_create_options[:image_id] = locate_config_value(:image)
 
           if !server_create_options[:image_id]
-            ui.error('Please specify an Image ID for the server with --image (-I)')
+            ui.error("Please specify an Image ID for the server with --image (-I)")
             exit 1
           end
         end
 
-        if locate_config_value(:bootstrap_protocol) == 'winrm'
+        if locate_config_value(:bootstrap_protocol) == "winrm"
           load_winrm_deps
         end
 
@@ -448,36 +445,36 @@ class Chef
         msg_pair("Metadata", server.metadata.all)
         msg_pair("ConfigDrive", server.config_drive)
         msg_pair("UserData", locate_config_value(:rackspace_user_data))
-        msg_pair("RackConnect Wait", rackconnect_wait ? 'yes' : 'no')
-        msg_pair("RackConnect V3", locate_config_value(:rackconnect_v3_network_id) ? 'yes' : 'no')
-        msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? 'yes' : 'no')
+        msg_pair("RackConnect Wait", rackconnect_wait ? "yes" : "no")
+        msg_pair("RackConnect V3", locate_config_value(:rackconnect_v3_network_id) ? "yes" : "no")
+        msg_pair("ServiceLevel Wait", rackspace_servicelevel_wait ? "yes" : "no")
         msg_pair("SSH Key", locate_config_value(:rackspace_ssh_keypair))
 
         # wait for it to be ready to do stuff
         begin
-          server.wait_for(Integer(locate_config_value(:server_create_timeout))) {
+          server.wait_for(Integer(locate_config_value(:server_create_timeout))) do
             print ".";
             Chef::Log.debug("#{progress}%")
 
-            if rackconnect_wait and rackspace_servicelevel_wait
+            if rackconnect_wait && rackspace_servicelevel_wait
               Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
               Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
-              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED' and metadata.all['rax_service_level_automation'] == 'Complete'
+              ready? && metadata.all["rackconnect_automation_status"] == "DEPLOYED" && metadata.all["rax_service_level_automation"] == "Complete"
             elsif rackconnect_wait
               Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
-              ready? and metadata.all['rackconnect_automation_status'] == 'DEPLOYED'
+              ready? && metadata.all["rackconnect_automation_status"] == "DEPLOYED"
             elsif rackspace_servicelevel_wait
               Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
-              ready? and metadata.all['rax_service_level_automation'] == 'Complete'
+              ready? && metadata.all["rax_service_level_automation"] == "Complete"
             else
               ready?
             end
-          }
+          end
         rescue Fog::Errors::TimeoutError
-          ui.error('Timeout waiting for the server to be created')
-          msg_pair('Progress', "#{server.progress}%")
-          msg_pair('rackconnect_automation_status', server.metadata.all['rackconnect_automation_status'])
-          msg_pair('rax_service_level_automation', server.metadata.all['rax_service_level_automation'])
+          ui.error("Timeout waiting for the server to be created")
+          msg_pair("Progress", "#{server.progress}%")
+          msg_pair("rackconnect_automation_status", server.metadata.all["rackconnect_automation_status"])
+          msg_pair("rax_service_level_automation", server.metadata.all["rax_service_level_automation"])
           Chef::Application.fatal! 'Server didn\'t finish on time'
         end
 
@@ -497,12 +494,12 @@ class Chef
         end
 
         if server_create_options[:networks] && locate_config_value(:rackspace_networks)
-          msg_pair("Networks", locate_config_value(:rackspace_networks).sort.join(', '))
+          msg_pair("Networks", locate_config_value(:rackspace_networks).sort.join(", "))
         end
 
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", ip_address(server, 'public'))
-        msg_pair("Private IP Address", ip_address(server, 'private'))
+        msg_pair("Public IP Address", ip_address(server, "public"))
+        msg_pair("Private IP Address", ip_address(server, "private"))
         msg_pair("Password", server.password)
         msg_pair("Metadata", server.metadata.all)
 
@@ -514,7 +511,7 @@ class Chef
           exit 1
         end
 
-        if locate_config_value(:bootstrap_protocol) == 'winrm'
+        if locate_config_value(:bootstrap_protocol) == "winrm"
           print "\n#{ui.color("Waiting for winrm", :magenta)}"
           print(".") until tcp_test_winrm(bootstrap_ip_address, locate_config_value(:winrm_port))
           bootstrap_for_windows_node(server, bootstrap_ip_address).run
@@ -533,11 +530,11 @@ class Chef
         msg_pair("Boot Image ID", server.boot_image_id) if server.boot_image_id
         msg_pair("Metadata", server.metadata)
         msg_pair("Public DNS Name", public_dns_name(server))
-        msg_pair("Public IP Address", ip_address(server, 'public'))
-        msg_pair("Private IP Address", ip_address(server, 'private'))
+        msg_pair("Public IP Address", ip_address(server, "public"))
+        msg_pair("Private IP Address", ip_address(server, "private"))
         msg_pair("Password", server.password)
-        msg_pair("Environment", config[:environment] || '_default')
-        msg_pair("Run List", config[:run_list].join(', '))
+        msg_pair("Environment", config[:environment] || "_default")
+        msg_pair("Run List", config[:run_list].join(", "))
       end
 
       def setup_rackconnect_network!(server)
@@ -549,8 +546,8 @@ class Chef
         Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
           begin
             req                 = Net::HTTP::Post.new(uri.request_uri)
-            req['X-Auth-Token'] = auth_token
-            req['Content-Type'] = 'application/json'
+            req["X-Auth-Token"] = auth_token
+            req["Content-Type"] = "application/json"
             req.body            = JSON.dump("cloud_server" => { "id" => server.id })
             http.use_ssl        = true
             http.request req
@@ -586,8 +583,8 @@ class Chef
         bootstrap.config[:bootstrap_vault_json] = locate_config_value(:bootstrap_vault_json) if locate_config_value(:bootstrap_vault_json)
         bootstrap.config[:bootstrap_vault_item] = locate_config_value(:bootstrap_vault_item) if locate_config_value(:bootstrap_vault_item)
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
-        bootstrap.config[:use_sudo] = true unless locate_config_value(:ssh_user) == 'root'
-        bootstrap.config[:distro] = locate_config_value(:distro)  || 'chef-full'
+        bootstrap.config[:use_sudo] = true unless locate_config_value(:ssh_user) == "root"
+        bootstrap.config[:distro] = locate_config_value(:distro) || "chef-full"
         bootstrap_common_params(bootstrap, server)
       end
 
@@ -608,7 +605,7 @@ class Chef
 #        bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
 #        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
         bootstrap.config[:secret] = locate_config_value(:secret)
-        bootstrap.config[:secret_file] = locate_config_value(:secret_file)  || ""
+        bootstrap.config[:secret_file] = locate_config_value(:secret_file) || ""
 
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
@@ -618,11 +615,11 @@ class Chef
       def bootstrap_for_windows_node(server, bootstrap_ip_address)
         bootstrap = Chef::Knife::BootstrapWindowsWinrm.new
         bootstrap.name_args = [bootstrap_ip_address]
-        bootstrap.config[:winrm_user] = locate_config_value(:winrm_user) || 'Administrator'
+        bootstrap.config[:winrm_user] = locate_config_value(:winrm_user) || "Administrator"
         bootstrap.config[:winrm_password] = locate_config_value(:winrm_password) || server.password
         bootstrap.config[:winrm_transport] = locate_config_value(:winrm_transport)
         bootstrap.config[:winrm_port] = locate_config_value(:winrm_port)
-        bootstrap.config[:distro] = locate_config_value(:distro)  || 'windows-chef-client-msi'
+        bootstrap.config[:distro] = locate_config_value(:distro) || "windows-chef-client-msi"
         bootstrap_common_params(bootstrap, server)
       end
 
@@ -631,29 +628,29 @@ class Chef
     def get_node_name(chef_node_name)
       return chef_node_name unless chef_node_name.nil?
       #lazy uuids
-      chef_node_name = "rs-"+rand.to_s.split('.')[1] unless version_one?
+      chef_node_name = "rs-" + rand.to_s.split(".")[1] unless version_one?
     end
 
-    def get_networks(names, rackconnect3=false)
+    def get_networks(names, rackconnect3 = false)
       names = Array(names)
 
-      if(locate_config_value(:rackspace_version) == 'v2')
+      if locate_config_value(:rackspace_version) == "v2"
         nets = if rackconnect3
-          [locate_config_value(:rackconnect_v3_network_id)]
-        elsif locate_config_value(:default_networks)
-          [
-            '00000000-0000-0000-0000-000000000000',
-            '11111111-1111-1111-1111-111111111111'
-          ]
-        else
-          []
-        end
+                 [locate_config_value(:rackconnect_v3_network_id)]
+               elsif locate_config_value(:default_networks)
+                 [
+                   "00000000-0000-0000-0000-000000000000",
+                   "11111111-1111-1111-1111-111111111111",
+                 ]
+               else
+                 []
+               end
 
         available_networks = connection.networks.all
 
         names.each do |name|
-          net = available_networks.detect{|n| n.label == name || n.id == name}
-          if(net)
+          net = available_networks.detect { |n| n.label == name || n.id == name }
+          if net
             nets << net.id
           else
             ui.error("Failed to locate network: #{name}")
@@ -661,7 +658,7 @@ class Chef
           end
         end
         nets
-      elsif(names && !names.empty?)
+      elsif names && !names.empty?
         ui.error("Custom networks are only available in v2 API")
         exit 1
       end

@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-require 'chef/knife/rackspace_base'
+require "chef/knife/rackspace_base"
 
 class Chef
   class Knife
@@ -28,8 +28,8 @@ class Chef
 
       def run
         image_list = [
-          ui.color('ID', :bold),
-          ui.color('Name', :bold)
+          ui.color("ID", :bold),
+          ui.color("Name", :bold),
         ]
 
         connection.images.sort_by(&:name).each do |image|
