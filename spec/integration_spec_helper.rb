@@ -77,7 +77,7 @@ RSpec::Matchers.define :match_output do |expected_output|
     clean_output(actual_output) == expected_output.strip
   end
   # Nice when it works, but has ANSI::Diff has some bugs that prevent it from showing any output
-  failure_message_for_should do |actual_output|
+  failure_message do |actual_output|
     buffer = StringIO.new
     buffer.puts clean_output(actual_output)
     buffer.puts

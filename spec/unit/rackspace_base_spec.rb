@@ -15,7 +15,7 @@ describe "auth_endpoint" do
     Chef::Config[:knife][:rackspace_auth_url] = test_url
     Chef::Config[:knife][:rackspace_region] = :ord
 
-    tester.auth_endpoint.should == test_url
+    expect(tester.auth_endpoint).to eq(test_url)
   end
 
   [:dfw, :ord, :syd].each do |region|
@@ -24,7 +24,7 @@ describe "auth_endpoint" do
       Chef::Config[:knife][:rackspace_auth_url] = nil
       Chef::Config[:knife][:rackspace_region] = region
 
-      tester.auth_endpoint.should == ::Fog::Rackspace::US_AUTH_ENDPOINT
+      expect(tester.auth_endpoint).to eq(::Fog::Rackspace::US_AUTH_ENDPOINT)
     end
   end
 
@@ -33,6 +33,6 @@ describe "auth_endpoint" do
     Chef::Config[:knife][:rackspace_auth_url] = nil
     Chef::Config[:knife][:rackspace_region] = "lon"
 
-    tester.auth_endpoint.should == ::Fog::Rackspace::UK_AUTH_ENDPOINT
+    expect(tester.auth_endpoint).to eq(::Fog::Rackspace::UK_AUTH_ENDPOINT)
   end
 end
