@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.homepage = "https://github.com/chef/knife-rackspace"
   s.summary = "Rackspace Support for Chef's Knife Command"
   s.description = s.summary
-  s.extra_rdoc_files = ["README.rdoc", "LICENSE" ]
+  s.extra_rdoc_files = ["README.md", "LICENSE" ]
 
   s.required_ruby_version = ">= 2.2.2"
   s.files         = `git ls-files`.split("\n")
