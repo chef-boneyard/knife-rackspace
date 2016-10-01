@@ -2,7 +2,7 @@
 
 [![Gem Version](https://badge.fury.io/rb/knife-rackspace.svg)](https://rubygems.org/gems/knife-rackspace) [![Build Status](https://travis-ci.org/chef/knife-rackspace.svg?branch=master)](https://travis-ci.org/chef/knife-rackspace)
 
-This is the official Opscode Knife plugin for Rackspace Cloud Servers. This plugin gives knife the ability to create, bootstrap, and manage servers on all the regions for Rackspace Cloud Servers.
+This is the official Chef Knife plugin for Rackspace Cloud Servers. This plugin gives knife the ability to create, bootstrap, and manage servers on all the regions for Rackspace Cloud Servers.
 
 ## Requirements
 

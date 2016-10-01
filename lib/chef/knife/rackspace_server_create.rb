@@ -1,7 +1,7 @@
 #
-# Author:: Adam Jacob (<adam@opscode.com>)
-# Author:: Matt Ray (<matt@opscode.com>)
-# Copyright:: Copyright (c) 2009-2012 Opscode, Inc.
+# Author:: Adam Jacob (<adam@chef.io>)
+# Author:: Matt Ray (<matt@chef.io>)
+# Copyright:: Copyright (c) 2009-2016 Chef Software, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
