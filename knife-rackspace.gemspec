@@ -20,9 +20,4 @@ Gem::Specification.new do |s|
   s.add_dependency "fog", '>= 1.35'
   s.add_dependency "chef", ">= 11.0.0"
   s.require_paths = ["lib"]
-
-  s.add_development_dependency "rspec"
-  s.add_development_dependency "vcr"
-  s.add_development_dependency "ansi"
-  s.add_development_dependency "rake"
 end
