@@ -11,16 +11,29 @@ This is the official Chef Knife plugin for Rackspace Cloud Servers. This plugin 
 
 ## Installation
 
-Be sure you are running the latest version Chef. Versions earlier than 0.10.0 don't support plugins:
+If you're using [ChefDK](https://downloads.chef.io/chef-dk/), simply install the Gem:
 
+```bash
+chef gem install knife-rackspace
 ```
-gem install chef
+
+If you're using bundler, simply add Chef and Knife OpenStack to your `Gemfile`:
+
+```ruby
+gem 'chef'
+gem 'knife-rackspace'
+```
+
+If you are not using bundler, you can install the gem manually. Be sure you are running Chef 0.10.10 or higher, as earlier versions do not support plugins.
+
+```bash
+$ gem install chef
 ```
 
 This plugin is distributed as a Ruby Gem. To install it, run:
 
-```
-gem install knife-rackspace
+```bash
+$ gem install knife-rackspace
 ```
 
 Depending on your system's configuration, you may need to run this command with root privileges.
@@ -219,6 +232,10 @@ knife rackspace server create \
 - Knife then waits for the IP to be provisioned before triggering the bootstrap process.
 
 Functionally, this operates the same way as version 2\. However, behind the scenes, Rackconnect v3 is significantly different in implementation. You can learn about the differences here : <http://www.rackspace.com/knowledge_center/article/comparing-rackconnect-v30-and-rackconnect-v20>
+
+## Contributing
+
+For information on contributing to this project see <https://github.com/chef/chef/blob/master/CONTRIBUTING.md>
 
 ## License and Authors
 
