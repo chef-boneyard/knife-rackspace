@@ -11,42 +11,10 @@ This is the official Chef Knife plugin for Rackspace Cloud Servers. This plugin 
 
 ## Installation
 
-If you're using [ChefDK](https://downloads.chef.io/chef-dk/), simply install the Gem:
+Using [ChefDK](https://downloads.chef.io/chef-dk/), simply install the Gem:
 
 ```bash
 chef gem install knife-rackspace
-```
-
-If you're using bundler, simply add Chef and Knife OpenStack to your `Gemfile`:
-
-```ruby
-gem 'chef'
-gem 'knife-rackspace'
-```
-
-If you are not using bundler, you can install the gem manually. Be sure you are running Chef 0.10.10 or higher, as earlier versions do not support plugins.
-
-```bash
-$ gem install chef
-```
-
-This plugin is distributed as a Ruby Gem. To install it, run:
-
-```bash
-$ gem install knife-rackspace
-```
-
-Depending on your system's configuration, you may need to run this command with root privileges.
-
-Ensure only the latest knife-rackspace gem and no other is installed. In some cases having older versions of the gem will cause the new OpenStack functionality not to function properly. To check:
-
-```
-$> gem list --local | grep knife-rackspace
-knife-rackspace (0.6.2, 0.5.12)
-$> gem uninstall knife-rackspace -v "= 0.5.12"
-Successfully uninstalled knife-rackspace-0.5.12
-$> gem list --local | grep knife-rackspace
-knife-rackspace (0.6.2)
 ```
 
 ## Configuration
