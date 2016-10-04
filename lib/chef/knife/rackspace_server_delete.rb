@@ -1,7 +1,7 @@
 #
-# Author:: Adam Jacob (<adam@opscode.com>)
-# Author:: Matt Ray (<matt@opscode.com>)
-# Copyright:: Copyright (c) 2009-2012 Opscode, Inc.
+# Author:: Adam Jacob (<adam@chef.io>)
+# Author:: Matt Ray (<matt@chef.io>)
+# Copyright:: Copyright (c) 2009-2016 Chef Software, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,11 +17,11 @@
 # limitations under the License.
 #
 
-require 'chef/knife/rackspace_base'
+require "chef/knife/rackspace_base"
 
 # These two are needed for the '--purge' deletion case
-require 'chef/node'
-require 'chef/api_client'
+require "chef/node"
+require "chef/api_client"
 
 class Chef
   class Knife
@@ -68,8 +68,8 @@ class Chef
             msg_pair("Flavor", server.flavor.name)
             msg_pair("Image", server.image.name) if server.image
             msg_pair("Boot Image ID", server.boot_image_id) if server.boot_image_id
-            msg_pair("Public IP Address", ip_address(server, 'public'))
-            msg_pair("Private IP Address", ip_address(server, 'private'))
+            msg_pair("Public IP Address", ip_address(server, "public"))
+            msg_pair("Private IP Address", ip_address(server, "private"))
 
             puts "\n"
             confirm("Do you really want to delete this server")

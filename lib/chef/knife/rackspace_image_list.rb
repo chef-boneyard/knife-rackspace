@@ -1,6 +1,6 @@
 #
-# Author:: Seth Chisamore (<schisamo@opscode.com>)
-# Copyright:: Copyright (c) 2011 Opscode, Inc.
+# Author:: Seth Chisamore (<schisamo@chef.io>)
+# Copyright:: Copyright (c) 2011-2016 Chef Software, Inc.
 # License:: Apache License, Version 2.0
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,7 +16,7 @@
 # limitations under the License.
 #
 
-require 'chef/knife/rackspace_base'
+require "chef/knife/rackspace_base"
 
 class Chef
   class Knife
@@ -28,8 +28,8 @@ class Chef
 
       def run
         image_list = [
-          ui.color('ID', :bold),
-          ui.color('Name', :bold)
+          ui.color("ID", :bold),
+          ui.color("Name", :bold),
         ]
 
         connection.images.sort_by(&:name).each do |image|

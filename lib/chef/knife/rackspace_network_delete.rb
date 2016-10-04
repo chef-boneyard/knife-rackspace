@@ -1,4 +1,4 @@
-require 'chef/knife/rackspace_base'
+require "chef/knife/rackspace_base"
 
 class Chef
   class Knife
@@ -15,7 +15,7 @@ class Chef
         else
           @name_args.each do |net_id|
             network = connection.networks.get(net_id)
-            unless(network)
+            unless network
               ui.error "Could not locate network: #{net_id}"
               exit 1
             end
