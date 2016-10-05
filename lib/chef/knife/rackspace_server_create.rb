@@ -29,7 +29,7 @@ class Chef
       include Chef::Knife::WinrmBase
 
       deps do
-        require "fog"
+        require "fog/rackspace"
         require "readline"
         require "chef/json_compat"
         require "chef/knife/bootstrap"

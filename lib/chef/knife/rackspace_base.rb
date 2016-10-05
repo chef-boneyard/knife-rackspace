@@ -17,7 +17,7 @@
 #
 
 require "chef/knife"
-require "fog"
+require "fog/rackspace"
 
 class Chef
   class Knife
@@ -30,7 +30,7 @@ class Chef
         includer.class_eval do
 
           deps do
-            require "fog"
+            require "fog/rackspace"
             require "net/ssh/multi"
             require "readline"
             require "chef/json_compat"
