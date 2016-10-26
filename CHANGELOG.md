@@ -4,7 +4,10 @@
 * Spec updates to avoid deprecation warnings
 * Chefstyle fixes
 * Modified server list - #118
+
+## v0.11.1
 * Remove unused, and unsupported/ancient knife-dsl requirement
+* Take it all the way to 11 (Chef 11.x) and greater
 
 ## v0.11.0
 * Add -B (boot volume ID) to `knife rackspace server create` - #91
