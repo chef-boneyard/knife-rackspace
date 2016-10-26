@@ -1,3 +1,11 @@
+## v1.0.0
+* Use fog/rackspace instead of fog gem
+* Require Ruby 2.2.2 / Chef 12 and general cleanup
+* Spec updates to avoid deprecation warnings
+* Chefstyle fixes
+* Modified server list - #118
+* Remove unused, and unsupported/ancient knife-dsl requirement
+
 ## v0.11.0
 * Add -B (boot volume ID) to `knife rackspace server create` - #91
 
