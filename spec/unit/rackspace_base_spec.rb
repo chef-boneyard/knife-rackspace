@@ -36,3 +36,29 @@ describe "auth_endpoint" do
     expect(tester.auth_endpoint).to eq(::Fog::Rackspace::UK_AUTH_ENDPOINT)
   end
 end
+
+describe "locate_config_value" do
+  it 'with cli options' do
+    # CLI
+    tester = RackspaceBaseTester.new
+    tester.parse_options([ "--rackspace-api-key", "12345" ])
+
+    # Knife Config
+    Chef::Config[:knife][:rackspace_api_key] = "67890"
+
+    # Test
+    expect(tester.locate_config_value(:rackspace_api_key)).to eq("12345")
+  end
+
+  it 'without cli options' do
+    # CLI
+    tester = RackspaceBaseTester.new
+    tester.parse_options([])
+
+    # Knife Config
+    Chef::Config[:knife][:rackspace_api_key] = "67890"
+
+    # Test
+    expect(tester.locate_config_value(:rackspace_api_key)).to eq("67890")
+  end
+end
