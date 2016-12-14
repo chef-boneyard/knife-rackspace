@@ -1,3 +1,7 @@
+## v1.0.1
+* Fix Server List exception (#131)
+* Fix bug preferring knife over CLI configurations items (#128)
+
 ## v1.0.0
 * Use fog/rackspace instead of fog gem
 * Require Ruby 2.2.2 / Chef 12 and general cleanup
