@@ -45,7 +45,7 @@ class Chef
         :long => "--flavor FLAVOR",
         :description => "The flavor of server; default is 2 (512 MB)",
         :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_s },
-        :default => 2
+        :default => "2"
 
       option :image,
         :short => "-I IMAGE",
