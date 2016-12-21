@@ -1,3 +1,6 @@
+## v1.0.2
+* Fix issue in error message when no flavor is supplied (#132)
+
 ## v1.0.1
 * Fix Server List exception (#131)
 * Fix bug preferring knife over CLI configurations items (#128)
