@@ -355,8 +355,9 @@ class Chef
       end
 
       def tcp_test_winrm(hostname, port)
-        TCPSocket.new(hostname, port)
-        return true
+        tcp_socket = TCPSocket.new(hostname, port)
+        yield
+        true
       rescue SocketError
         sleep 2
         false
@@ -373,6 +374,7 @@ class Chef
       rescue Errno::ENETUNREACH
         sleep 2
         false
+        tcp_socket && tcp_socket.close
       end
 
       def run
