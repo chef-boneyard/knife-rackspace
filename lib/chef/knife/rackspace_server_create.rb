@@ -258,10 +258,15 @@ class Chef
         :proc => Proc.new { |v| Chef::Config[:knife][:rackspace_ssh_keypair] = v },
         :default => nil
 
+      option :secret,
+        :long => "--secret",
+        :description => "The secret key to us to encrypt data bag item values",
+        :proc => lambda { |s| Chef::Config[:knife][:secret] = s }
+
       option :secret_file,
         :long => "--secret-file SECRET_FILE",
         :description => "A file containing the secret key to use to encrypt data bag item values",
-        :proc => Proc.new { |sf| Chef::Config[:knife][:secret_file] = sf }
+        :proc => lambda { |sf| Chef::Config[:knife][:secret_file] = sf }
 
       option :bootstrap_vault_file,
         :long        => "--bootstrap-vault-file VAULT_FILE",
@@ -284,10 +289,9 @@ class Chef
 
       def load_winrm_deps
         require "winrm"
-        require "em-winrm"
+        require "chef/knife/winrm"
         require "chef/knife/bootstrap_windows_winrm"
         require "chef/knife/core/windows_bootstrap_context"
-        require "chef/knife/winrm"
       end
 
       def tcp_test_ssh(server, bootstrap_ip)
@@ -351,8 +355,9 @@ class Chef
       end
 
       def tcp_test_winrm(hostname, port)
-        TCPSocket.new(hostname, port)
-        return true
+        tcp_socket = TCPSocket.new(hostname, port)
+        yield
+        true
       rescue SocketError
         sleep 2
         false
@@ -369,6 +374,7 @@ class Chef
       rescue Errno::ENETUNREACH
         sleep 2
         false
+        tcp_socket && tcp_socket.close
       end
 
       def run
@@ -605,7 +611,7 @@ class Chef
 #        bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
 #        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
         bootstrap.config[:secret] = locate_config_value(:secret)
-        bootstrap.config[:secret_file] = locate_config_value(:secret_file) || ""
+        bootstrap.config[:secret_file] = locate_config_value(:secret_file)
 
         Chef::Config[:knife][:hints] ||= {}
         Chef::Config[:knife][:hints]["rackspace"] ||= {}
