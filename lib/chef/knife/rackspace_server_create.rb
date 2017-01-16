@@ -607,9 +607,8 @@ class Chef
         bootstrap.config[:template_file] = locate_config_value(:template_file)
         bootstrap.config[:first_boot_attributes] = locate_config_value(:first_boot_attributes)
         bootstrap.config[:bootstrap_proxy] = locate_config_value(:bootstrap_proxy)
-#        TODO: Remove dead code. There's no command line parameter for these two.
-#        bootstrap.config[:encrypted_data_bag_secret] = config[:encrypted_data_bag_secret]
-#        bootstrap.config[:encrypted_data_bag_secret_file] = config[:encrypted_data_bag_secret_file]
+        bootstrap.config[:encrypted_data_bag_secret] = locate_config_value(:secret)
+        bootstrap.config[:encrypted_data_bag_secret_file] = locate_config_value(:secret_file)
         bootstrap.config[:secret] = locate_config_value(:secret)
         bootstrap.config[:secret_file] = locate_config_value(:secret_file)
 
