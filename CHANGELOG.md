@@ -1,3 +1,7 @@
+## v1.0.3
+* Fix to encrypted_data_bag_secret and encrypted_data_bag_secret_file options (#138)
+* Fix em-winrm dependencies and close TCP sockets (#134)
+
 ## v1.0.2
 * Fix issue in error message when no flavor is supplied (#132)
 
