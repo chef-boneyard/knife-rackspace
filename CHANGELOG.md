@@ -1,3 +1,6 @@
+## v1.0.4
+* Pin to require fog-rackspace 0.1.5 (#139)
+
 ## v1.0.3
 * Fix to encrypted_data_bag_secret and encrypted_data_bag_secret_file options (#138)
 * Fix em-winrm dependencies and close TCP sockets (#134)
