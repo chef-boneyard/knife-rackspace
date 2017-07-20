@@ -1,9 +1,17 @@
 language: ruby
 cache: bundler
+dist: trusty
 sudo: false
 rvm:
-- 2.2.5
-- 2.3.1
+  - 2.2.7
+  - 2.3.4
+  - 2.4.1
+  - ruby-head
+  
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+
 env:
   global:
     - excon_debug: true
