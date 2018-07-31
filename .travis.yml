@@ -1,6 +1,5 @@
 language: ruby
 cache: bundler
-dist: trusty
 sudo: false
 rvm:
   - 2.2.7
@@ -47,9 +46,3 @@ env:
         RQDTTLjob/9p+9XpcpYo4VaQSVvVbbHtUcpVyTXcnHwMq3WJzXXBoj/9iFxA
         Uupx9IhP0gZhX6kzcm5BG+oKTYAxTQkf2tRCRkVMBFCJKreER1SuSDVvljdV
         KLMfTbC5qwXox78PtD23BjO5k8hCJCSHfs0XuQ5y7k1mMFjM4ok=
-deploy:
-  provider: rubygems
-  api_key:
-    secure: YeHeF7cuLuN3lHJQNQ4jpgfhaHGuB861cF6dzoyGPzAi/PO3wmTZfDNG27iI3zCe3CPviDSPiK4v14SQA1Xq3UtvSmeE+zcX/PxYsjNp7EQPn8J6fq2DfjmhYU5ECXnojbTkoh2HIM29YXBjxS8VlSTFDHYx0oV6uMZFgrzSLrI=
-  on:
-    tags: true
