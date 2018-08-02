@@ -1,3 +1,14 @@
+# knife-rackspace Change Log
+
+<!-- latest_release -->
+<!-- latest_release -->
+
+<!-- release_rollup -->
+<!-- release_rollup -->
+
+<!-- latest_stable_release -->
+<!-- latest_stable_release -->
+
 ## v1.0.3
 * Fix to encrypted_data_bag_secret and encrypted_data_bag_secret_file options (#138)
 * Fix em-winrm dependencies and close TCP sockets (#134)
