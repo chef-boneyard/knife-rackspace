@@ -1,9 +1,17 @@
 # knife-rackspace Change Log
 
-<!-- latest_release -->
+<!-- latest_release 1.0.4 -->
+## [v1.0.4](https://github.com/chef/knife-rackspace/tree/v1.0.4) (2018-11-20)
+
+#### Merged Pull Requests
+- Only ship the necessary libraries in the gem [#144](https://github.com/chef/knife-rackspace/pull/144) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=1.0.4 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Only ship the necessary libraries in the gem [#144](https://github.com/chef/knife-rackspace/pull/144) ([tas50](https://github.com/tas50)) <!-- 1.0.4 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
