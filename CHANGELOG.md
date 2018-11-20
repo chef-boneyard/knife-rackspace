@@ -1,22 +1,20 @@
 # knife-rackspace Change Log
 
-<!-- latest_release 1.0.5 -->
-## [v1.0.5](https://github.com/chef/knife-rackspace/tree/v1.0.5) (2018-11-20)
-
-#### Merged Pull Requests
-- Expand ruby testing in Travis [#145](https://github.com/chef/knife-rackspace/pull/145) ([tas50](https://github.com/tas50))
+<!-- latest_release -->
 <!-- latest_release -->
 
-<!-- release_rollup since=1.0.4 -->
-### Changes not yet released to rubygems.org
-
-#### Merged Pull Requests
-- Expand ruby testing in Travis [#145](https://github.com/chef/knife-rackspace/pull/145) ([tas50](https://github.com/tas50)) <!-- 1.0.5 -->
-- Only ship the necessary libraries in the gem [#144](https://github.com/chef/knife-rackspace/pull/144) ([tas50](https://github.com/tas50)) <!-- 1.0.4 -->
+<!-- release_rollup -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
+## [v1.0.5](https://github.com/chef/knife-rackspace/tree/v1.0.5) (2018-11-20)
+
+#### Merged Pull Requests
+- Only ship the necessary libraries in the gem [#144](https://github.com/chef/knife-rackspace/pull/144) ([tas50](https://github.com/tas50))
+- Expand ruby testing in Travis [#145](https://github.com/chef/knife-rackspace/pull/145) ([tas50](https://github.com/tas50))
 <!-- latest_stable_release -->
+
+
 
 ## v1.0.3
 * Fix to encrypted_data_bag_secret and encrypted_data_bag_secret_file options (#138)
