@@ -213,7 +213,7 @@ Author:: Seth Chisamore (<schisamo@chef.io>)
 Author:: Matt Ray (<matt@chef.io>)
 Author:: JJ Asghar (<jj@chef.io>)
 Author:: Rackspace Developers
-Copyright:: Copyright (c) 2019-2016 Chef Software, Inc.
+Copyright:: Copyright (c) 2019-2018 Chef Software, Inc.
 License:: Apache License, Version 2.0
 
 Licensed under the Apache License, Version 2.0 (the "License");
