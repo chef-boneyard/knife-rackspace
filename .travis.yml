@@ -1,6 +1,7 @@
 sudo: false
 language: ruby
 cache: bundler
+distro: xenial
 
 matrix:
   include:
@@ -46,3 +47,7 @@ env:
         RQDTTLjob/9p+9XpcpYo4VaQSVvVbbHtUcpVyTXcnHwMq3WJzXXBoj/9iFxA
         Uupx9IhP0gZhX6kzcm5BG+oKTYAxTQkf2tRCRkVMBFCJKreER1SuSDVvljdV
         KLMfTbC5qwXox78PtD23BjO5k8hCJCSHfs0XuQ5y7k1mMFjM4ok=
+
+branches:
+  only:
+  - master
