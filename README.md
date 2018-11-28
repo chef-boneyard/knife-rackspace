@@ -19,14 +19,14 @@ chef gem install knife-rackspace
 
 ## Configuration
 
-In order to communicate with the Rackspace Cloud API you will have to tell Knife about your Username and API Key. The easiest way to accomplish this is to create some entries in your knife.rb file:
+In order to communicate with the Rackspace Cloud API you will have to tell Knife about your Username and API Key. The easiest way to accomplish this is to create some entries in your config.rb (knife.rb) file:
 
 ```ruby
 knife[:rackspace_api_username] = "Your Rackspace API username"
 knife[:rackspace_api_key] = "Your Rackspace API Key"
 ```
 
-If your knife.rb file will be checked into a SCM system (ie readable by others) you may want to read the values from environment variables:
+If your config.rb (knife.rb) file will be checked into a SCM system (ie readable by others) you may want to read the values from environment variables:
 
 ```ruby
 knife[:rackspace_api_username] = "#{ENV['RACKSPACE_USERNAME']}"
@@ -40,21 +40,21 @@ You also have the option of passing your Rackspace API Username/Key into the ind
 knife rackspace server create -I 112 -f 3 -A 'Your Rackspace API username' -K "Your Rackspace API Key" -r 'role[webserver]'
 ```
 
-To select for the previous Rackspace API (aka 'v1'), you can use the **--rackspace-version v1** command option. 'v2' is the default, so if you're still using exclusively 'v1' you will probably want to add the following to your knife.rb:
+To select for the previous Rackspace API (aka 'v1'), you can use the **--rackspace-version v1** command option. 'v2' is the default, so if you're still using exclusively 'v1' you will probably want to add the following to your config.rb (knife.rb):
 
 ```ruby
 knife[:rackspace_version] = 'v1'
 ```
 
-This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a using a custom endpoint, here is an example of configuring your knife.rb:
+This plugin also has support for authenticating against an alternate API Auth URL. This is useful if you are a using a custom endpoint, here is an example of configuring your config.rb (knife.rb):
 
 ```ruby
 knife[:rackspace_auth_url] = "auth.my-custom-endpoint.com"
 ```
 
-Different regions can be specified by using the `--rackspace-region` switch or using the `knife[:rackspace_region]` in the knife.rb file. Valid regions include :dfw, :ord, :lon, and :syd.
+Different regions can be specified by using the `--rackspace-region` switch or using the `knife[:rackspace_region]` in the config.rb (knife.rb) file. Valid regions include :dfw, :ord, :lon, and :syd.
 
-If you are behind a proxy you can specify it in the knife.rb file as follows:
+If you are behind a proxy you can specify it in the config.rb (knife.rb) file as follows:
 
 ```ruby
 https_proxy https://PROXY_IP_ADDRESS:PORT
