@@ -70,8 +70,7 @@ Additionally the following options may be set in your knife.rb:
 
 - flavor
 - image
-- distro
-- template_file
+- bootstrap-template
 
 ## Knife Sub Commands
 
