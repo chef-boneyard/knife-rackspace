@@ -6,8 +6,8 @@ This is the official Chef Knife plugin for Rackspace Cloud Servers. This plugin 
 
 ## Requirements
 
-- Chef 12.0 higher
-- Ruby 2.2.2 or higher
+- Chef 13.0 higher
+- Ruby 2.3 or higher
 
 ## Installation
 

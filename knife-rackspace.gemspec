@@ -12,11 +12,11 @@ Gem::Specification.new do |s|
   s.description = s.summary
   s.license     = "Apache-2.0"
 
-  s.required_ruby_version = ">= 2.2.2"
+  s.required_ruby_version = ">= 2.3"
   s.files         = %w(LICENSE) + Dir.glob("lib/**/*")
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.add_dependency "knife-windows"
   s.add_dependency "fog-rackspace", ">= 0.1"
-  s.add_dependency "chef", ">= 12.0"
+  s.add_dependency "chef", ">= 13.0"
   s.require_paths = ["lib"]
 end
