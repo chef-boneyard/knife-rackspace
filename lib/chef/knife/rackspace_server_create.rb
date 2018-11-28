@@ -122,14 +122,25 @@ class Chef
       option :distro,
         :short => "-d DISTRO",
         :long => "--distro DISTRO",
-        :description => "Bootstrap a distro using a template; default is 'chef-full'",
-        :proc => Proc.new { |d| Chef::Config[:knife][:distro] = d }
+        :description => "Bootstrap a distro using a template. [DEPRECATED] Use -t / --bootstrap-template option instead.",
+        :proc        => Proc.new { |v|
+          Chef::Log.fatal("[DEPRECATED] -d / --distro option is deprecated. Use --bootstrap-template option instead.")
+          v
+        }
 
+      # @todo When we no longer support Chef 13 this can just go away
       option :template_file,
         :long => "--template-file TEMPLATE",
-        :description => "Full path to location of template to use",
-        :proc => Proc.new { |t| Chef::Config[:knife][:template_file] = t },
-        :default => false
+        :description => "Full path to location of template to use. [DEPRECATED] Use -t / --bootstrap-template option instead.",
+        :proc        => Proc.new { |v|
+          Chef::Log.fatal("[DEPRECATED] --template-file option is deprecated. Use --bootstrap-template option instead.")
+          v
+        }
+
+      option :bootstrap_template,
+        :short => "-t TEMPLATE",
+        :long => "--bootstrap-template TEMPLATE",
+        :description => "Bootstrap Chef using a built-in or custom template. Set to the full path of an erb template or use one of the built-in templates."
 
       option :run_list,
         :short => "-r RUN_LIST",
@@ -589,7 +600,6 @@ class Chef
         bootstrap.config[:bootstrap_vault_item] = locate_config_value(:bootstrap_vault_item) if locate_config_value(:bootstrap_vault_item)
         # bootstrap will run as root...sudo (by default) also messes up Ohai on CentOS boxes
         bootstrap.config[:use_sudo] = true unless locate_config_value(:ssh_user) == "root"
-        bootstrap.config[:distro] = locate_config_value(:distro) || "chef-full"
         bootstrap_common_params(bootstrap, server)
       end
 
@@ -603,7 +613,7 @@ class Chef
         end
         bootstrap.config[:prerelease] = locate_config_value(:prerelease)
         bootstrap.config[:bootstrap_version] = locate_config_value(:bootstrap_version)
-        bootstrap.config[:template_file] = locate_config_value(:template_file)
+        bootstrap.config[:bootstrap_template] = locate_config_value(:bootstrap_template)
         bootstrap.config[:first_boot_attributes] = locate_config_value(:first_boot_attributes)
         bootstrap.config[:bootstrap_proxy] = locate_config_value(:bootstrap_proxy)
         bootstrap.config[:encrypted_data_bag_secret] = locate_config_value(:secret)

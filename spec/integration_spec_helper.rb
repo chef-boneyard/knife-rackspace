@@ -104,7 +104,7 @@ def capture_instance_data(stdout, labels = {})
   result
 end
 
-# Ideally this belongs in knife-dsl, but it causes a scoping conflict with knife.rb.
+# Ideally this belongs in knife-dsl, but it causes a scoping conflict with config.rb (knife.rb).
 # See https://github.com/chef-workflow/knife-dsl/issues/2
 def knife_capture(command, args = [], input = nil)
   null = Gem.win_platform? ? File.open("NUL:", "r") : File.open("/dev/null", "r")
