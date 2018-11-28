@@ -1,9 +1,17 @@
 # knife-rackspace Change Log
 
-<!-- latest_release -->
+<!-- latest_release unreleased -->
+## Unreleased
+
+#### Merged Pull Requests
+- Require Ruby 2.3+/Chef 13+ and remove deprecated bootstrap options [#146](https://github.com/chef/knife-rackspace/pull/146) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
-<!-- release_rollup -->
+<!-- release_rollup since=1.0.5 -->
+### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- Require Ruby 2.3+/Chef 13+ and remove deprecated bootstrap options [#146](https://github.com/chef/knife-rackspace/pull/146) ([tas50](https://github.com/tas50)) <!-- 2.0.0 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
