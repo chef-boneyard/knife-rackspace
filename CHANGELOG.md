@@ -1,14 +1,18 @@
 # knife-rackspace Change Log
 
-<!-- latest_release unreleased -->
-## Unreleased
+<!-- latest_release 2.0.1 -->
+## [v2.0.1](https://github.com/chef/knife-rackspace/tree/v2.0.1) (2019-08-20)
 
 #### Merged Pull Requests
+- MSYS-1071 Updated README.md as per Chef OSS [#147](https://github.com/chef/knife-rackspace/pull/147) ([NAshwini](https://github.com/NAshwini))
 - Require Ruby 2.3+/Chef 13+ and remove deprecated bootstrap options [#146](https://github.com/chef/knife-rackspace/pull/146) ([tas50](https://github.com/tas50))
 <!-- latest_release -->
 
 <!-- release_rollup since=2.0.0 -->
 ### Changes not yet released to rubygems.org
+
+#### Merged Pull Requests
+- MSYS-1071 Updated README.md as per Chef OSS [#147](https://github.com/chef/knife-rackspace/pull/147) ([NAshwini](https://github.com/NAshwini)) <!-- 2.0.1 -->
 <!-- release_rollup -->
 
 <!-- latest_stable_release -->
