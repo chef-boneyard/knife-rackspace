@@ -2,6 +2,14 @@
 
 [![Gem Version](https://badge.fury.io/rb/knife-rackspace.svg)](https://rubygems.org/gems/knife-rackspace) [![Build Status](https://travis-ci.org/chef/knife-rackspace.svg?branch=master)](https://travis-ci.org/chef/knife-rackspace)
 
+* **Umbrella Project: [Knife](https://github.com/chef/chef-oss-practices/blob/master/projects/knife.md)**
+
+* **Project State [Deprecated](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#deprecated)**
+
+* **Issues [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#what-is-the-response-time-maximum): None**
+
+* **Pull Request [Response Time Maximum](https://github.com/chef/chef-oss-practices/blob/master/repo-management/repo-states.md#what-is-the-response-time-maximum): None**
+
 This is the official Chef Knife plugin for Rackspace Cloud Servers. This plugin gives knife the ability to create, bootstrap, and manage servers on all the regions for Rackspace Cloud Servers.
 
 ## Requirements
