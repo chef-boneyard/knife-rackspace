@@ -22,7 +22,7 @@ Bundler::GemHelper.install_tasks
 
 require "rspec/core/rake_task"
 RSpec::Core::RakeTask.new(:spec)
-task :default => [:credentials, :spec, "integration:live"]
+task default: [:credentials, :spec, "integration:live"]
 
 task :credentials do
   if ENV["TRAVIS_SECURE_ENV_VARS"] == "false"

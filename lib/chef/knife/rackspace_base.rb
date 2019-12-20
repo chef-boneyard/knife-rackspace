@@ -37,37 +37,37 @@ class Chef
           end
 
           option :rackspace_api_key,
-            :short => "-K KEY",
-            :long => "--rackspace-api-key KEY",
-            :description => "Your rackspace API key",
-            :proc => Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
+            short: "-K KEY",
+            long: "--rackspace-api-key KEY",
+            description: "Your rackspace API key",
+            proc: Proc.new { |key| Chef::Config[:knife][:rackspace_api_key] = key }
 
           option :rackspace_username,
-            :short => "-A USERNAME",
-            :long => "--rackspace-username USERNAME",
-            :description => "Your rackspace API username",
-            :proc => Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
+            short: "-A USERNAME",
+            long: "--rackspace-username USERNAME",
+            description: "Your rackspace API username",
+            proc: Proc.new { |username| Chef::Config[:knife][:rackspace_username] = username }
 
           option :rackspace_version,
-            :long => "--rackspace-version VERSION",
-            :description => "Rackspace Cloud Servers API version",
-            :default => "v2",
-            :proc => Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
+            long: "--rackspace-version VERSION",
+            description: "Rackspace Cloud Servers API version",
+            default: "v2",
+            proc: Proc.new { |version| Chef::Config[:knife][:rackspace_version] = version }
 
           option :rackspace_auth_url,
-            :long => "--rackspace-auth-url URL",
-            :description => "Your rackspace API auth url",
-            :proc => Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
+            long: "--rackspace-auth-url URL",
+            description: "Your rackspace API auth url",
+            proc: Proc.new { |url| Chef::Config[:knife][:rackspace_auth_url] = url }
 
           option :rackspace_region,
-            :long => "--rackspace-region REGION",
-            :description => "Your rackspace region",
-            :proc => Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
+            long: "--rackspace-region REGION",
+            description: "Your rackspace region",
+            proc: Proc.new { |region| Chef::Config[:knife][:rackspace_region] = region }
 
           option :file,
-            :long => "--file DESTINATION-PATH=SOURCE-PATH",
-            :description => "File to inject on node",
-            :proc => Proc.new {|arg|
+            long: "--file DESTINATION-PATH=SOURCE-PATH",
+            description: "File to inject on node",
+            proc: Proc.new { |arg|
               Chef::Config[:knife][:file] ||= []
               Chef::Config[:knife][:file] << arg
             }
@@ -94,14 +94,14 @@ class Chef
           region_warning_for_v1
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => "v1",
+              version: "v1",
               }))
           end
         else
           Chef::Log.debug("rackspace v2")
           @connection ||= begin
             connection = Fog::Compute.new(connection_params({
-              :version => "v2",
+              version: "v2",
             }))
           end
         end
@@ -131,22 +131,22 @@ class Chef
         end
 
         hash = options.merge({
-          :provider => "Rackspace",
-          :rackspace_api_key => locate_config_value(:rackspace_api_key),
-          :rackspace_username => username,
-          :rackspace_auth_url => auth_endpoint,
-          :rackspace_region => locate_config_value(:rackspace_region),
+          provider: "Rackspace",
+          rackspace_api_key: locate_config_value(:rackspace_api_key),
+          rackspace_username: username,
+          rackspace_auth_url: auth_endpoint,
+          rackspace_region: locate_config_value(:rackspace_region),
         })
 
         hash[:connection_options] ||= {}
-        Chef::Log.debug("https_proxy #{ Chef::Config[:https_proxy] || "<not specified>"} (config)")
-        Chef::Log.debug("http_proxy #{ Chef::Config[:http_proxy] || "<not specified>"} (config)")
-        if Chef::Config.has_key?(:https_proxy) || Chef::Config.has_key?(:http_proxy)
-          hash[:connection_options] = { :proxy => Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
+        Chef::Log.debug("https_proxy #{Chef::Config[:https_proxy] || "<not specified>"} (config)")
+        Chef::Log.debug("http_proxy #{Chef::Config[:http_proxy] || "<not specified>"} (config)")
+        if Chef::Config.key?(:https_proxy) || Chef::Config.key?(:http_proxy)
+          hash[:connection_options] = { proxy: Chef::Config[:https_proxy] || Chef::Config[:http_proxy] }
         end
         Chef::Log.debug("using proxy #{hash[:connection_options][:proxy] || "<none>"} (config)")
-        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].has_key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
-        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].has_key?(:ssl_verify_peer)
+        Chef::Log.debug("ssl_verify_peer #{Chef::Config[:knife].key?(:ssl_verify_peer) ? Chef::Config[:knife][:ssl_verify_peer] : "<not specified>"} (config)")
+        hash[:connection_options][:ssl_verify_peer] = Chef::Config[:knife][:ssl_verify_peer] if Chef::Config[:knife].key?(:ssl_verify_peer)
 
         hash
       end
@@ -154,6 +154,7 @@ class Chef
       def auth_endpoint
         url = locate_config_value(:rackspace_auth_url)
         return url if url
+
         (locate_config_value(:rackspace_region) == "lon") ? ::Fog::Rackspace::UK_AUTH_ENDPOINT : ::Fog::Rackspace::US_AUTH_ENDPOINT
       end
 
@@ -188,8 +189,8 @@ class Chef
         if public_ip_address = ip_address(server, "public")
           @public_dns_name ||= begin
             Resolv.getname(public_ip_address)
-          rescue
-            "#{public_ip_address}.xip.io"
+                               rescue
+                                 "#{public_ip_address}.xip.io"
           end
         end
       end
@@ -206,11 +207,11 @@ class Chef
       end
 
       def v1_public_ip(server)
-        server.public_ip_address == nil ? "" : server.public_ip_address
+        server.public_ip_address.nil? ? "" : server.public_ip_address
       end
 
       def v1_private_ip(server)
-        server.addresses["private"].first == nil ? "" : server.addresses["private"].first
+        server.addresses["private"].first.nil? ? "" : server.addresses["private"].first
       end
 
       def v2_ip_address(server, network)
@@ -219,7 +220,7 @@ class Chef
       end
 
       def v2_access_ip(server)
-        server.access_ipv4_address == nil ? "" : server.access_ipv4_address
+        server.access_ipv4_address.nil? ? "" : server.access_ipv4_address
       end
 
       def extract_ipv4_address(ip_addresses)

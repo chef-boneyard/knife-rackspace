@@ -18,7 +18,7 @@ describe "auth_endpoint" do
     expect(tester.auth_endpoint).to eq(test_url)
   end
 
-  [:dfw, :ord, :syd].each do |region|
+  %i{dfw ord syd}.each do |region|
     it "should pick the US endpoint if the region is #{region}" do
       tester = RackspaceBaseTester.new
       Chef::Config[:knife][:rackspace_auth_url] = nil
@@ -38,7 +38,7 @@ describe "auth_endpoint" do
 end
 
 describe "locate_config_value" do
-  it 'with cli options' do
+  it "with cli options" do
     # CLI
     tester = RackspaceBaseTester.new
     tester.parse_options([ "--rackspace-api-key", "12345" ])
@@ -50,7 +50,7 @@ describe "locate_config_value" do
     expect(tester.locate_config_value(:rackspace_api_key)).to eq("12345")
   end
 
-  it 'without cli options' do
+  it "without cli options" do
     # CLI
     tester = RackspaceBaseTester.new
     tester.parse_options([])

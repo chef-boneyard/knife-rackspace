@@ -39,7 +39,7 @@ class Chef
         if version_one?
           network_list = %w{public private}
         else
-          network_list = connection.networks.sort_by(&:label).collect { |t| t.label }
+          network_list = connection.networks.sort_by(&:label).collect(&:label)
         end
         server_list.insert(2, network_list.collect { |n| ui.color("#{n.capitalize} IP", :bold) }).flatten!
         num_columns_across = server_list.length
@@ -48,8 +48,8 @@ class Chef
           server_list << server.id.to_s
           server_list << server.name
           server_list += network_list.collect { |n| ip_address(server, n) }
-          server_list << (server.flavor_id == nil ? "" : server.flavor_id.to_s)
-          server_list << (server.image_id == nil ? "" : server.image_id.to_s)
+          server_list << (server.flavor_id.nil? ? "" : server.flavor_id.to_s)
+          server_list << (server.image_id.nil? ? "" : server.image_id.to_s)
           server_list << begin
             case server.state.downcase
             when "deleted", "suspended"

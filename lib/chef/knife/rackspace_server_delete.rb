@@ -32,16 +32,16 @@ class Chef
       banner "knife rackspace server delete SERVER_ID [SERVER_ID] (options)"
 
       option :purge,
-        :short => "-P",
-        :long => "--purge",
-        :boolean => true,
-        :default => false,
-        :description => "Destroy corresponding node and client on the Chef Server, in addition to destroying the Rackspace node itself. Assumes node and client have the same name as the server (if not, add the '--node-name' option)."
+        short: "-P",
+        long: "--purge",
+        boolean: true,
+        default: false,
+        description: "Destroy corresponding node and client on the Chef Server, in addition to destroying the Rackspace node itself. Assumes node and client have the same name as the server (if not, add the '--node-name' option)."
 
       option :chef_node_name,
-        :short => "-N NAME",
-        :long => "--node-name NAME",
-        :description => "The name of the node and client to delete, if it differs from the server name. Only has meaning when used with the '--purge' option."
+        short: "-N NAME",
+        long: "--node-name NAME",
+        description: "The name of the node and client to delete, if it differs from the server name. Only has meaning when used with the '--purge' option."
 
       # Extracted from Chef::Knife.delete_object, because it has a
       # confirmation step built in... By specifying the '--purge'
@@ -49,13 +49,11 @@ class Chef
       # the user is already making their intent known.  It is not
       # necessary to make them confirm two more times.
       def destroy_item(klass, name, type_name)
-        begin
-          object = klass.load(name)
-          object.destroy
-          ui.warn("Deleted #{type_name} #{name}")
-        rescue Net::HTTPServerException
-          ui.warn("Could not find a #{type_name} named #{name} to delete!")
-        end
+        object = klass.load(name)
+        object.destroy
+        ui.warn("Deleted #{type_name} #{name}")
+      rescue Net::HTTPServerException
+        ui.warn("Could not find a #{type_name} named #{name} to delete!")
       end
 
       def run
@@ -84,7 +82,7 @@ class Chef
                 destroy_item(Chef::Node, thing_to_delete, "node")
                 destroy_item(Chef::ApiClient, thing_to_delete, "client")
               else
-                #v2 nodes may be named automatically
+                # v2 nodes may be named automatically
                 thing_to_delete = config[:chef_node_name] || server.name
                 destroy_item(Chef::Node, thing_to_delete, "node")
                 destroy_item(Chef::ApiClient, thing_to_delete, "client")
