@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-require "chef/knife/rackspace_base"
+require_relative "rackspace_base"
 
 # These two are needed for the '--purge' deletion case
 require "chef/node"

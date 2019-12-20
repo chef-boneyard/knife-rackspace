@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-require "chef/knife/rackspace_base"
+require_relative "rackspace_base"
 require "chef/knife/winrm_base"
 require "chef/knife"
 
