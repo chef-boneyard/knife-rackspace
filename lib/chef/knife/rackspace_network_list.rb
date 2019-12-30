@@ -1,4 +1,4 @@
-require "chef/knife/rackspace_base"
+require_relative "rackspace_base"
 
 class Chef
   class Knife

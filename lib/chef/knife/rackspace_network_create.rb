@@ -1,4 +1,4 @@
-require "chef/knife/rackspace_base"
+require_relative "rackspace_base"
 
 class Chef
   class Knife
@@ -9,16 +9,16 @@ class Chef
       banner "knife rackspace network create (options)"
 
       option :label,
-        :short => "-L LABEL",
-        :long => "--label LABEL",
-        :description => "Label for the network",
-        :required => true
+        short: "-L LABEL",
+        long: "--label LABEL",
+        description: "Label for the network",
+        required: true
 
       option :cidr,
-        :short => "-C CIDR",
-        :long => "--cidr CIDR",
-        :description => "CIDR for the network",
-        :required => true
+        short: "-C CIDR",
+        long: "--cidr CIDR",
+        description: "CIDR for the network",
+        required: true
 
       def run
         if version_one?
@@ -32,7 +32,7 @@ class Chef
           ]
         end
         options = {}
-        [:cidr, :label].each do |key|
+        %i{cidr label}.each do |key|
           options[key] = config[key]
         end
         net = connection.networks.create(options)

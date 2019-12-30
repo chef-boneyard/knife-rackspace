@@ -3,8 +3,8 @@ require "vcr"
 require "ansi/code"
 require "ansi/diff"
 
-Chef::Config[:knife][:rackspace_api_username] = "#{ENV['OS_USERNAME']}"
-Chef::Config[:knife][:rackspace_api_key] = "#{ENV['OS_PASSWORD']}"
+Chef::Config[:knife][:rackspace_api_username] = "#{ENV["OS_USERNAME"]}"
+Chef::Config[:knife][:rackspace_api_key] = "#{ENV["OS_PASSWORD"]}"
 Chef::Config[:knife][:ssl_verify_peer] = false
 # Chef::Config[:knife][:rackspace_version] = "#{ENV['RS_VERSION']}"
 
@@ -45,9 +45,9 @@ VCR.configure do |c|
   c.default_cassette_options = {
     # :record => :none,
     # Ignores cache busting parameters.
-    :match_requests_on => [:host, :path],
+    match_requests_on: %i{host path},
   }
-  c.default_cassette_options.merge!({ :record => :all }) if ENV["INTEGRATION_TESTS"] == "live"
+  c.default_cassette_options.merge!({ record: :all }) if ENV["INTEGRATION_TESTS"] == "live"
 end
 
 def filter_headers(interaction, pattern, placeholder)
@@ -124,7 +124,7 @@ def knife_capture(command, args = [], input = nil)
   $VERBOSE = warn
 
   status = Chef::Knife::DSL::Support.run_knife(command, args)
-  return $stdout.string, $stderr.string, status
+  [$stdout.string, $stderr.string, status]
 ensure
   warn = $VERBOSE
   $VERBOSE = nil

@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-require "chef/knife/rackspace_base"
+require_relative "rackspace_base"
 require "chef/knife/winrm_base"
 require "chef/knife"
 
@@ -41,256 +41,256 @@ class Chef
       attr_accessor :initial_sleep_delay
 
       option :flavor,
-        :short => "-f FLAVOR",
-        :long => "--flavor FLAVOR",
-        :description => "The flavor of server; default is 2 (512 MB)",
-        :proc => Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_s },
-        :default => "2"
+        short: "-f FLAVOR",
+        long: "--flavor FLAVOR",
+        description: "The flavor of server; default is 2 (512 MB)",
+        proc: Proc.new { |f| Chef::Config[:knife][:flavor] = f.to_s },
+        default: "2"
 
       option :image,
-        :short => "-I IMAGE",
-        :long => "--image IMAGE",
-        :description => "The image of the server",
-        :proc => Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
+        short: "-I IMAGE",
+        long: "--image IMAGE",
+        description: "The image of the server",
+        proc: Proc.new { |i| Chef::Config[:knife][:image] = i.to_s }
 
       option :boot_volume_size,
-        :long => "--boot-volume-size GB",
-        :description => "The size of the CBS to use as the server's boot device",
-        :proc => Proc.new { |i| Chef::Config[:knife][:boot_volume_size] = i.to_s },
-        :default => 100
+        long: "--boot-volume-size GB",
+        description: "The size of the CBS to use as the server's boot device",
+        proc: Proc.new { |i| Chef::Config[:knife][:boot_volume_size] = i.to_s },
+        default: 100
 
       option :boot_volume_id,
-        :short => "-B BOOT_VOLUME_ID",
-        :long => "--boot-volume-id UUID",
-        :description => "The image CBS UUID to use as the server's boot device",
-        :proc => Proc.new { |i| Chef::Config[:knife][:boot_volume_id] = i.to_s }
+        short: "-B BOOT_VOLUME_ID",
+        long: "--boot-volume-id UUID",
+        description: "The image CBS UUID to use as the server's boot device",
+        proc: Proc.new { |i| Chef::Config[:knife][:boot_volume_id] = i.to_s }
 
       option :server_name,
-        :short => "-S NAME",
-        :long => "--server-name NAME",
-        :description => "The server name"
+        short: "-S NAME",
+        long: "--server-name NAME",
+        description: "The server name"
 
       option :chef_node_name,
-        :short => "-N NAME",
-        :long => "--node-name NAME",
-        :description => "The Chef node name for your new node"
+        short: "-N NAME",
+        long: "--node-name NAME",
+        description: "The Chef node name for your new node"
 
       option :bootstrap_network,
-        :long => "--bootstrap-network LABEL",
-        :description => "Use IP address on this network for bootstrap",
-        :default => "public"
+        long: "--bootstrap-network LABEL",
+        description: "Use IP address on this network for bootstrap",
+        default: "public"
 
       option :private_network,
-        :long => "--private-network",
-        :description => "Equivalent to --bootstrap-network private",
-        :boolean => true,
-        :default => false
+        long: "--private-network",
+        description: "Equivalent to --bootstrap-network private",
+        boolean: true,
+        default: false
 
       option :ssh_user,
-        :short => "-x USERNAME",
-        :long => "--ssh-user USERNAME",
-        :description => "The ssh username; default is 'root'",
-        :default => "root"
+        short: "-x USERNAME",
+        long: "--ssh-user USERNAME",
+        description: "The ssh username; default is 'root'",
+        default: "root"
 
       option :ssh_password,
-        :short => "-P PASSWORD",
-        :long => "--ssh-password PASSWORD",
-        :description => "The ssh password"
+        short: "-P PASSWORD",
+        long: "--ssh-password PASSWORD",
+        description: "The ssh password"
 
       option :ssh_port,
-        :short => "-p PORT",
-        :long => "--ssh-port PORT",
-        :description => "The ssh port",
-        :default => "22",
-        :proc => Proc.new { |key| Chef::Config[:knife][:ssh_port] = key }
+        short: "-p PORT",
+        long: "--ssh-port PORT",
+        description: "The ssh port",
+        default: "22",
+        proc: Proc.new { |key| Chef::Config[:knife][:ssh_port] = key }
 
       option :identity_file,
-        :short => "-i IDENTITY_FILE",
-        :long => "--identity-file IDENTITY_FILE",
-        :description => "The SSH identity file used for authentication"
+        short: "-i IDENTITY_FILE",
+        long: "--identity-file IDENTITY_FILE",
+        description: "The SSH identity file used for authentication"
 
       option :prerelease,
-        :long => "--prerelease",
-        :description => "Install the pre-release chef gems",
-        :default => false
+        long: "--prerelease",
+        description: "Install the pre-release chef gems",
+        default: false
 
       option :bootstrap_version,
-        :long => "--bootstrap-version VERSION",
-        :description => "The version of Chef to install",
-        :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_version] = v }
+        long: "--bootstrap-version VERSION",
+        description: "The version of Chef to install",
+        proc: Proc.new { |v| Chef::Config[:knife][:bootstrap_version] = v }
 
       option :distro,
-        :short => "-d DISTRO",
-        :long => "--distro DISTRO",
-        :description => "Bootstrap a distro using a template. [DEPRECATED] Use -t / --bootstrap-template option instead.",
-        :proc        => Proc.new { |v|
+        short: "-d DISTRO",
+        long: "--distro DISTRO",
+        description: "Bootstrap a distro using a template. [DEPRECATED] Use -t / --bootstrap-template option instead.",
+        proc: Proc.new { |v|
           Chef::Log.fatal("[DEPRECATED] -d / --distro option is deprecated. Use --bootstrap-template option instead.")
           v
         }
 
       # @todo When we no longer support Chef 13 this can just go away
       option :template_file,
-        :long => "--template-file TEMPLATE",
-        :description => "Full path to location of template to use. [DEPRECATED] Use -t / --bootstrap-template option instead.",
-        :proc        => Proc.new { |v|
+        long: "--template-file TEMPLATE",
+        description: "Full path to location of template to use. [DEPRECATED] Use -t / --bootstrap-template option instead.",
+        proc: Proc.new { |v|
           Chef::Log.fatal("[DEPRECATED] --template-file option is deprecated. Use --bootstrap-template option instead.")
           v
         }
 
       option :bootstrap_template,
-        :short => "-t TEMPLATE",
-        :long => "--bootstrap-template TEMPLATE",
-        :description => "Bootstrap Chef using a built-in or custom template. Set to the full path of an erb template or use one of the built-in templates."
+        short: "-t TEMPLATE",
+        long: "--bootstrap-template TEMPLATE",
+        description: "Bootstrap Chef using a built-in or custom template. Set to the full path of an erb template or use one of the built-in templates."
 
       option :run_list,
-        :short => "-r RUN_LIST",
-        :long => "--run-list RUN_LIST",
-        :description => "Comma separated list of roles/recipes to apply",
-        :proc => lambda { |o| o.split(/[\s,]+/) },
-        :default => []
+        short: "-r RUN_LIST",
+        long: "--run-list RUN_LIST",
+        description: "Comma separated list of roles/recipes to apply",
+        proc: lambda { |o| o.split(/[\s,]+/) },
+        default: []
 
       option :first_boot_attributes,
-        :short => "-j JSON_ATTRIBS",
-        :long => "--json-attributes",
-        :description => "A JSON string to be added to the first run of chef-client",
-        :proc => lambda { |o| JSON.parse(o) },
-        :default => {}
+        short: "-j JSON_ATTRIBS",
+        long: "--json-attributes",
+        description: "A JSON string to be added to the first run of chef-client",
+        proc: lambda { |o| JSON.parse(o) },
+        default: {}
 
       option :rackspace_metadata,
-        :short => "-M JSON",
-        :long => "--rackspace-metadata JSON",
-        :description => "JSON string version of metadata hash to be supplied with the server create call",
-        :proc => lambda { |m| JSON.parse(m) },
-        :default => {}
+        short: "-M JSON",
+        long: "--rackspace-metadata JSON",
+        description: "JSON string version of metadata hash to be supplied with the server create call",
+        proc: lambda { |m| JSON.parse(m) },
+        default: {}
 
       option :rackconnect_wait,
-        :long => "--rackconnect-wait",
-        :description => "Wait until the Rackconnect automation setup is complete before bootstrapping chef",
-        :boolean => true,
-        :default => false
+        long: "--rackconnect-wait",
+        description: "Wait until the Rackconnect automation setup is complete before bootstrapping chef",
+        boolean: true,
+        default: false
 
       option :rackconnect_v3_network_id,
-        :long => "--rackconnect-v3-network-id ID",
-        :description => "Rackconnect V3 ONLY: Link a new server to an existing network",
-        :proc => lambda { |o| Chef::Config[:knife][:rackconnect_v3_network_id] = o },
-        :default => nil
+        long: "--rackconnect-v3-network-id ID",
+        description: "Rackconnect V3 ONLY: Link a new server to an existing network",
+        proc: lambda { |o| Chef::Config[:knife][:rackconnect_v3_network_id] = o },
+        default: nil
 
       option :rackspace_servicelevel_wait,
-        :long => "--rackspace-servicelevel-wait",
-        :description => "Wait until the Rackspace service level automation setup is complete before bootstrapping chef",
-        :boolean => true,
-        :default => false
+        long: "--rackspace-servicelevel-wait",
+        description: "Wait until the Rackspace service level automation setup is complete before bootstrapping chef",
+        boolean: true,
+        default: false
 
       option :hint,
-        :long => "--hint HINT_NAME[=HINT_FILE]",
-        :description => "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
-        :proc => Proc.new { |h|
+        long: "--hint HINT_NAME[=HINT_FILE]",
+        description: "Specify Ohai Hint to be set on the bootstrap target.  Use multiple --hint options to specify multiple hints.",
+        proc: Proc.new { |h|
           Chef::Config[:knife][:hints] ||= {}
           name, path = h.split("=")
-          Chef::Config[:knife][:hints][name] = path ? JSON.parse(::File.read(path)) : Hash.new
+          Chef::Config[:knife][:hints][name] = path ? JSON.parse(::File.read(path)) : {}
         }
 
       option :host_key_verify,
-        :long => "--[no-]host-key-verify",
-        :description => "Verify host key, enabled by default",
-        :boolean => true,
-        :default => true
+        long: "--[no-]host-key-verify",
+        description: "Verify host key, enabled by default",
+        boolean: true,
+        default: true
 
       option :tcp_test_ssh,
-        :long => "--[no-]tcp-test-ssh",
-        :description => "Check that SSH is available using a TCP check directly on port 22, enabled by default",
-        :boolean => true,
-        :default => true
+        long: "--[no-]tcp-test-ssh",
+        description: "Check that SSH is available using a TCP check directly on port 22, enabled by default",
+        boolean: true,
+        default: true
 
       option :ssh_wait_timeout,
-        :long => "--ssh-wait-timeout TIMEOUT",
-        :description => "The ssh wait timeout, before attempting ssh",
-        :default => "0"
+        long: "--ssh-wait-timeout TIMEOUT",
+        description: "The ssh wait timeout, before attempting ssh",
+        default: "0"
 
       option :retry_ssh_every,
-        :long => "--retry-ssh-every TIMEOUT",
-        :description => "Retry SSH after n seconds (retry each period)",
-        :default => "5"
+        long: "--retry-ssh-every TIMEOUT",
+        description: "Retry SSH after n seconds (retry each period)",
+        default: "5"
 
       option :retry_ssh_limit,
-        :long => "--retry-ssh-limit COUNT",
-        :description => "Retry SSH at most this number of times",
-        :default => "5"
+        long: "--retry-ssh-limit COUNT",
+        description: "Retry SSH at most this number of times",
+        default: "5"
 
       option :default_networks,
-        :long => "--[no-]default-networks",
-        :description => "Include public and service networks, enabled by default",
-        :boolean => true,
-        :default => true
+        long: "--[no-]default-networks",
+        description: "Include public and service networks, enabled by default",
+        boolean: true,
+        default: true
 
       option :network,
-        :long => "--network [LABEL_OR_ID]",
-        :description => "Add private network. Use multiple --network options to specify multiple networks.",
-        :proc => Proc.new{ |name|
+        long: "--network [LABEL_OR_ID]",
+        description: "Add private network. Use multiple --network options to specify multiple networks.",
+        proc: Proc.new { |name|
           Chef::Config[:knife][:rackspace_networks] ||= []
           (Chef::Config[:knife][:rackspace_networks] << name).uniq!
         }
 
       option :bootstrap_protocol,
-        :long => "--bootstrap-protocol protocol",
-        :description => "Protocol to bootstrap Windows servers. options: winrm",
-        :default => nil
+        long: "--bootstrap-protocol protocol",
+        description: "Protocol to bootstrap Windows servers. options: winrm",
+        default: nil
 
       option :server_create_timeout,
-        :long => "--server-create-timeout timeout",
-        :description => "How long to wait until the server is ready; default is 1200 seconds",
-        :default => 1200,
-        :proc => Proc.new { |v| Chef::Config[:knife][:server_create_timeout] = v }
+        long: "--server-create-timeout timeout",
+        description: "How long to wait until the server is ready; default is 1200 seconds",
+        default: 1200,
+        proc: Proc.new { |v| Chef::Config[:knife][:server_create_timeout] = v }
 
       option :bootstrap_proxy,
-        :long => "--bootstrap-proxy PROXY_URL",
-        :description => "The proxy server for the node being bootstrapped",
-        :proc => Proc.new { |v| Chef::Config[:knife][:bootstrap_proxy] = v }
+        long: "--bootstrap-proxy PROXY_URL",
+        description: "The proxy server for the node being bootstrapped",
+        proc: Proc.new { |v| Chef::Config[:knife][:bootstrap_proxy] = v }
 
       option :rackspace_disk_config,
-        :long => "--rackspace-disk-config DISKCONFIG",
-        :description => "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL)",
-        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k }
+        long: "--rackspace-disk-config DISKCONFIG",
+        description: "Specify if want to manage your own disk partitioning scheme (AUTO or MANUAL)",
+        proc: Proc.new { |k| Chef::Config[:knife][:rackspace_disk_config] = k }
 
       option :rackspace_config_drive,
-        :long => "--rackspace_config_drive CONFIGDRIVE",
-        :description => "Creates a config drive device in /dev/disk/by-label/config-2 if set to TRUE",
-        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_config_drive] = k },
-        :default => "false"
+        long: "--rackspace_config_drive CONFIGDRIVE",
+        description: "Creates a config drive device in /dev/disk/by-label/config-2 if set to TRUE",
+        proc: Proc.new { |k| Chef::Config[:knife][:rackspace_config_drive] = k },
+        default: "false"
 
       option :rackspace_user_data_file,
-        :long => "--rackspace_user_data_file USERDATA",
-        :description => "User data file will be placed in the openstack/latest/user_data directory on the config drive",
-        :proc => Proc.new { |k| Chef::Config[:knife][:rackspace_user_data] = k }
+        long: "--rackspace_user_data_file USERDATA",
+        description: "User data file will be placed in the openstack/latest/user_data directory on the config drive",
+        proc: Proc.new { |k| Chef::Config[:knife][:rackspace_user_data] = k }
 
       option :ssh_keypair,
-        :long => "--ssh-keypair KEYPAIR_NAME",
-        :description => "Name of existing nova SSH keypair. Public key will be injected into the instance.",
-        :proc => Proc.new { |v| Chef::Config[:knife][:rackspace_ssh_keypair] = v },
-        :default => nil
+        long: "--ssh-keypair KEYPAIR_NAME",
+        description: "Name of existing nova SSH keypair. Public key will be injected into the instance.",
+        proc: Proc.new { |v| Chef::Config[:knife][:rackspace_ssh_keypair] = v },
+        default: nil
 
       option :secret,
-        :long => "--secret",
-        :description => "The secret key to us to encrypt data bag item values",
-        :proc => lambda { |s| Chef::Config[:knife][:secret] = s }
+        long: "--secret",
+        description: "The secret key to us to encrypt data bag item values",
+        proc: lambda { |s| Chef::Config[:knife][:secret] = s }
 
       option :secret_file,
-        :long => "--secret-file SECRET_FILE",
-        :description => "A file containing the secret key to use to encrypt data bag item values",
-        :proc => lambda { |sf| Chef::Config[:knife][:secret_file] = sf }
+        long: "--secret-file SECRET_FILE",
+        description: "A file containing the secret key to use to encrypt data bag item values",
+        proc: lambda { |sf| Chef::Config[:knife][:secret_file] = sf }
 
       option :bootstrap_vault_file,
-        :long        => "--bootstrap-vault-file VAULT_FILE",
-        :description => "A JSON file with a list of vault(s) and item(s) to be updated"
+        long: "--bootstrap-vault-file VAULT_FILE",
+        description: "A JSON file with a list of vault(s) and item(s) to be updated"
 
       option :bootstrap_vault_json,
-        :long        => "--bootstrap-vault-json VAULT_JSON",
-        :description => "A JSON string with the vault(s) and item(s) to be updated"
+        long: "--bootstrap-vault-json VAULT_JSON",
+        description: "A JSON string with the vault(s) and item(s) to be updated"
 
       option :bootstrap_vault_item,
-        :long        => "--bootstrap-vault-item VAULT_ITEM",
-        :description => 'A single vault and item to update as "vault:item"',
-        :proc        => Proc.new { |i|
+        long: "--bootstrap-vault-item VAULT_ITEM",
+        description: 'A single vault and item to update as "vault:item"',
+        proc: Proc.new { |i|
           (vault, item) = i.split(/:/)
           Chef::Config[:knife][:bootstrap_vault_item] ||= {}
           Chef::Config[:knife][:bootstrap_vault_item][vault] ||= []
@@ -306,13 +306,13 @@ class Chef
       end
 
       def tcp_test_ssh(server, bootstrap_ip)
-        return true unless locate_config_value(:tcp_test_ssh) != nil
+        return true if locate_config_value(:tcp_test_ssh).nil?
 
         limit = locate_config_value(:retry_ssh_limit).to_i
         count = 0
 
         begin
-          Net::SSH.start(bootstrap_ip, "root", :password => server.password ) do |ssh|
+          Net::SSH.start(bootstrap_ip, "root", password: server.password ) do |ssh|
             Chef::Log.debug("sshd accepting connections on #{bootstrap_ip}")
             break
           end
@@ -358,8 +358,8 @@ class Chef
           dest, src = parse_file_argument(arg)
           Chef::Log.debug("Inject file #{src} into #{dest}")
           files << {
-            :path => dest,
-            :contents => encode_file(src),
+            path: dest,
+            contents: encode_file(src),
           }
         end
         files
@@ -391,14 +391,14 @@ class Chef
         $stdout.sync = true
 
         server_create_options = {
-          :metadata => locate_config_value(:rackspace_metadata),
-          :disk_config => locate_config_value(:rackspace_disk_config),
-          :user_data => user_data,
-          :config_drive => locate_config_value(:rackspace_config_drive) || false,
-          :personality => files,
-          :key_name => locate_config_value(:rackspace_ssh_keypair),
-          :name => get_node_name(config[:chef_node_name] || config[:server_name]),
-          :networks => get_networks(locate_config_value(:rackspace_networks), locate_config_value(:rackconnect_v3_network_id)),
+          metadata: locate_config_value(:rackspace_metadata),
+          disk_config: locate_config_value(:rackspace_disk_config),
+          user_data: user_data,
+          config_drive: locate_config_value(:rackspace_config_drive) || false,
+          personality: files,
+          key_name: locate_config_value(:rackspace_ssh_keypair),
+          name: get_node_name(config[:chef_node_name] || config[:server_name]),
+          networks: get_networks(locate_config_value(:rackspace_networks), locate_config_value(:rackconnect_v3_network_id)),
         }
 
         # Maybe deprecate this option at some point
@@ -431,7 +431,7 @@ class Chef
         else
           server_create_options[:image_id] = locate_config_value(:image)
 
-          if !server_create_options[:image_id]
+          unless server_create_options[:image_id]
             ui.error("Please specify an Image ID for the server with --image (-I)")
             exit 1
           end
@@ -446,7 +446,7 @@ class Chef
         if version_one?
           server.save
         else
-          server.save(:networks => server_create_options[:networks])
+          server.save(networks: server_create_options[:networks])
         end
 
         rackconnect_wait = locate_config_value(:rackconnect_wait)
@@ -469,18 +469,18 @@ class Chef
         # wait for it to be ready to do stuff
         begin
           server.wait_for(Integer(locate_config_value(:server_create_timeout))) do
-            print ".";
+            print "."
             Chef::Log.debug("#{progress}%")
 
             if rackconnect_wait && rackspace_servicelevel_wait
-              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
-              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all["rackconnect_automation_status"]}")
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all["rax_service_level_automation"]}")
               ready? && metadata.all["rackconnect_automation_status"] == "DEPLOYED" && metadata.all["rax_service_level_automation"] == "Complete"
             elsif rackconnect_wait
-              Chef::Log.debug("rackconnect_automation_status: #{metadata.all['rackconnect_automation_status']}")
+              Chef::Log.debug("rackconnect_automation_status: #{metadata.all["rackconnect_automation_status"]}")
               ready? && metadata.all["rackconnect_automation_status"] == "DEPLOYED"
             elsif rackspace_servicelevel_wait
-              Chef::Log.debug("rax_service_level_automation: #{metadata.all['rax_service_level_automation']}")
+              Chef::Log.debug("rax_service_level_automation: #{metadata.all["rax_service_level_automation"]}")
               ready? && metadata.all["rax_service_level_automation"] == "Complete"
             else
               ready?
@@ -491,7 +491,7 @@ class Chef
           msg_pair("Progress", "#{server.progress}%")
           msg_pair("rackconnect_automation_status", server.metadata.all["rackconnect_automation_status"])
           msg_pair("rax_service_level_automation", server.metadata.all["rax_service_level_automation"])
-          Chef::Application.fatal! 'Server didn\'t finish on time'
+          Chef::Application.fatal! "Server didn't finish on time"
         end
 
         msg_pair("Metadata", server.metadata)
@@ -638,10 +638,11 @@ class Chef
       end
 
     end
-    #v2 servers require a name, random if chef_node_name is empty, empty if v1
+    # v2 servers require a name, random if chef_node_name is empty, empty if v1
     def get_node_name(chef_node_name)
       return chef_node_name unless chef_node_name.nil?
-      #lazy uuids
+
+      # lazy uuids
       chef_node_name = "rs-" + rand.to_s.split(".")[1] unless version_one?
     end
 
@@ -652,10 +653,10 @@ class Chef
         nets = if rackconnect3
                  [locate_config_value(:rackconnect_v3_network_id)]
                elsif locate_config_value(:default_networks)
-                 [
-                   "00000000-0000-0000-0000-000000000000",
-                   "11111111-1111-1111-1111-111111111111",
-                 ]
+                 %w{
+                   00000000-0000-0000-0000-000000000000
+                   11111111-1111-1111-1111-111111111111
+                 }
                else
                  []
                end
